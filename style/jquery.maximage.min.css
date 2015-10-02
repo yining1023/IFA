@@ -1,0 +1,14 @@
+/*! Version: 2.0.72 (08-Oct-2012) */.mc-hide-scrolls{overflow:hidden}body .mc-cycle{height:100%;left:0;overflow:hidden;position:fixed;top:0;width:100%;z-index:-1}div.mc-image{-webkit-transition:opacity 1s ease-in-out;-moz-transition:opacity 1s ease-in-out;-o-transition:opacity 1s ease-in-out;transition:opacity 1s ease-in-out;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;background-position:center center;background-repeat:no-repeat;height:100%;overflow:hidden;width:100%}.mc-old-browser .mc-image{overflow:hidden}
+
+#videos {
+	background: url(../graphics/videos-logo.png);
+	width:103px;
+	display: block;
+	height:20px;
+	margin-bottom: 2px;
+}
+
+#videos:hover {
+	background: url(../graphics/videos-hover.png);
+	
+}

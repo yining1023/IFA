@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 9]>Some features of the Institute's website may not function properly with this version of Internet Explorer. Please consider updating your browser by <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">clicking here</a>.  <![endif]-->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="cache-control" content="no-cache">
+
+<!-- FACEBOOK SPECIFIC CODE-->
+<meta property="og:image" content="https://www.nyu.edu/gsas/dept/fineart/images/web/mapping-alumni.jpg"/>
+<meta property="og:title" content="Mapping Institute of Fine Arts Alumni" />
+<meta property="og:description" 
+  content="Interactive map of IFA alumni." />
+  
+  <!-- TWITTER SPECIFIC CODE -->
+  <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@NYUIFA">
+<meta name="twitter:title" content="Mapping IFA Alumni">
+<meta name="twitter:description" content="Interactive map of IFA alumni.">
+<meta name="twitter:image:src" content="https://www.nyu.edu/gsas/dept/fineart/images/web/mapping-alumni.jpg">
+  
+  <!--CSS links-->
+  <link rel="stylesheet" type="text/css" href="./css/foundation.min.css">
+  <link rel="stylesheet" type="text/css" href="./css//icons/foundation-icons.css">
+  <link rel="stylesheet" type="text/css" href="./css/jquery-ui.theme.min.css">
+  <link href="../style/style.css" rel="stylesheet" type="text/css"/>
+  <link href="./css/av-style.css" rel="stylesheet" type="text/css"/>
+  <link href="./css/d3-tip.css" rel="stylesheet" type="text/css"/>
+  <link href="./css/c3.min.css" rel="stylesheet" type="text/css"/>
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+
+  
+	<title>Mapping Institute of Fine Arts Alumni</title>
+
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-6533284-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/jquery-ui.min.js"></script>
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+  <script type="text/javascript" src='./js/d3/d3.min.js'></script>
+  <script type="text/javascript" src='./js/d3/topojson.min.js'></script>
+  <script type="text/javascript" src='./js/d3/queue.v1.min.js'></script>
+  <script type="text/javascript" src='./js/d3/d3.tip.js'></script>
+  <script type="text/javascript" src="./js/foundation.min.js"></script>
+
+</head>
+
+<body>
+
+	<div class="backgroundShade"></div>
+	<!--Begin the main div -->
+	<div class="mainWrapper">
+    <div class="header">
+      <div class="ifaLogoContainer">
+      	<a href="../index.htm"><img src="../images/IFAlogo.png" alt="IFA Logo"></a>
+      </div>
+      <div class="nyuImage">
+          <a href="http://www.nyu.edu" target="_blank"><img src="../images/NYUlogo.png" alt="NYU Logo"></a>
+      </div>
+      <div class="mainHeaderContainer">
+        <div id="map"></div>
+        <div id="viz"></div>
+      </div>
+    </div>
+
+    <div class="contentWrapper">
+      <div class="mainContent">
+        <p class="heading">Mapping IFA Alumni</p>
+        <p class="content">This interactive map visualizes the international reach of the Institute of Fine Arts' alumni. Here you can locate the current employment status of approximately 1,000 active alumni. If you are an IFA graduate and would like to be included on this map,<a href="https://docs.google.com/forms/d/1ODX4GWewUkLuPfa6n-gORbFwPPN4RnFONvK7iS6EiuQ/viewform?sid=60faa8d85d1cd6e9&token=H2t6rT0BAAA.5dU7ZDJYqaDnjJ64wLfyvA.famwlVoTr_bioRL93U4QEQ" target="_blank"> please send us your updated information</a>.</p>
+        <div id="search" class="ui-widget content">
+          <input id="searchbox" placeholder="Search Alumni"></input>
+          <i class="fi-magnifying-glass" id="searchbtn"></i>
+        </div>
+        <div id="meta" class="content">
+          <div id="alumni-info" class="row"></div>
+          <div class="row clearfix" id="categories">
+            <div class="info-inner large-6 columns">
+              <h2>Employment categories</h2><br>
+              <div id="categories-viz" class="clearfix"></div>
+            </div>
+            <div class="info-inner large-6 columns">
+              <h2>Distribution of type of employment</h2><br><br>
+              <div id="meta-viz"></div>
+              <div id="bargraph"></div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="cardHolder">
+        <div class="card">
+        <p class="heading">About the Institute</p>
+        <p class="content">
+          <a href="../about/index.htm">Welcome to the IFA</a><br>
+        </p>
+        </div>
+          <div class="cardhighlight">
+                <a href="../news/achievements.htm"><img src="../images/navimages/alumni-achievements.jpg"></a>
+                </div>
+                   <div class="cardhighlight2">
+                <a href="../people/alumni/alumni-what-to-read.htm"><img src="../images/navimages/what-to-read.jpg"></a>
+                </div>
+      
+<div class="card">
+        <p class="heading">Credits</p>
+        <p class="caption2">
+          Design | Project Management<br>
+          <a href="../people/staff.htm#jason">Jason Varone</a><br>
+          Front-end engineering | Data visualization<br>
+          <a href="http://www.seaflection.com/" target="_blank">Sagar Mohite</a><br><br>
+        </p>
+        </div>
+
+            
+    </div>
+
+
+    <script type="text/javascript" src='./js/main.js'></script>
+    <script src='../js/toggleContent.js'></script>
+    <script src="../js/toggleNavAlumni.js"></script> <!-- Added 1/27/15 -->
+      
+</body>
+</html>

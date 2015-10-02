@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>Mapping Video Art</title>
+<style>
+
+path {
+  fill: #ccc;
+  stroke: #fff;
+}
+
+.frame {
+  fill: none;
+  pointer-events: all;
+}
+
+.tooltip {
+	font-family:Gotham, Arial, Helvetica, sans-serif; 
+	font-size:12px;
+	text-align:left;
+	margin: 0px;
+	padding: 0px;
+}
+
+span.year {
+	font-family:Gotham, Arial, Helvetica, sans-serif; 
+	font-size:50px;
+	overflow:hidden
+}
+
+#slider { 
+	position : absolute;
+	margin-bottom: 10px;
+	bottom: 0px;
+	right: 0px;
+	margin-right: 10px;
+}
+
+#date { 
+	position : absolute;
+	bottom: 27px;
+	left: 260px;
+	width:	290px;
+	text-align:left;
+	opacity: 0.39;
+}
+
+ul, li { 
+margin: 0; 
+padding: 0; 
+}
+
+#histogram { 
+	position : absolute;
+	list-style-type: none;
+	width: 200px;
+	bottom: 10px;
+	margin-left: 10px;
+}
+
+#histogram li {
+	position:relative;
+	height:17px;
+	margin-top: 0px;
+	display:inline-block;
+	padding-bottom:	5px;
+	width:200px;
+}
+
+.button { 
+	position : relative;
+	width: 12px;
+	height: 12px;
+	background-color: transparent;
+	border-style:solid;
+	border-width:thin;
+	border-color:#999;
+	margin: 1px;
+	float: left;	
+}
+
+.histoLine {
+	position : relative;
+	float:left;
+}
+
+.histogramName {
+	padding: 0px;
+	margin: 0px;
+	margin-left: 20px;
+	font-family:Gotham, Arial, Helvetica, sans-serif;
+	opacity: 0.75;
+}
+
+#playButton {
+	position:absolute;
+	width: 50px;
+	height: 50px;
+	left: 206px;
+	bottom:	32px;
+	background:url('pause_play.png') 0 0;
+}
+
+#zoombar {
+	position:absolute;
+	top: 90px;
+	left :10px;
+}
+
+#zoomplus {
+	width: 40px;
+	height: 40px;
+	background:url('zoombuttons.png') 0 0;
+	margin-bottom:5px;
+}
+
+#zoomplus:hover {
+	background-position:0px 40px;
+}
+
+#zoomminus {
+	width: 40px;
+	height: 40px;
+	background:url('zoombuttons.png') 40px 0px;
+}
+
+#zoomminus:hover {
+	background-position:40px 40px;
+}
+
+#mainMenu {
+	position: absolute;
+}
+
+.menuButton {
+	position:relative;
+	width: 77px;
+	height: 77px;
+	margin-left: 3px;
+	background-color:#71adc6;
+	float:left;
+	display:none;
+}
+
+#button1 {
+	opacity: 0.5;
+}
+
+#button2 {
+	opacity: 0.9;
+}
+
+#button3 {
+	opacity: 0.2;
+}
+
+.big-link { 
+	position:absolute; 
+	left: 668px;
+	top: 70px; 
+	text-align: left; 
+	font-size: 70px; 
+	color: #06f;
+	z-index:999; 
+}
+
+p { 
+	font-family: Gotham, Arial, Helvetica, sans-serif; 
+}
+
+#modalHeading {
+	font-size:25px;
+	opacity: 0.5;
+	margin-bottom: 10px;
+	text-align:center;
+}
+
+.modalText {
+	color:#999;
+	text-align:justify;
+}
+
+.modalText a {
+	text-decoration:none;
+	color:#030;
+}
+</style>
+<script type="text/javascript" src="http://mbostock.github.com/d3/d3.js"></script>
+<script src="http://d3js.org/d3.v2.js?2.9.1"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="jquery.tipsy.js"></script>
+
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-6533284-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<link href="tipsy.css" rel="stylesheet" type="text/css" />
+
+<!-- Attach Reveal CSS & Script -->
+<link rel="stylesheet" href="reveal.css">	
+<script type="text/javascript" src="jquery.reveal.js"></script>
+</head>
+
+<body style="margin:0px; overflow:hidden">
+<div id="slider"></div>
+<div id="date"></div>
+<div id="playButton" onClick="playPause(this)"></div>
+<ul id = "histogram"></ul>
+<div id = "mainMenu"><img src="mapping-video-title.png"/></div>
+<a href="#" data-reveal-id="myModal"><img class="big-link" src="mapping-video-subtitle.png"/></a>
+<div id="myModal" class="reveal-modal">
+	<div style="margin-left:auto; margin-right:auto; width:230px"><a href="http://www.nyu.edu/gsas/dept/fineart/" target="_blank"><p align="center"><img src="dukehouse-logo.png" width="150"/></p></a></div>
+    <p id="modalHeading">About Mapping Video Art</p>
+	<p class="modalText">'Mapping Video Art' is an experiment in data visualization created at the Institute of Fine Arts.  The project allows the user to see the movement of video art as it crossed continents and decades.  Information about specific exhibitions is visible in mouse-over of each circle.  The lines of movement are color-coded for each artist, and move in the direction of the art--if an artist showed work in New York and then in Paris, the lines will move from one city to the next in the proper direction. The chronology slider at the bottom ties this movement into a specific timeframe. The map is zoomable, which allows more information about important exhibition sites (such as New York City) to be visible. This project is currently in its second phase of development, and additional artists' exhibition records are being prepared for inclusion in the visualization.</p>
+<p class="modalText">
+This project is the result of a collaboration among <a 	href="http://varonearts.com/"  target="_blank">Jason Varone</a> a visual artist and the web master at the Institute of Fine Arts, who initiated and oversees the project;  <a 	href="http://shilpanbhagat.com/site/"  target="_blank">Shilpan Bhagat</a>, interaction designer/creative technologist, who developed the code that makes this visualization possible; with data collection and correlation by <a href="http://www.evesurvilo.com/" target="_blank">Eve Survilo</a>, Department of Art and Art Professions; all at NYU. If you have any questions, suggestions or contributions please e-mail:<a 	href="mailto:jason.varone@nyu.edu" > jason.varone@nyu.edu</a>
+	<a class="close-reveal-modal">&#215;</a></p>
+</div>
+<div id="zoombar"><div id="zoomplus" onClick="zoomin()"></div><div id="zoomminus" onClick="zoomout()"></div></div>
+<script>
+$(document).ready(function () {
+	//$('#date').css('width', function(){ return  $(window).width()/6});
+	$('#slider').css('width', function(){ return ($(window).width() - 220)});
+	$('.big-link').click(); 
+	$(window).resize(function() {
+  		$('#svgMain').attr('width', function(){ return $(window).width()});
+		$('#svgMain').attr('height', function(){ return $(window).height()});
+		$('#slider').css('width', function(){ return ($(window).width() - 220)});
+		//$('#date').css('width', function(){ return $(window).width()/6});
+	});
+	
+	//For the slider
+	$("#slider").slider();
+	
+	//$('.sprite-change').on('click', function(){$('.sprite-change').css({'background-position' : '10px 0px'})});
+});
+ 
+var margin = {top: 0, right: 0, bottom: 0, left: 0},
+    width = $(window).width() - margin.left - margin.right,
+    height = $(window).height() - margin.top - margin.bottom,
+	centered;
+	
+var projection = d3.geo.mercator()
+    .scale(width)
+    .translate([width/2, height/1.5]);
+
+var path = d3.geo.path()
+    .projection(projection);
+	
+var drag = d3.behavior.drag()
+    .origin(g)
+    .on("drag", dragmove)
+	.on("dragend", dragend)
+	.on("dragstart", dragstart);
+
+var svg = d3.select("body").append("svg:svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+	.attr("id", "svgMain")
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+	.call(drag);
+	
+svg.append("rect")
+    .attr("class", "frame")
+    .attr("width", width)
+    .attr("height", height)
+	.on("click", click);
+		
+var g = svg.append("g").attr("id", "World"),
+    feature = g.selectAll(".feature");
+	
+var lines = svg.append("g")
+	.attr("id", "lines");
+	
+var circles = svg.append("g")
+	.attr("id", "circles");
+	
+var hoverCircles = svg.append("g")
+					.attr("id", "hoverCircles");
+	  
+d3.json("world-countries.json", function(collection) {
+	var totalCountries = collection.features.length;
+	var counter = 0;
+  	
+	feature = feature
+	.data(collection.features)
+     .enter().append("path")
+	  .attr("class", "feature")
+      .attr("d", path)
+	  .on("click", click)
+	  .attr("id", function(d) { return d.properties.name;});//if(d.properties.name == "Germany") { click(d);} return d.properties.name;});
+	  
+	  //setTimeout(function(){console.log("Hello"); $("#Germany").trigger("click");},3000);
+	  //setTimeout(showGermany, 2500);
+	  //console.log("Germany is clicked");  
+});
+
+var counter = 0;
+var startYear = 3000;
+var endYear = 0;
+var patternFinished = true;
+//fill it up by code
+var Artists = new Array();
+var immediateShift = false;
+//set it manually for the number of artists
+var colorSet = ["#54b1d4", "#ff5151", "#ff00fc", "#7eca72", "#ed93f0", "#daaa38", "#f0ff00", "#ff6c00", "#c10000", "#01966e", "#bd0179"];
+
+d3.csv("videoart.csv", function(data) {
+	//console.log(data);
+	circles.selectAll("circle")
+         .data(data)
+       .enter().append("svg:circle")
+	     .attr("cx", function(d, i) { 
+		 								counter++; 
+										
+										//set the Min Year & the Max Year in the data
+										ifMinMaxYear(d);
+										
+										//set the different Artists in the data set
+										getArtists(d);
+										
+										//filter each node appropriately and make a dataset for creating the animating lines
+										setDataNode(d);
+										
+										
+										var loc = projection([+d.Lo, +d.La]); 
+										return loc[0];})
+         .attr("cy", function(d, i) { var loc = projection([+d.Lo, +d.La]); return loc[1];})
+		 .attr("r", initCircleRadius)
+		 .attr("class", "abc")
+		 .on("mouseover", mouseover)
+		 .on("mouseout", mouseout)
+		 .on("click", circleClick)
+		 .style("fill", function(d){ return setColor(d)})
+	
+	   .append("svg:title")
+   			.text(function(d) { return d.Date; });
+		 
+		 
+		 if(counter == data.length) {
+			counter = 0;
+			click(); 
+			setlookup();
+			currentYear = (+startYear);
+			sliderYear = (+startYear);
+			//console.log(currentYear);
+			//console.log("organisedData");
+			//console.log(organisedData);
+		 	getPatternData(currentYear, organisedData);
+			
+			//set the tooltip to appear for every node
+			setToolTip()
+			
+			//set the Maximum value of the slider and bind the slide event to create the sweep
+			$( "#slider" ).slider( "option", "max", (+endYear - +startYear));
+			$( "#slider" ).bind( "slide", function(event, ui) {
+																		clearTimeout(timer1);
+																		currentYear = +startYear + ui.value - 1;
+																		console.log(currentYear);
+																		sliderShift = true;
+																		immediateShift = true;
+																		if(patternFinished) {
+																			timer1 = setTimeout(getPatternData(currentYear, organisedData), 100);
+																		}
+																		//set the value of the year
+																		$('#date').html('<span class="year">' + ((+currentYear)) +'</span>');
+																	});
+		 	insertHistogramElements();
+		 }
+
+});
+
+function ifMinMaxYear(d) {
+	if(d.Date < startYear) {
+		startYear = d.Date;
+	}
+    if(d.Date > endYear) {
+		endYear = d.Date;
+	}
+}
+
+function getArtists(d) {
+	for(artist in Artists){
+		if(d.Name == Artists[artist]) {
+			return;
+		}	
+	}
+	Artists.push(d.Name);
+}
+
+var organisedData = new Object();
+organisedData.year = new Array();
+organisedData.data = new Array();
+/*
+* This function sorts the entire dataset into an object based on the Year of occurence
+*/
+function setDataNode(d) {
+	//Adding nodes to pre-sorted Years
+	for(i in organisedData.year) {
+		if((+organisedData.year[i]) == (+d.Date)){
+			//console.log(+organisedData[i][0].Date);
+			organisedData.data[i].push(d);
+			return;
+		}
+	}
+	
+	//Sorting the data based on year
+	for(year in organisedData.year) {
+		if((+d.Date) < organisedData.year[year]) {
+			organisedData.year.splice(year, 0, (+d.Date));
+					
+			organisedData.data.splice(year , 0, new Array());
+			organisedData.data[year].push(d);
+			return;
+		}
+		else if(organisedData.year.length == (+year) + 1) {
+			organisedData.year.splice((+year) + 1, 0, (+d.Date));
+					
+			organisedData.data.splice((+year) + 1 , 0, new Array());
+			organisedData.data[(+year) + 1].push(d);
+			return;
+		}
+	}
+	
+	//For the very first element in organisedData
+	organisedData.year.splice(0, 0, (+d.Date));
+					
+	organisedData.data.splice(0 , 0, new Array());
+	organisedData.data[0].push(d);
+	return;
+}
+
+var sliderYear;
+function getPatternData(currYear, Data) {
+	patternFinished = false;
+	var end = new Array(Artists.length);
+	var init = new Array(Artists.length);
+	var col = new Array(Artists.length);
+	var linePoints = new Array();
+	var lineData = new Array();
+	var found = false;
+	console.log("patterncalled");
+	for(year in Data.year) {
+		//console.log(year);
+		if(Data.year[year] == currentYear){
+			//console.log(year);
+			for(artist in Artists) {
+				end[artist] = new Array();
+				//endpoints are instantiated based on the current year and the artist
+				for(node in Data.data[year]) {
+					if(Data.data[year][node].Name == Artists[artist]) {
+						end[artist].push(projection([+Data.data[year][node].Lo, +Data.data[year][node].La]));
+					}
+				}
+			
+				init[artist] = new Array();
+				//initpoints are instantiated based on the previous occurence to the current year and the artist
+				for(var i = (year - 1); i>=0; i--) {
+					for(node in Data.data[i]) {
+						if(Data.data[i][node].Name == Artists[artist]) {
+							init[artist].push(projection([+Data.data[i][node].Lo, +Data.data[i][node].La]));
+							col[artist] = setColorLine(Data.data[i][node]);
+							found = true;
+						}
+					}
+					if(found) {
+						break;
+					}
+				}
+			}
+			//console.log("end");
+			//console.log(end);
+			
+			//console.log("init");
+			//console.log(init);
+			break;
+		}
+	}
+	
+	//create the array of start and end co-ordinate
+	for(i in init) {
+		for(spoint in init[i]) {
+			for(epoint in end[i]) {
+				linePoints.push(init[i][spoint]);
+				linePoints.push(end[i][epoint]);
+				linePoints.push(col[i]);
+				lineData.push(linePoints);
+				
+				linePoints = new Array();
+			}	
+		}
+	}
+	
+	if(play || sliderShift) {
+		lines.selectAll("line").transition().duration(750)
+			 .attr("x1", function(d, i) { return (d[1][0]);})
+        	 .attr("y1", function(d, i) { return (d[1][1]);})
+			 .remove();
+		sliderShift = false;
+	}
+	
+	var totscale = currentYear;
+	//set the value of the year
+	$('#date').html('<span class="year">' + ((+currYear)) +'</span>');
+	
+	//set the value of the slider
+	$( "#slider" ).slider( "option", "value", (+currYear - +startYear))
+	
+	patternFinished = true;
+	console.log("patternended");
+	//sliderYear = sliderYear + 1;
+	
+	if(currentYear != endYear) {
+		currentYear = +currentYear + 1;
+	}
+	else {
+		currentYear = (+startYear);
+	}
+	
+	
+	//console.log("lineData");
+	//console.log(lineData);
+	timer1 = setTimeout(function(){addLines(lineData);}, 1000);
+}
+
+var currentYear;
+var timer = 0;
+var timer1;
+function addLines(a) {
+	//set up the lines once the data has been deleted
+	var abc = lines.selectAll("line").data(a);
+	//console.log(abc);	    
+	abc.enter().insert("line");
+	 
+    abc
+	     .attr("x1", function(d, i) { return (d[0][0]);})
+         .attr("y1", function(d, i) { return (d[0][1]);})
+		 .attr("x2", function(d, i) { return (d[0][0]);})
+         .attr("y2", function(d, i) { return (d[0][1]);})
+         .style("stroke", function(d) { return d[2];})
+		 .style("stroke-width", initLineWidth/scale)
+		 .attr("class", "lines");
+	
+	abc.transition().duration(750)
+	     .attr("x2", function(d, i) { return (d[1][0]);})
+         .attr("y2", function(d, i) { return (d[1][1]);});
+	
+	lines.selectAll("line").attr("transform", "scale("+scale+")translate("+(dx/scale)+","+(dy/scale)+")");	 
+	if(play) {
+		clearTimeout(timer1);	 
+		timer1 = setTimeout(function(){timer++; getPatternData(currentYear, organisedData);},2000);
+	}
+}
+
+var dx = 0,
+	dy = 0;
+function dragmove(d) {
+	//console.log(d3.event);
+	dx = dx + d3.event.dx;
+	dy = dy + d3.event.dy;
+	
+	//console.log(dx + " ," + dy);
+	g.attr("transform", "scale("+scale+")translate("+(dx/scale)+","+(dy/scale)+")");
+	
+	circles.selectAll("circle").attr("transform", "scale("+scale+")translate("+(dx/scale)+","+(dy/scale)+")");
+	
+	hoverCircles.selectAll("circle").attr("transform", "scale("+scale+")translate("+(dx/scale)+","+(dy/scale)+")");
+  	//feature.attr("d", path);
+	
+	lines.selectAll("line").attr("transform", "scale("+scale+")translate("+(dx/scale)+","+(dy/scale)+")");      
+}
+
+function dragend(d) {
+	//dx = 0;
+	//dy = 0
+	worldx = dx/scale;
+	worldy = dy/scale;
+	console.log("End called: "+ dx + " ," + dy);
+}
+
+function dragstart(d) {
+	console.log("Start: ");
+	console.log(d3.event);
+	//g.attr("transform", "scale("+scale+")translate("+worldx+","+worldy+")");
+	dx = worldx*scale;
+	dy = worldy*scale;
+	//console.log(console.log("Start called: "+ dx + " ," + dy));
+}
+
+function circleClick(d) {
+	scale = scale*2;
+	var loc = projection([+d.Lo, +d.La]);
+	var x = -loc[0] + width/(2*scale);
+    var y = -loc[1] + height/(2*scale);
+	console.log(loc);
+	
+	worldx = x;
+  	worldy = y;
+  	set1 = x;
+  	set2 = y;
+  	dx = worldx*scale;
+  	dy = worldy*scale;
+  
+	g.transition()
+      .duration(1000)
+      .attr("transform", "scale(" + scale + ")translate(" + x + "," + y + ")")
+      .style("stroke-width", 1.5 / scale + "px");
+	  
+  	circles.selectAll("circle")
+      .transition().duration(1000)
+	  .attr("transform", "scale(" + scale + ")translate(" + x + "," + y + ")")
+	  .attr("r", initCircleRadius/scale);
+	  
+  	hoverCircles.selectAll("circle")
+      .transition().duration(1000)
+	  .attr("transform", "scale(" + scale + ")translate(" + x + "," + y + ")");
+	  
+  	lines.selectAll("line")
+      .transition().duration(1000)
+	  .attr("transform", "scale(" + scale + ")translate(" + x + "," + y + ")")
+	  .style("stroke-width", function(d) {return initLineWidth/scale+'px';});
+}
+
+function zoomin() {
+	scale = scale*2;
+	
+	var x = worldx - width/(2*scale);
+    var y = worldy - height/(2*scale) ;
+	worldx = x;
+  	worldy = y;
+  	set1 = x;
+  	set2 = y;
+  	dx = worldx*scale;
+  	dy = worldy*scale;
+  
+	g.transition()
+      .duration(1000)
+      .attr("transform", "scale(" + scale + ")translate(" + x + "," + y + ")")
+      .style("stroke-width", 1.5 / scale + "px");
+	  
+  	circles.selectAll("circle")
+      .transition().duration(1000)
+	  .attr("transform", "scale(" + scale + ")translate(" + x + "," + y + ")")
+	  .attr("r", initCircleRadius/scale);
+	  
+  	hoverCircles.selectAll("circle")
+      .transition().duration(1000)
+	  .attr("transform", "scale(" + scale + ")translate(" + x + "," + y + ")");
+	  
+  	lines.selectAll("line")
+      .transition().duration(1000)
+	  .attr("transform", "scale(" + scale + ")translate(" + x + "," + y + ")")
+	  .style("stroke-width", function(d) {return initLineWidth/scale+'px';});
+}
+
+function zoomout() {
+	scale = scale/2;
+	
+	var x = worldx + width/(4*scale);
+    var y = worldy + height/(4*scale);
+	worldx = x;
+  	worldy = y;
+  	set1 = x;
+  	set2 = y;
+  	dx = worldx*scale;
+  	dy = worldy*scale;
+	
+	g.transition()
+      .duration(1000)
+      .attr("transform", "scale(" + scale + ")translate(" + worldx + "," + worldy + ")")
+      .style("stroke-width", 1.5 / scale + "px");
+	  
+  	circles.selectAll("circle")
+      .transition().duration(1000)
+	  .attr("transform", "scale(" + scale + ")translate(" + worldx + "," + worldy + ")")
+	  .attr("r", initCircleRadius/scale);
+	  
+  	hoverCircles.selectAll("circle")
+      .transition().duration(1000)
+	  .attr("transform", "scale(" + scale + ")translate(" + worldx + "," + worldy + ")");
+	  
+  	lines.selectAll("line")
+      .transition().duration(1000)
+	  .attr("transform", "scale(" + scale + ")translate(" + worldx + "," + worldy + ")")
+	  .style("stroke-width", function(d) {return initLineWidth/scale+'px';});
+}
+
+var scale =1;
+var worldx = 0;
+var worldy = 0;
+var first = true; 
+var set1 = 0;
+var set2 = 0;
+var initCircleRadius = 5;
+var initLineWidth = 3;
+function click(d) {
+  var x = 0,
+      y = 0,
+      k = 1;
+   
+  if (d && centered !== d) {
+    k = 5;
+	var centroid = path.centroid(d);
+    x = -d3.event.clientX + width/11;   ///-centroid[0] + width/((2*k) + 1);
+    y = -d3.event.clientY + height/12; ///-centroid[1] + height/((2*k) + 2);
+	    centered = d;
+  } else {
+    centered = null;
+  }
+  
+  scale = k;
+  worldx = x;
+  worldy = y;
+  set1 = x;
+  set2 = y;
+  dx = worldx*scale;
+  dy = worldy*scale;
+	
+  //alert(linewidth);
+  
+  g.transition()
+      .duration(1000)
+      .attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")")
+      .style("stroke-width", 1.5 / k + "px");
+	  
+  circles.selectAll("circle")
+      .transition().duration(1000)
+	  .attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")")
+	  .attr("r", initCircleRadius/k);
+	  
+  hoverCircles.selectAll("circle")
+      .transition().duration(1000)
+	  .attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")");
+	  
+  lines.selectAll("line")
+      .transition().duration(1000)
+	  .attr("transform", "scale(" + k + ")translate(" + x + "," + y + ")")
+	  .style("stroke-width", function(d) {return initLineWidth/k +'px';});
+
+if(first) {
+  	x = width/2;
+	y = height/2;
+	first = false;
+  }
+}
+
+var radiusIncrease;
+var mainNode;
+function mouseover(node) {
+	var count = 0;
+	var firstNode = true;
+	radiusIncrease = 4/scale;
+	console.log("mouseover");
+	console.log(node.Date);
+	circles.selectAll("circle").attr("r", function(d){if(+node.La == +d.La && +node.Lo == +d.Lo) {count++;} return initCircleRadius/scale;});
+	count = count - 1;
+	circles.selectAll("circle")
+			.attr("r", function(d){
+								  	if(+node.La == +d.La && +node.Lo == +d.Lo) {
+										if(firstNode) {
+											mainNode = d;
+											firstNode = false;
+										}
+										this.parentNode.appendChild(this);
+										
+										var increment = count*radiusIncrease;
+										console.log(this);
+										count--;
+										return initCircleRadius/scale + increment;
+									}
+									return initCircleRadius/scale;
+								  })
+			.style("stroke-width", function(d){
+								  	if(+node.La == +d.La && +node.Lo == +d.Lo) {
+										return 0.2/scale;
+									}
+									return 0;
+								  })
+		   .style("stroke", "#999");
+}
+
+function mouseout(node) {
+	if(node == mainNode) {
+		//alert("am out");
+		circles.selectAll("circle")
+			.attr("r", initCircleRadius/scale);
+	}
+}
+
+function setColor(d) {
+	//alert(d);
+	for(num in Artists) {
+		if(d.Name == Artists[num]) {
+			return colorSet[num];	
+		}
+	}
+}
+
+function setColorLine(d) {
+	return colorSet[lookupArtistOriginal[d.Name]];
+}
+
+function setToolTip() {
+	$('.abc').tipsy({ 
+        gravity: 'w', 
+        html: true, 
+        title: function() {
+		  var d = this.__data__;
+          return '<p class="tooltip">'+ d.Date + ' , ' + d.Name +'<br><br>Place: '+ d.Place +'<br><br>Additional Info: <br>'+ d.Notes +'</p>'; 
+        }
+    });
+}
+	
+function hideArtist(d) {
+	if(d.style.backgroundColor == "" && ifArtistAdded[d.id] == false) {
+		//console.log(d.id);
+		ifArtistAdded[d.id] = true;
+		d.style.backgroundColor = colorSet[lookupArtistOriginal[d.id]];
+		addArtist(d.id);
+	}
+	else if(ifArtistAdded[d.id] == true){
+		//console.log(d.id);
+		ifArtistAdded[d.id] = false;
+		d.style.backgroundColor = "";
+		removeArtist(d.id);
+	}
+	
+	//set lines immediately
+	console.log(timer1);
+	clearTimeout(timer1);
+	if(!immediateShift){
+		currentYear = currentYear - 1;
+	}
+	immediateShift = false;
+	timer1 = getPatternData(currentYear, organisedData);
+}
+
+function insertHistogramElements() {
+	for (artist in Artists) {
+		$('#histogram').append('<li><div id="'+Artists[artist]+'" class="button" style=" background-color:'+ colorSet[artist]+'"onClick="hideArtist(this)"></div><p class="histogramName">' + Artists[artist] + '</p><div style="float:none"></div></li><br>');
+	}
+}
+
+var ifArtistAdded = new Object;
+var lookupArtistOriginal = new Object;
+var colorSetObj = new Object;
+function setlookup() {
+	for(node in Artists) {
+		ifArtistAdded[Artists[node]] = true;
+		lookupArtistOriginal[Artists[node]] = node;
+	}
+}
+
+function removeArtist(artist) {
+	for(node in Artists) {
+		if(Artists[node] == artist) {
+			Artists.splice(node,1);
+		}
+		
+	}
+	
+	console.log(Artists);
+	setNodes();
+}
+
+function addArtist(artist) {
+	for(node in Artists) {
+		if(lookupArtistOriginal[Artists[node]] > lookupArtistOriginal[artist] && artist != Artists[node]) {
+			Artists.splice(node, 0, artist);
+			break;
+		}
+		
+		if(node == Artists.length - 1 && artist != Artists[node]) {
+			Artists.push(artist);
+		}
+	}
+	
+	if(Artists.length == 0) {
+		Artists.push(artist);
+	}
+	console.log(Artists);
+	setNodes();
+}
+
+function setNodes() {
+	circles.selectAll('circle').transition().attr("r", function(d) {  var setRadius = false;
+																	  for(node in Artists){
+																	  	if(d.Name == Artists[node]) {
+																			setRadius = true;
+																			break;
+																		}
+																	  }
+																	  
+																	  if(setRadius) {
+																	  	return initCircleRadius/scale;
+																	  }
+																	  else {
+																	  	return 0;
+																	  }
+																  });
+}
+
+var play = true;
+var sliderShift = false;
+function playPause(d) {
+	if(play) {
+		$('#playButton').css("background-position", "50px 0px");
+		clearTimeout(timer1);
+		play = false;
+	}
+	else {
+		$('#playButton').css("background-position", "0px 0px");
+		timer1 = setTimeout(getPatternData(currentYear, organisedData), 0);
+		play = true;
+	}
+}
+</script>
+</body>

@@ -1,0 +1,359 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/*Reset CSS for coherence across multiple browsers*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*
+* CSS FOR THE PAGE STARTS HERE
+* FOR ALL THE MEASUREMENTS I HAVE USED %, PLEASE REFER TO HOW TO USE % BEFORE MAKING CHANGES TO THE MEASUREMENTS
+* IFA CONTENT PAGE CSS
+*/
+
+@font-face {  
+  font-family: myGotham;  
+  src: url( '../font/Gotham-Light.otf' );  
+}
+
+/*Container for all content in the page*/
+.mainWrapper {
+	width: 100%;
+	height: 100%;
+	position:relative;
+}
+
+.mainWrapper:before,
+.mainWrapper:after {
+  content: "";
+  display: table;
+}
+.mainWrapper:after {
+  clear: both;
+}
+.mainWrapper {
+  *zoom: 1;
+}
+
+/* Main menu */
+.menuContainer {
+    position:relative;
+    width:242px;
+    height: 398px; /*make it relative if you want to make the header responsive */
+    top: 0px;
+    float:left;
+}
+
+.menuButton {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(122,152,171); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(122,152,171,0.75);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=75);	}
+
+.menuHover a:hover {
+	background: rgba(0,0,0,0);
+}
+
+.menuButton2 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(176,220,247); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(176,220,247,0.75);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=75);	}
+
+.menuButton3 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(176,220,247); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(176,220,247,0.75);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=75);	}
+
+.menuButton4 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(247,215,176); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(247,215,176,0.75);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=75);	}
+
+.menuButton5 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(247,215,176); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(247,215,176,0.75);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=75);	}
+
+.menuButton6 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(236,237,231); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(236,237,231,0.75);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=75);	
+	
+}
+
+
+.menuButton7 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(236,237,231); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(236,237,231,0.75);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=75);	
+
+}
+
+.menuButton8 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(176,220,247); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(176,220,247,0.75);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=75);	}
+
+.menuButton9 {
+    position:relative;
+    width: 120px;
+    height: 78px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(176,220,247); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(176,220,247,0.75);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=75);	}
+
+.menuButton10 {
+    position:relative;
+    width: 120px;
+    height: 78px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(122,152,171); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(122,152,171,0.75);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=75);	}
+
+
+.menuContainer .menuText {
+    position:relative;
+	vertical-align:middle;
+	display: table-cell;
+	font-size: 12px;
+	text-shadow: 1px 1px 1px #333;
+	font-weight:bolder;
+}
+
+.IFALogoContainer {
+    position:relative;
+    /**top: 10px;**/
+    float:left;
+    margin:5px 5px;
+}
+
+.NYULogoContainer {
+	margin-left:40px;
+	}
+	
+/*Setting up the div in the apporpriate place for the text and the required CSS*/
+.text {
+    position:relative;
+    left:0px;
+    bottom:0px;
+	top:400px;
+    margin:45px;  
+    text-align:left;
+	z-index:1; /* Show above .gradient */
+    text-shadow: 3px 2px 7px #000;
+	font-weight:900;
+}
+
+
+.text .heading {
+    font-family: myGotham, 'helvetica', sans-serif;
+    font-size: 17px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.text .quote {
+    font-family: myGotham, 'helvetica', sans-serif;
+    font-size: 17px;
+    color: #fff;
+    margin-bottom: 20px;
+	font-weight:900;
+	text-align:left;
+}
+
+.text .smallerquote {
+    font-family: myGotham, 'helvetica', sans-serif;
+    font-size: 17px;
+	line-height: 1.25;
+    color: #fff;
+    margin-bottom: 20px;
+	font-weight:900;
+	text-align:left;
+}
+
+.text .content {
+    font-family: myGotham, 'helvetica', sans-serif;
+    color: #fff;
+    margin-bottom: 25px;
+    margin-left: 25px;
+}
+
+.text .moreContent {
+    font-family: myGotham, 'helvetica', sans-serif;
+    color: #fff;
+    margin-top: 25px;
+    margin-left: 25px;
+}
+
+.text a {
+    text-decoration:underline;
+	color: #fff
+}
+
+.text a:hover {
+    text-decoration:underline;
+	color: #83c9ef
+}
+
+/*
+ * 
+ * CSS FOR MAKING THE PAGE RESPONSIVE PARTIALLY
+ *
+ */
+img, video, canvas {
+  max-width: 100%;
+}

@@ -1,0 +1,1009 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/*Reset CSS for coherence across multiple browsers*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Preloader - This is to preload the entire page before displaying anything */
+
+#preloader {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:#fff; /* change if the mask should have another color then white */
+    z-index:99; /* makes sure it stays on top */
+}
+
+/*
+* CSS FOR THE PAGE STARTS HERE
+* FOR ALL THE MEASUREMENTS I HAVE USED %, PLEASE REFER TO HOW TO USE % BEFORE MAKING CHANGES TO THE MEASUREMENTS
+* IFA CONTENT PAGE CSS
+*/
+
+@font-face {  
+  font-family: myGotham;  
+  src: url( '../font/Gotham-Light.otf' );  
+}
+
+body {
+	background-color: #808d92;
+}
+
+.backgroundShade {
+	width: 100%;
+	height: 390px;
+	margin: 0 0 0 0;
+	background-color: #677175;
+	position:absolute;
+	
+	filter: alpha(opacity=0); /* hack for IE */
+	
+}
+
+/* container for topmost search function, keeps it vertically centered & right-aligned */
+#topsearch { 
+	position: absolute;
+	height: 40px; /* this value must match line-height below */
+	line-height: 40px; /* this value must match height above */
+	right: 0px; /* position search elements X distance from the right edge */
+	top:-40px;
+	}
+	
+/* these values determine physical appearance of FORM buttons & fields */
+input#search {width: 100px; border: 1px solid #e2e4da;  background: #ffffff; font-size: 10px;} /* search field */
+input#button {border: 0px; background: #808d92; cursor:pointer; background-image:url(../images/search.png); background-repeat:no-repeat; width: 16px; height:16px; } /* submit button */
+	
+/*Container for all content in the page*/
+.mainWrapper {
+	width: 1020px;
+	height: 100%;
+	padding: 0 40px;
+	margin: 40px auto;
+	position:relative;
+}
+
+/* Contains header image, the IFA logo and the nav bar */
+.header {
+    
+	width: 100%;
+    height: 390px; /* make it relative if you want the header to be responsive */
+	margin-bottom: 1px;
+	/* A hack to remove the extra space at the bottom. 
+	 * Leaves a 1px space at the bottom. 
+	 * Increment the value to get more spacing at the bottom
+	 *
+	margin-bottom : -2px;*/
+}
+
+.ifaLogoContainer {
+	position:absolute;
+	display: inline-block;
+	left: 5px;
+	top: 5px;
+	/*hack*/
+	margin-bottom: -3px;
+}
+
+
+.nyuImage {
+    position:absolute;
+	z-index:1;
+    top: -32px;
+}
+
+/* CSS for the main header with the picture and the menu */
+.mainHeaderContainer {
+    position:absolute;
+    /* A hack to remove the extra space at the bottom. 
+	 * Leaves a 1px space at the bottom. 
+	 * Increment the value to get more spacing at the bottom
+	 */
+	margin-bottom : -2px;
+}
+
+
+/* The following class can be used to preload images */
+.dontshow{
+        display: none;
+}
+
+/* Main menu */
+.menuContainer {
+    position:absolute;
+    width: 242px;
+    height: relative; /*make it relative if you want to make the header responsive OR 398px */
+    top: 0px;
+	bottom: -.5px;
+    right: -1px; /* To take care of the offset of the right-side buttons due to margin-right and an unknown offset caused by shifting the div to the right*/
+}
+
+.menuButton {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(122,152,171); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(122,152,171,0.72);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=72);		}
+
+.menuHover a:hover {
+	background: rgba(0,0,0,0);
+}
+
+
+.menuButton2 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(122,152,171); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(122,152,171,0.72);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=72);			}
+
+
+
+.menuButton3 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(122,152,171); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(122,152,171,0.72);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=72);			}
+
+
+.menuButton4 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(122,152,171); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(122,152,171,0.72);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=72);			}
+
+
+.menuButton5 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(122,152,171); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(122,152,171,0.72);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=72);			}
+
+
+.menuButton6 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(122,152,171); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(122,152,171,0.72);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=72);			}
+
+
+.menuButton7 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(122,152,171); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(122,152,171,0.72);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=72);			}
+
+
+.menuButton8 {
+    position:relative;
+    width: 120px;
+    height: 77px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(122,152,171); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(122,152,171,0.72);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=72);			}
+
+
+.menuButton9 {
+    position:relative;
+    width: 120px;
+    height: 78px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(122,152,171); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(122,152,171,0.72);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=72);			}
+
+
+.menuButton10 {
+    position:relative;
+    width: 120px;
+    height: 78px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(122,152,171); /* this is the FALLBACK for old versions of IE: 6,7,8 */
+	background: rgba(122,152,171,0.72);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=72);			}
+
+
+.menuContainer .menuText {
+    position:relative;
+	vertical-align:middle;
+	display: table-cell;
+	font-size: 12px;
+	text-shadow: 1px 1px 1px #333;
+	font-weight:bold;
+}
+
+
+
+/* CSS for distributing the lower region including the text area as well as the Information Cards */
+.contentWrapper {
+    width: 100%;
+    padding: 0px;
+}
+
+.contentWrapper:before,
+.contentWrapper:after {
+  content: "";
+  display: table;
+}
+.contentWrapper:after {
+  clear: both;
+}
+.contentWrapper {
+  *zoom: 1;
+}
+
+/* CSS for the main content of this page*/
+.mainContent {
+	font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+	font-size: 90%;
+    width: 698px;
+    margin-right:1px;
+	padding-bottom:10px;
+    background-color: #fff;
+    float:left;
+}
+
+.mainContent .contact {
+	padding: 10px 10px 10px 10px;
+	float: right;
+}
+
+
+.mainContent .contact a {
+	color:#7a98ab;
+    text-decoration:none;
+}
+
+.mainContent .contact a:hover {
+	color: #7a3236;  
+}
+
+.mainContent .heading {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 200%;
+    color:#7a3236;
+    padding: 10px 10px 10px 10px;
+	cursor:pointer;
+}
+
+.mainContent .headingBROCHURE {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 150%;
+    color:#000;
+    padding: 10px 10px 5px 10px;
+	cursor:pointer;
+}
+
+.mainContent .headingANNOUNCE {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 140%;
+    color:#7a3236;
+    padding: 10px 10px 5px 10px;
+	cursor:pointer;
+}
+
+
+.mainContent .headingexpanding {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 150%;
+    color:#7a3236;
+    padding: 10px 10px 10px 10px;
+	cursor:pointer;
+}
+
+.mainContent .headingexpandingBlue {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 150%;
+    color:#7a98ab;
+    padding: 10px 10px 10px 10px;
+	cursor:pointer;
+}
+
+.mainContent .headingbyline {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 100%;
+    color:#7a3236;
+    padding: 0px 0px 0px 0px;
+	cursor:pointer;
+}
+
+.mainContent .heading img {
+    margin: 0px 5px;
+    margin-bottom: 10px; 
+}
+
+.mainContent .subheading {
+    color:#000;
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-weight:600;
+    padding: 0 10px;
+}
+
+.mainContent .subheadingItalic {
+    color: #000;
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-style:italic;
+    padding: 0 10px;
+}
+
+.mainContent .content {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 100%;
+    color: #000;
+    padding: 0px 10px 10px 10px;
+    line-height: 1.2;
+}
+
+.mainContent .caption {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 80%;
+    color: #000;
+    padding: 5px 10px 0px 10px;
+    line-height: 1.2;
+}
+
+.mainContent .imagecontent {
+    
+    padding: 10px 10px 10px 10px;
+}
+
+
+.mainContent .contentBROCHURE {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 100%;
+    color: #fff;
+    padding: 10px 10px 10px 10px;
+    line-height: 1.2;
+}
+
+.mainContent .content a {
+    color:#7a98ab;
+    text-decoration:none;
+}
+
+.mainContent .strong {
+    font-weight:bold;
+}
+
+.mainContent .italic {
+    
+    font-style:italic;
+}
+
+.mainContent .underline {
+    
+    text-decoration:underline;
+}
+
+.mainContent .italic a {
+    color:#7a98ab;
+	text-decoration:none;
+}
+
+.mainContent .italic a:hover {
+    color:#7a3236;
+	text-decoration:none;
+}
+
+.mainContent .strongitalic {
+	font-weight:bold;
+    font-style:italic;
+}
+
+.mainContent .content a:hover {
+    color: #7a3236;    
+}
+
+/* -- GRID for People and Research sections -- */
+
+.gridContainer {
+    position:relative;
+    width: 678px;
+    top: 0px;
+    left: 10px;	
+}
+
+.gridBackground1 {
+	position:relative;
+	float:left;
+    background-image:url(../images/navimages/ResearchGrid1.jpg);
+	margin: 0 1px 1px 0;
+    position: relative;
+	width: 337px;
+	height: 200px;
+}
+
+.gridBackground2 {
+	position:relative;
+	float:left;
+    background-image:url(../images/navimages/ResearchGrid2.jpg);
+	margin: 0 1px 1px 0;
+    position: relative;
+	width: 337px;
+	height: 200px;
+}
+
+
+.gridBackground3 {
+	position:relative;
+	float:left;
+    background-image:url(../images/navimages/ResearchGrid3.jpg);
+	margin: 0 1px 1px 0;
+    position: relative;
+	width: 337px;
+	height: 200px;
+}
+
+.gridBackground4 {
+	position:relative;
+	float:left;
+    background-image:url(../images/navimages/ResearchGrid4.jpg);
+	margin: 0 1px 1px 0;
+    position: relative;
+	width: 337px;
+	height: 200px;
+}
+
+.gridBackgroundCONTEMP1 {
+	position:relative;
+	float:left;
+    background-image:url(../images/navimages/ContempGrid1.jpg);
+	margin: 0 1px 1px 0;
+    position: relative;
+	width: 337px;
+	height: 200px;
+}
+
+.gridBackgroundCONTEMP2 {
+	position:relative;
+	float:left;
+    background-image:url(../images/navimages/ContempGrid2.jpg);
+	margin: 0 1px 1px 0;
+    position: relative;
+	width: 337px;
+	height: 200px;
+}
+
+
+
+.gridBackgroundFACULTY {
+	position:relative;
+	float:left;
+    background-image:url(../images/navimages/GridFaculty.jpg);
+	margin: 0 1px 1px 0;
+    position: relative;
+	width: 337px;
+	height: 200px;
+}
+
+.gridBackgroundSTUDENTS {
+	position:relative;
+	float:left;
+    background-image:url(../images/navimages/GridStudents.jpg);
+	margin: 0 1px 1px 0;
+    position: relative;
+	width: 337px;
+	height: 200px;
+}
+
+.gridBackgroundALUMNI {
+	position:relative;
+	float:left;
+    background-image:url(../images/navimages/GridAlumni.jpg);
+	margin: 0 1px 1px 0;
+    position: relative;
+	width: 337px;
+	height: 200px;
+}
+
+.gridBackgroundSTAFF {
+	position:relative;
+	float:left;
+    background-image:url(../images/navimages/GridStaff.jpg);
+	margin: 0 1px 1px 0;
+    position: relative;
+	width: 337px;
+	height: 200px;
+}
+
+
+.gridBackgroundCPP1 {
+	position:relative;
+	float:left;
+    background-image:url(../images/navimages/Grid-CPP-wide.jpg);
+	margin: 0 1px 1px 0;
+    position: relative;
+	width: 675px;
+	height: 200px;
+}
+
+.gridBackgroundCPP2 {
+	position:relative;
+	float:left;
+    background-image:url(../images/navimages/Grid-CPP-entertain.jpg);
+	margin: 0 1px 1px 0;
+    position: relative;
+	width: 337px;
+	height: 200px;
+}
+
+.gridBackgroundCPP3 {
+	position:relative;
+	float:left;
+    background-image:url(../images/navimages/Grid-CPP-sponsor.jpg);
+	margin: 0 1px 1px 0;
+    position: relative;
+	width: 337px;
+	height: 200px;
+}
+
+
+.gridContainer .buttonText {
+    position:relative;
+	vertical-align:middle;
+	display: table-cell;
+	font-size: 300%;
+	text-shadow: 1px 1px 1px #333;
+	font-weight:bold;
+}
+
+.gridContainer .buttonSmallText {
+    position:relative;
+	vertical-align:middle;
+	display: table-cell;
+	font-size: 200%;
+	text-shadow: 2px 2px 2px #333;
+	font-weight:bold;
+}
+
+.gridItem {
+	position:relative;
+    width: 337px;
+    height: 200px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(236,237,231);
+	background: rgba(236,237,231,0.6);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=72);	
+}
+
+.gridItemWide {
+	position:relative;
+    width: 675px;
+    height: 200px;
+    float:left;
+    margin: 0 1px 1px 0;
+    text-decoration:none;
+    color: #fff;
+    font-family: myGotham, Helvetica, sans-serif;
+    text-align:center;
+	display:table;
+	background: rgb(236,237,231);
+	background: rgba(236,237,231,0.6);
+	
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
+	filter: alpha(opacity=72);	
+}
+
+
+.gridHover a:hover {
+	background: rgba(0,0,0,0);
+}
+
+/* CSS for the div holding the cards. CC is for Conservation. Video is for Video Spotlights. Highlight is for side bar Advertisements. */
+.cardHolder {
+    width: 241px;
+    float:left;
+}
+
+.card {
+    width: 100%;
+    min-height: 10px;
+    background-color: #fff;
+    margin-bottom:1px;
+}
+
+
+.cardCC {
+    width: 100%;
+    min-height: 10px;
+    background-color: #fff;
+    margin-bottom:1px;
+}
+
+.card .strong {
+    font-weight:bold;
+}
+
+.card .italic {
+    font-style:italic;
+}
+
+.cardhighlight {
+    width: 100%;
+    
+    background-color: #ecede7;
+	margin-top:0px;
+    margin-bottom:0px;
+}
+
+.cardvideo {
+    width: 100%;
+    min-height: 10px;
+    background-color: #fff;
+	margin-top:0px;
+    margin-bottom:1px;
+}
+
+.cardvideo .strong {
+    font-weight:bold;
+}
+
+.cardvideo .italic {
+    font-style:italic;
+}
+
+
+
+.card .heading {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 90%;
+    color:#7a3236;
+    padding: 10px 0 1px 10px;
+    /*font-kerning:-1000px;*/
+}
+
+
+.card .heading a {
+    color:#7a3236;
+    /*font-kerning:-1000px;*/
+}
+
+.cardCC .heading a {
+    color:#7a98ab;
+    /*font-kerning:-1000px;*/
+}
+
+
+.card .heading a:hover {
+    color:#7a98ab;
+    /*font-kerning:-1000px;*/
+}
+
+.cardCC .heading a:hover {
+    color:#7a3236;
+    /*font-kerning:-1000px;*/
+}
+
+
+.cardhighlight .heading {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 90%;
+    color:#7a3236;
+    padding: 10px 0 3px 10px;
+    /*font-kerning:-1000px;*/
+}
+
+.cardvideo .heading {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 90%;
+    color:#7a3236;
+    padding: 10px 0 5px 10px;
+    /*font-kerning:-1000px;*/
+}
+
+.cardCC .heading {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 90%;
+    color:#7a3236;
+    padding: 10px 0 5px 10px;
+    /*font-kerning:-1000px;*/
+}
+
+.card .content {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 80%;
+    color: #000;
+    padding: 10px 5px 10px 15px;
+}
+
+.card .contentspecial {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 80%;
+    color: #000;
+    padding: 5px 0px 5px 15px;
+}
+
+.card .caption {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 70%;
+    color: #000;
+    padding: 0px 10px 10px 0px;
+}
+
+
+.cardvideo .content {
+    font-family: 'Helvetica-Nueue', 'Helvetica', sans-serif;
+    font-size: 80%;
+    color: #000;
+    padding: 0px 0px 10px 15px;
+}
+
+
+.card a {
+    color:#7a98ab;
+    text-decoration:none;
+}
+
+.cardCC a {
+    color:#7a98ab;
+    text-decoration:none;
+}
+
+.cardhighlight a {
+    color:#7a3236;
+    text-decoration:none;
+}
+
+.cardvideo a {
+    color:#7a98ab;
+    text-decoration:none;
+}
+
+.card a:hover {
+    color: #7a3236;    
+}
+
+.cardCC a:hover {
+    color: #7a3236;    
+}
+
+
+.cardvideo a:hover {
+    color: #7a3236;    
+}
+
+
+/* Social media icons */
+
+.social-slide {
+	height: 24px;
+	width: 24px;
+	margin: 10px 0px 15px 10px;
+	float: left;
+	-webkit-transition: all ease 0.3s;
+	-moz-transition: all ease 0.3s;
+	-o-transition: all ease 0.3s;
+	-ms-transition: all ease 0.3s;
+	transition: all ease 0.3s;
+}
+
+.social-slide-pagebottom {
+	height: 24px;
+	width: 24px;
+	margin: 0px 0px 5px 10px;
+	float: left;
+	-webkit-transition: all ease 0.3s;
+	-moz-transition: all ease 0.3s;
+	-o-transition: all ease 0.3s;
+	-ms-transition: all ease 0.3s;
+	transition: all ease 0.3s;
+}
+
+.social-slide:hover {
+	background-position: 0px -24px;
+	box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.8);
+}
+
+.social-slide-pagebottom:hover {
+	background-position: 0px -24px;
+	box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.8);
+}
+
+.twitter-hover {
+	background-image: url('../images/navimages/twitter-hover.png');
+}
+
+.facebook-hover {
+	background-image: url('../images/navimages/facebook-hover.png');
+}
+
+.linkedin-hover {
+	background-image: url('../images/navimages/linkedin-hover.png');
+}
+
+.tumblr-hover {
+	background-image: url('../images/navimages/tumblr-hover.png');
+}
+.instagram-hover {
+	background-image: url('../images/navimages/instagram-hover.png');
+}
+
+.google-hover {
+	background-image: url('../images/navimages/google-hover.png');
+}
+
+
+/*
+ * 
+ * CSS FOR MAKING THE PAGE RESPONSIVE PARTIALLY
+ *
+ */
+img, video, canvas {
+  max-width: 100%;
+}
+
+/* EXPANDING CONTENT FOR EVENTS CALENDAR */
+
+.expandingContentClosed {
+    border-top: 1px dashed #ecede7;
+}
+
+.expandingContentOpen {
+    border-top: 1px dashed #ecede7;
+}
+
+
+/* For hiding the closed div in expanding Content */
+.expandingContentClosed .expandingSubText {
+	display:none;
+}
+
+/* For separating areas of text - like a Horizontal Rule - this adds a dashed line on the BOTTOM of a DIV */
+.dashedline {
+    border-bottom: 1px dashed #ecede7;
+	margin-top:5px;
+}
+
+
+
+

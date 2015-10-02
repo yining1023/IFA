@@ -1,0 +1,65 @@
+[ {
+    "name": "education",
+    "display_text": "Education",
+    "alt": ["professor", "professors", "education", "postdoc", "university administration"]
+  },
+
+  {
+    "name": "curators",
+    "display_text": "Curators",
+    "alt": ["curator"]
+  },
+
+  {
+    "name": "conservators",
+    "display_text": "Conservators",
+    "alt": ["conservator"]
+  },
+
+  {
+    "name": "non-profit",
+    "display_text": "Non-profit Arts Administrators",
+    "alt": ["museum director", "development and marketing", "museum educator", "registrar", "museum administration", "information technology", "foundation director"]
+  },
+
+  {
+    "name": "for-profit",
+    "display_text": "For-profit Arts Professionals",
+    "alt": ["gallerist", "auction house", "appraiser", "gallery director"]
+  },
+
+  {
+    "name": "editors",
+    "display_text": "Editors, Writers or Publishers",
+    "alt": ["editor", "writer", "publisher"]
+  },
+
+  {
+    "name": "critics",
+    "display_text": "Critics",
+    "alt": ["critic"]
+  },
+
+  {
+    "name": "art-law",
+    "display_text": "Art Law",
+    "alt": ["art law", "lawyer"]
+  },
+
+  {
+    "name": "insurance",
+    "display_text": "Insurance",
+    "alt": ["insurance"]
+  },
+
+  {
+    "name": "pr",
+    "display_text": "Public Relations",
+    "alt": ["pr", "public relations"]
+  },
+
+  {
+    "name": "misc",
+    "display_text": "Miscellaneous",
+    "alt": ["misc", "miscellaneous"]
+  }]

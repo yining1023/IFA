@@ -1,0 +1,7 @@
+TODOS:
+1. Category checkboxes
+2. Category colorcodes -- get from Jason
+3. Popups below
+4. Stats Below 3 columns
+5. Mapbox
+6. Search/sort/select alumni categories.
