@@ -2,7 +2,7 @@
 IFA Alumni Visualization
 ------------------------------------------------
 
-Authors:                    Sagar Mohite, Jason Varone
+Authors:                    Sagar Mohite, Jason Varone, Yining Shi
 Github:                     https://github.com/sagar-sm/ifa/
 Developement Version:       https://sagar-sm.github.io/ifa/mapping-alumni/
 Live Version:               http://www.nyu.edu/gsas/dept/fineart/mapping-alumni/
@@ -10,6 +10,8 @@ Live Version:               http://www.nyu.edu/gsas/dept/fineart/mapping-alumni/
 ------------------------------------------------*/
 
 //MISC FUNCTIONALITIES
+
+//return all the values that are unique. i.e. remove repetiting values
 Array.prototype.unique = function()
 {
   var n = {},r=[];
@@ -24,6 +26,7 @@ Array.prototype.unique = function()
   return r;
 }
 
+//for formatting better - capitalize first letter
 String.prototype.capitalizeFirstLetter = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
@@ -33,11 +36,11 @@ String.prototype.capitalizeFirstLetter = function() {
 //READY
 $(document).ready(function(){
 
-  //SETUP MAPBOX
+  //SETUP Leaflet and MAPBOX. Mapbox just supplies map tile images whereas Leaflet is a complete mapping library
   L.mapbox.accessToken = 'pk.eyJ1Ijoic3NtIiwiYSI6IkFsRTJFNDAifQ.k7_1MScHyFU44SbXlC3x8w';
   var map = L.mapbox.map('map', 'ssm.m5hkonen', {maxZoom: 15, minZoom: 2}) 
     .setView([35,-50], 3);
-	
+    
 
 
   //STATE VARIABLES AND CONSTANTS
@@ -70,7 +73,11 @@ $(document).ready(function(){
 
 
   //SETUP SVG PANE
-  var svg = d3.select(map.getPanes().overlayPane).append("svg");
+  //get overlay pane from map
+  var overlayPane = map.getPanes().overlayPane;
+  //append an empty svg element to that pane
+  var svg = d3.select(overlayPane).append("svg");
+  
   var g = svg.append("g").attr("class", "leaflet-zoom-hide");
 
   //SETUP BAR CHART VARIABLES. Variables with a `b` prepended are usually related to the bar chart
@@ -269,7 +276,7 @@ $(document).ready(function(){
       var lons = alumniDom.map(function(d){
         return d.y;
       });
-	  
+      
 
 
       var bounds = [[Math.min.apply(null,lats),Math.min.apply(null,lons)] , [Math.max.apply(null,lats),Math.max.apply(null,lons)]];

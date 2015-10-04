@@ -219,30 +219,40 @@ p {
 <div id="playButton" onClick="playPause(this)"></div>
 <ul id = "histogram"></ul>
 <div id = "mainMenu"><img src="mapping-video-title.png"/></div>
+
 <a href="#" data-reveal-id="myModal"><img class="big-link" src="mapping-video-subtitle.png"/></a>
-<div id="myModal" class="reveal-modal">
+<div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
 	<div style="margin-left:auto; margin-right:auto; width:230px"><a href="http://www.nyu.edu/gsas/dept/fineart/" target="_blank"><p align="center"><img src="dukehouse-logo.png" width="150"/></p></a></div>
     <p id="modalHeading">About Mapping Video Art</p>
 	<p class="modalText">'Mapping Video Art' is an experiment in data visualization created at the Institute of Fine Arts.  The project allows the user to see the movement of video art as it crossed continents and decades.  Information about specific exhibitions is visible in mouse-over of each circle.  The lines of movement are color-coded for each artist, and move in the direction of the art--if an artist showed work in New York and then in Paris, the lines will move from one city to the next in the proper direction. The chronology slider at the bottom ties this movement into a specific timeframe. The map is zoomable, which allows more information about important exhibition sites (such as New York City) to be visible. This project is currently in its second phase of development, and additional artists' exhibition records are being prepared for inclusion in the visualization.</p>
 <p class="modalText">
 This project is the result of a collaboration among <a 	href="http://varonearts.com/"  target="_blank">Jason Varone</a> a visual artist and the web master at the Institute of Fine Arts, who initiated and oversees the project;  <a 	href="http://shilpanbhagat.com/site/"  target="_blank">Shilpan Bhagat</a>, interaction designer/creative technologist, who developed the code that makes this visualization possible; with data collection and correlation by <a href="http://www.evesurvilo.com/" target="_blank">Eve Survilo</a>, Department of Art and Art Professions; all at NYU. If you have any questions, suggestions or contributions please e-mail:<a 	href="mailto:jason.varone@nyu.edu" > jason.varone@nyu.edu</a>
-	<a class="close-reveal-modal">&#215;</a></p>
+	<a class="close-reveal-modal" aria-label="Close">&#215;</a></p>
 </div>
+
 <div id="zoombar"><div id="zoomplus" onClick="zoomin()"></div><div id="zoomminus" onClick="zoomout()"></div></div>
 <script>
+
+
 $(document).ready(function () {
 	//$('#date').css('width', function(){ return  $(window).width()/6});
 	$('#slider').css('width', function(){ return ($(window).width() - 220)});
-	$('.big-link').click(); 
+
+	// $('.big-link').click(); 
+
 	$(window).resize(function() {
   		$('#svgMain').attr('width', function(){ return $(window).width()});
 		$('#svgMain').attr('height', function(){ return $(window).height()});
 		$('#slider').css('width', function(){ return ($(window).width() - 220)});
 		//$('#date').css('width', function(){ return $(window).width()/6});
 	});
+
+
 	
 	//For the slider
 	$("#slider").slider();
+
+
 	
 	//$('.sprite-change').on('click', function(){$('.sprite-change').css({'background-position' : '10px 0px'})});
 });
