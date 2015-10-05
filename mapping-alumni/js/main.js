@@ -49,7 +49,7 @@ $(document).ready(function(){
   var placeCount = {}; //hashtable for count of alumni in workplaces
   var radius = 4;
   var padding = 1;
-  var alumniDom;
+  var alumniDom, _alumni;
 
   var colors = ["#f15854",
     "#f17cb0",
@@ -68,9 +68,6 @@ $(document).ready(function(){
   ifaloc.lat = 40.776338;
   ifaloc.lon = -73.964047;
   
-  
-
-
 
   //SETUP SVG PANE
   //get overlay pane from map
@@ -133,10 +130,10 @@ $(document).ready(function(){
         return a.category;
       });
 
-      var catfreq = {};
+      var catfreq = {}; //category frequency
 
       alumni.forEach(function(a){
-        if(!catfreq[a.category])
+        if(!catfreq[a.category]) 
           catfreq[a.category]=1;
         else
           catfreq[a.category]++;
@@ -155,21 +152,53 @@ $(document).ready(function(){
 
       categories = categories.unique();
 
-      var names = alumni.map(function(a){
-        return a.name;
-      });
+      _alumni = alumni;
 
-      $( "#searchbox" ).autocomplete({
-        source: names,
-        select: function(e, ui){
-          var i = names.indexOf(ui.item.value);
-          var d = alumni[i];
-          renderPanel(d, true); //direct option is set to true to bypass all alumni
-        }
-      });
+      initSearchBox();
 
       loadAlumni(err, categories, alumni, barData);
     });
+
+      // initialize search box
+  function initSearchBox() {
+    var places = _alumni.map(function(a){
+      return a.place;
+    }).unique();
+
+    var placesWithLocation = _alumni.map(function(a){
+      return { 
+        place: a.place,
+        lat: a.lat,
+        lon: a.lon
+      };
+    });
+
+    var names = _alumni.map(function(a){
+      return a.name;
+    });
+
+    var searchTerms = places.concat(names);
+
+    $( "#searchbox" ).autocomplete({
+      source: searchTerms,
+      select: function(e, selected){
+        var nameIndex = names.indexOf(selected.item.value);
+        var placeIndex = places.indexOf(selected.item.value);
+        if(nameIndex > -1){
+          var d = _alumni[nameIndex];
+          renderPanel(d, {alumniProfile: true});
+        }
+        else{
+          //force to show list of alumnis at a place even if there is just one alumni at that place
+          var d = placesWithLocation.filter(function(pl) {
+            return (pl.place === selected.item.value);
+          });
+          d = d[0];
+          renderPanel(d, {forcePlaceProfile: true}); 
+        }
+      }
+    });
+  }
 
   function loadAlumni(err, categories, alumni, _barData) {
 
@@ -486,36 +515,20 @@ $(document).ready(function(){
   //RENDER INFO PANEL
   /*
     `d` is the object to be rendered
-    `direct` is a boolean option for bypassing initial placeCount check
   */
-  function renderPanel(d, direct){
-    if( placeCount[d.place] > 1 && !direct){
-      $("#alumni-info").html(
-        "<div class=\"small-12 columns\">" +
-        "<h2 class=\"cumul\">" + placeCount[d.place] + " alumni who work at " + d.place + "</h2>" +
-        // "<p class=\"subheader\">Select to view details</p>" +
-        "<i class=\"fi-x\"></i>" + 
-        "</div>"
-      );
-      var list_col1 = $("<div class=\"cumul small-4 columns\"></div>");
-      var list_col2 = $("<div class=\"cumul small-4 columns\"></div>");
-      var list_col3 = $("<div class=\"cumul small-4 columns\"></div>");
-      var cumul = alumniDom.filter(function(e){
-        return (e.place === d.place);
-      });
+  function renderPanel(d, options){
+    if(!options) {
+      //default options
+      var options = {};
+      options.alumniProfile = false;
+      options.forcePlaceProfile = false;
+    }
 
-      for (var i = 0; i < cumul.length; i+=3) {
-        list_col1.append("<div class=\"alum-href\">" + cumul[i].name + "</div>");
-        if(i < cumul.length - 1)
-          list_col2.append("<div class=\"alum-href\">" + cumul[i+1].name + "</div>");
-        if(i < cumul.length - 2)
-          list_col3.append("<div class=\"alum-href\">" + cumul[i+2].name + "</div>");
-      };
-
-      $("#alumni-info").append(list_col1);
-      $("#alumni-info").append(list_col2);
-      $("#alumni-info").append(list_col3);
-
+    if(options.forcePlaceProfile){
+      renderPlaceProfile(d);
+    }
+    else if( placeCount[d.place] > 1 && !options.alumniProfile){
+      renderPlaceProfile(d);
     }
     else{
       renderAlumProfile(d);
@@ -560,6 +573,35 @@ $(document).ready(function(){
         "<div class=\"place\">" + (d.place? d.place : "") + "</div>" +
       "</div>"
     );
+  }
+
+  //RENDERS PLACE PROFILE i.e. list of all people in a place
+  function renderPlaceProfile(d){
+    $("#alumni-info").html(
+      "<div class=\"small-12 columns\">" +
+      "<h2 class=\"cumul\">" + placeCount[d.place] + " alumni who work at " + d.place + "</h2>" +
+      // "<p class=\"subheader\">Select to view details</p>" +
+      "<i class=\"fi-x\"></i>" + 
+      "</div>"
+    );
+    var list_col1 = $("<div class=\"cumul small-4 columns\"></div>");
+    var list_col2 = $("<div class=\"cumul small-4 columns\"></div>");
+    var list_col3 = $("<div class=\"cumul small-4 columns\"></div>");
+    var cumul = alumniDom.filter(function(e){
+      return (e.place === d.place);
+    });
+
+    for (var i = 0; i < cumul.length; i+=3) {
+      list_col1.append("<div class=\"alum-href\">" + cumul[i].name + "</div>");
+      if(i < cumul.length - 1)
+        list_col2.append("<div class=\"alum-href\">" + cumul[i+1].name + "</div>");
+      if(i < cumul.length - 2)
+        list_col3.append("<div class=\"alum-href\">" + cumul[i+2].name + "</div>");
+    };
+
+    $("#alumni-info").append(list_col1);
+    $("#alumni-info").append(list_col2);
+    $("#alumni-info").append(list_col3);
   }
 
   //CLOSE PANEL
