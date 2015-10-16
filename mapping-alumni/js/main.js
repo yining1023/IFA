@@ -130,7 +130,7 @@ $(document).ready(function(){
         return a.category;
       });
 
-      var catfreq = {}; //category frequency
+      var catfreq = {}; //category frequency. better name would be catCount
 
       alumni.forEach(function(a){
         if(!catfreq[a.category]) 
@@ -151,6 +151,19 @@ $(document).ready(function(){
       });
 
       categories = categories.unique();
+
+      var allPlaces = alumni.map(function(a){
+        return a.place;
+      });
+      
+      alumni.forEach(function(a){
+        if(!placeCount[a.place])
+          placeCount[a.place]=1;
+        else
+          placeCount[a.place]++;
+      });
+
+      console.log(placeCount);
 
       _alumni = alumni;
 
@@ -331,20 +344,13 @@ $(document).ready(function(){
         .attr("r", radius)
         .attr("class", "point")
         .attr("fill", function(d){
-          var col = '#dddddd';
-          categories.forEach(function(c, i){
-            if(c.indexOf(d.category) != -1)
-              col = colors[i];
-          });
+          var col = colors[categories.indexOf(d.category)] || "#dddddd";
+          if(placeCount[d.place] > 1){
+            col = "#000000";
+          }
           return col;
         })
         .attr("cx", function(d){
-          if(!placeCount[d.place]) {
-            placeCount[d.place] = 1;
-          }
-          else {
-            placeCount[d.place]++;
-          }
           return d.x;
         })
         .attr("cy", function(d){
@@ -362,14 +368,14 @@ $(document).ready(function(){
           tip.hide(d);
         });
 
-        console.log(placeCount);
+        // console.log(placeCount);
       g.selectAll("circle.point")
         .data(alumniDom) 
         .attr("fill", function(d){
-          categories.forEach(function(c, i){
-            if(c.indexOf(d.category.toLowerCase()) != -1)
-              col = colors[i];
-          });
+          var col = colors[categories.indexOf(d.category)] || "#dddddd";
+          if(placeCount[d.place] > 1){
+            col = "#000000";
+          }
           return col;
         })
         .attr("r", radius)
@@ -383,7 +389,6 @@ $(document).ready(function(){
       g.selectAll("circle.point")
         .data(alumniDom)
         .exit().transition().remove();
-
 
       lines.selectAll("line")
         .data(linesData)
