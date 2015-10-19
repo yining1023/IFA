@@ -2,7 +2,7 @@
 IFA Alumni Visualization
 ------------------------------------------------
 
-Authors:                    Sagar Mohite, Jason Varone, Yining Shi
+Authors:                    Sagar Mohite, Jason Varone
 Github:                     https://github.com/sagar-sm/ifa/
 Developement Version:       https://sagar-sm.github.io/ifa/mapping-alumni/
 Live Version:               http://www.nyu.edu/gsas/dept/fineart/mapping-alumni/

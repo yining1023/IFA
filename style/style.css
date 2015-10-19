@@ -106,7 +106,7 @@ body {
 	}
 	
 /* these values determine physical appearance of FORM buttons & fields */
-input#search {width: 100px; border: 1px solid #e2e4da;  background: #ffffff; font-size: 10px;} /* search field */
+input#search {width: 100px; border: 1px solid #e2e4da;  background: #ffffff; font-size: 10px; line-height: normal !important} /* search field */
 input#button {border: 0px; background: #ecede7; cursor:pointer; background-image:url(../images/search.png); background-repeat:no-repeat; width: 16px; height:16px; } /* submit button */
 	
 /*Container for all content in the page*/
@@ -118,6 +118,36 @@ input#button {border: 0px; background: #ecede7; cursor:pointer; background-image
 	position:relative;
 }
 
+.carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
+    right: 219%;
+}
+.carousel-indicators {
+    left: 37%;
+}
+.carousel-caption {
+    right: 0%;
+    left: 6.3%;
+    text-align: left;
+    font-family: 'Merriweather';
+    font-size: 100%;
+    width: 65%;
+}
+.mycaption{
+    font-size: 80%;
+    margin: 10px 0;
+    line-height: 130%;
+    font-family: 'Merriweather';
+}
+.myheader{
+    font-size: 140%;
+    font-family: 'Merriweather';
+    font-weight: 500;
+    /*font-style: italic;*/
+}
+.myreadme{
+    color: #a3ddf4;
+    font-weight: 700;
+}
 /* Contains header image, the IFA logo and the nav bar */
 .header {
     
