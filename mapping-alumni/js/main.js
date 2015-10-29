@@ -50,6 +50,7 @@ $(document).ready(function(){
   var radius = 4;
   var padding = 1;
   var alumniDom, _alumni;
+  var categories1;//let renderAlumni-info()get acess to categories too
 
   var colors = ["#f15854",
     "#f17cb0",
@@ -151,6 +152,8 @@ $(document).ready(function(){
       });
 
       categories = categories.unique();
+      categories1 = categories;
+      console.log(categories1);
 
       var allPlaces = alumni.map(function(a){
         return a.place;
@@ -163,7 +166,7 @@ $(document).ready(function(){
           placeCount[a.place]++;
       });
 
-      console.log(placeCount);
+      // console.log(placeCount);
 
       _alumni = alumni;
 
@@ -566,12 +569,14 @@ $(document).ready(function(){
 
   //RENDERS PROFILE PANEL
   function renderAlumProfile(d){
+    var col = colors[categories1.indexOf(d.category)] || "#dddddd";
     $("#alumni-info").html(
       "<div id=\"profile_img\" class=\"small-3 columns\">" +
         "<img src=\"profile_images/" + d.img_url + "\"></img>" + 
       "</div>" +
-      "<div class=\"small-9 columns\">" +
-        "<h2 class=\"name\">" + d.name + "</h2>" +
+      "<div class=\"small-9 columns\" id = \"info-box\">" +
+        // "<h2 class=\"category\">" + (d.category? d.category : "") + "</h2>" +   //name of category
+        "<h2 id=\"info-name\" style=\"border-left-width: 16px; border-left-style: solid; border-color:" + col + "\">"+ "<span class=\"name\">" + d.name + "</span>" + "</h2>" +
         "<i class=\"fi-x\"></i>" + 
         "<div class=\"degree\">" + (d.degree? d.degree : "") + "</div>" +
         "<div class=\"notes\">" + (d.notes? d.notes : "") + "</div>" +

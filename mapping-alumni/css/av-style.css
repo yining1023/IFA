@@ -65,6 +65,16 @@
   transition: all 0.3s ease-in-out;
 }
 
+#info-box{
+  padding-top: 0.83em;
+}
+#info-name {
+  width: 16px;
+  height: 16px;
+  background-color: #eee;
+  border-radius: 12px;
+}
+
 .selected {
   border-left-width: 16px !important;
   background-color: #bedded;
@@ -100,13 +110,14 @@ h2 {
 }
 
 .name {
-  padding-top: 0.5em;
+  position: absolute;
+  left: 40px;
   font-weight: 300;
   font-size: 1.8em;
 }
 .degree {
   color: #555;
-  margin: 3px 0 0 0;
+  margin: 6px 0 0 0;
 }
 .notes {
   font-style: italic;
