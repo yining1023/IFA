@@ -48,6 +48,7 @@ $(document).ready(function(){
   var marker; //blue pin marker to be displayed upon alumni select
   var placeCount = {}; //hashtable for count of alumni in workplaces
   var radius = 4;
+  var width = 10;//width of the building icon
   var padding = 1;
   var alumniDom, _alumni;
   var categories1;//let renderAlumni-info()get acess to categories too
@@ -340,19 +341,90 @@ $(document).ready(function(){
       tip.direction("e");
       tip.offset([-40,10]);
 
+      g.selectAll("image.point")
+        .data(alumniDom)
+        .enter()
+        .append("svg:image")
+        .attr("xlink:href", "profile_images/university.png")
+        .attr("width", function(d){
+          var wid = 0;
+          if(placeCount[d.place] > 1){
+            wid = width;
+          }
+          return wid;
+         })
+        .attr("height", function(d){
+          var hei = 0;
+          if(placeCount[d.place] > 1){
+            hei = width;
+          }
+          return hei;
+         })
+        .attr("class", "point")
+        .attr("x", function(d){
+          return d.x - 5;
+        })
+        .attr("y", function(d){
+          return d.y - 5;
+        })
+        .on("click", function(d){
+          renderPanel(d);
+        })
+        .on("mouseover", function(d){
+          d3.select(this).attr("width", function(d){
+          var wid = 0;
+          if(placeCount[d.place] > 1){
+            wid = 20;
+          }
+          return wid;
+         });
+          d3.select(this).attr("height", function(d){
+          var hei = 0;
+          if(placeCount[d.place] > 1){
+            hei = 20;
+          }
+          return hei;
+         });
+          tip.show(d);
+        })
+        .on("mouseout", function(d){
+          d3.select(this).attr("width", function(d){
+          var wid = 0;
+          if(placeCount[d.place] > 1){
+            wid = width;
+          }
+          return wid;
+         });
+          d3.select(this).attr("height", function(d){
+          var hei = 0;
+          if(placeCount[d.place] > 1){
+            hei = width;
+          }
+          return hei;
+         });
+          tip.hide(d);
+        });
+
+
       g.selectAll("circle.point")
         .data(alumniDom)
         .enter()
         .append("circle")
-        .attr("r", radius)
-        .attr("class", "point")
+        .attr("r", function(d){
+          var rad = radius;
+          if(placeCount[d.place] > 1){
+            rad = 0;
+          }
+          return rad;
+         })
         .attr("fill", function(d){
           var col = colors[categories.indexOf(d.category)] || "#dddddd";
-          if(placeCount[d.place] > 1){
-            col = "#000000";
-          }
+          // if(placeCount[d.place] > 1){
+          //   col = "transparent";
+          // }
           return col;
-        })
+         })
+        .attr("class", "point")
         .attr("cx", function(d){
           return d.x;
         })
@@ -372,22 +444,55 @@ $(document).ready(function(){
         });
 
         // console.log(placeCount);
-      g.selectAll("circle.point")
+      g.selectAll("image.point")
         .data(alumniDom) 
+        .attr("width", function(d){
+          var wid = 0;
+          if(placeCount[d.place] > 1){
+            wid = width;
+          }
+          return wid;
+         })
+        .attr("height", function(d){
+          var hei = 0;
+          if(placeCount[d.place] > 1){
+            hei = width;
+          }
+          return hei;
+         })
+        .attr("x", function(d) {
+          return d.x - 5;
+        })
+        .attr("y", function(d) {
+          return d.y - 5;
+        });
+
+      g.selectAll("circle.point")
+        .data(alumniDom)
+        .attr("r", function(d){
+          var rad = radius;
+          if(placeCount[d.place] > 1){
+            rad = 0;
+          }
+          return rad;
+         }) 
         .attr("fill", function(d){
           var col = colors[categories.indexOf(d.category)] || "#dddddd";
-          if(placeCount[d.place] > 1){
-            col = "#000000";
-          }
+          // if(placeCount[d.place] > 1){
+          //   col = "transparent";
+          // }
           return col;
-        })
-        .attr("r", radius)
+        })   
         .attr("cx", function(d) {
           return d.x;
         })
         .attr("cy", function(d) {
           return d.y;
         });
+
+      g.selectAll("image.point")
+        .data(alumniDom)
+        .exit().transition().remove();
 
       g.selectAll("circle.point")
         .data(alumniDom)
