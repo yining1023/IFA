@@ -47,8 +47,8 @@ $(document).ready(function(){
   var panelOpen = false; //alumni info panel state
   var marker; //blue pin marker to be displayed upon alumni select
   var placeCount = {}; //hashtable for count of alumni in workplaces
-  var radius = 4;
-  var width = 10;//width of the building icon
+  var radius = 4; //radius for every circle
+  var width = 10; //width of the building icon
   var padding = 1;
   var alumniDom, _alumni;
   var categories1;//let renderAlumni-info()get acess to categories too
@@ -362,32 +362,48 @@ $(document).ready(function(){
          })
         .attr("class", "point")
         .attr("x", function(d){
-          return d.x - 5;
+          return d.x - width/2;
         })
         .attr("y", function(d){
-          return d.y - 5;
+          return d.y - width/2;
         })
         .on("click", function(d){
           renderPanel(d);
         })
         .on("mouseover", function(d){
+          d3.select(this).attr("x", function(d){
+            return d.x-10;
+          });
+
+          d3.select(this).attr("y", function(d){
+            return d.y-10;
+          });
+
           d3.select(this).attr("width", function(d){
-          var wid = 0;
-          if(placeCount[d.place] > 1){
-            wid = 20;
-          }
-          return wid;
-         });
+            var wid = 0;
+            if(placeCount[d.place] > 1){
+              wid = 20;
+            }
+            return wid;
+          });
+
           d3.select(this).attr("height", function(d){
-          var hei = 0;
-          if(placeCount[d.place] > 1){
-            hei = 20;
-          }
-          return hei;
-         });
+            var hei = 0;
+            if(placeCount[d.place] > 1){
+              hei = 20;
+            }
+            return hei;
+          });
           tip.show(d);
         })
         .on("mouseout", function(d){
+          d3.select(this).attr("x", function(d){
+            return d.x-width/2;
+          });
+
+          d3.select(this).attr("y", function(d){
+            return d.y-width/2;
+          });
           d3.select(this).attr("width", function(d){
           var wid = 0;
           if(placeCount[d.place] > 1){
