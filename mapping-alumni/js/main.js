@@ -154,7 +154,7 @@ $(document).ready(function(){
 
       categories = categories.unique();
       categories1 = categories;
-      console.log(categories1);
+      // console.log(categories1);
 
       var allPlaces = alumni.map(function(a){
         return a.place;
@@ -720,8 +720,9 @@ $(document).ready(function(){
     var list_col3 = $("<div class=\"cumul small-4 columns\"></div>");
     var cumul = alumniDom.filter(function(e){
       return (e.place === d.place);
+      
     });
-
+    console.log(cumul);
     for (var i = 0; i < cumul.length; i+=3) {
       list_col1.append("<div class=\"alum-href\">" + cumul[i].name + "</div>");
       if(i < cumul.length - 1)
