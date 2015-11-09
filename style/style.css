@@ -128,26 +128,33 @@ input#button {border: 0px; background: #ecede7; cursor:pointer; background-image
     right: 0%;
     left: 6.3%;
     text-align: left;
-    font-family: 'Merriweather';
-    font-size: 100%;
+    font-family: 'Helvetica-Neue', 'Helvetica', sans-serif;
+    font-size: 110%;
     width: 65%;
 }
 .mycaption{
-    font-size: 80%;
+    font-size: 90%;
     margin: 10px 0;
-    line-height: 130%;
-    font-family: 'Merriweather';
+    line-height: 1.33em;
+    font-family: 'Helvetica-Neue', 'Helvetica', sans-serif;
 }
 .myheader{
-    font-size: 140%;
-    font-family: 'Merriweather';
+    font-size: 180%;
+    font-family: 'Helvetica-Neue', 'Helvetica', sans-serif;
     font-weight: 500;
     /*font-style: italic;*/
 }
-.myreadme{
-    color: #a3ddf4;
-    font-weight: 700;
+a{
+    color:white;
 }
+a:hover {
+    color: white;
+    text-decoration: none;
+}
+.carousel-control.left, .carousel-control.right {
+    background-image: none
+}
+
 /* Contains header image, the IFA logo and the nav bar */
 .header {
     
