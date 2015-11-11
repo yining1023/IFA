@@ -65,8 +65,28 @@
   })();
 
 </script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="//f.vimeocdn.com/js/froogaloop2.min.js"></script>
 </head>
 	<body>
+
+    <div class="video">    
+      <iframe id="vimeo_player" src="//player.vimeo.com/video/106536438?api=1;title=0&amp;byline=0&amp;portrait=0&amp;color=3a6774&amp;autoplay=1&amp;loop=1"
+      width="960" height="540" frameborder="0" webkitallowfullscreen
+      mozallowfullscreen allowfullscreen></iframe></div>
+        <script>
+        var iframe = document.getElementsByTagName('iframe')[0];
+        var player = $f( iframe );
+
+        player.addEvent('ready', function() {
+          player.api('setVolume', 0); 
+        });
+        // var iframe = document.getElementsByTagName('iframe')[0];
+        // iframe.contentWindow.postMessage('{"method":"setVolume", "value":0}','*');
+        // console.log("mute!!")
+        </script>
+
 		<div class="mainWrapper">
 	      <span class="NYULogoContainer"><a href="http://www.nyu.edu" target="_blank"><img src="images/nyulogo_horiz_white.png" alt="NYU Logo"></a></span><br>
 	      <div class="IFALogoContainer">
@@ -148,7 +168,7 @@ The Conservation Center Announces a New Dual Degree Program <a href="news/strong
             </div> -->
 		</div>
    
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" ></script>
+
 		<script src="js/jquery.cycle.all.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery.maximage.min.js" type="text/javascript" charset="utf-8"></script>
 		
