@@ -71,21 +71,10 @@
 </head>
 	<body>
 
-    <div class="video">    
-      <iframe id="vimeo_player" src="//player.vimeo.com/video/106536438?api=1;title=0&amp;byline=0&amp;portrait=0&amp;color=3a6774&amp;autoplay=1&amp;loop=1"
-      width="960" height="540" frameborder="0" webkitallowfullscreen
-      mozallowfullscreen allowfullscreen></iframe></div>
-        <script>
-        var iframe = document.getElementsByTagName('iframe')[0];
-        var player = $f( iframe );
-
-        player.addEvent('ready', function() {
-          player.api('setVolume', 0); 
-        });
-        // var iframe = document.getElementsByTagName('iframe')[0];
-        // iframe.contentWindow.postMessage('{"method":"setVolume", "value":0}','*');
-        // console.log("mute!!")
-        </script>
+      <video autoplay loop id="video-background" muted>
+      <source src="http://beta.mattgrossdesign.com/sites/default/files/wood%20autumn-HD.mp4" type="video/mp4">
+      </video>
+        
 
 		<div class="mainWrapper">
 	      <span class="NYULogoContainer"><a href="http://www.nyu.edu" target="_blank"><img src="images/nyulogo_horiz_white.png" alt="NYU Logo"></a></span><br>
@@ -135,7 +124,7 @@ Agnieszka Kurant. <a href="events/livestream.htm">Watch Live.</a></p>
                      
                 </div>            </div> -->
             
-             <div><img src="images/frontpage-promo.jpg" alt="The Institute of Fine Arts" /><div class="text">
+             <div><!-- <img src="images/frontpage-promo.jpg" alt="The Institute of Fine Arts" /> --><div class="text">
         
         
             
