@@ -2,7 +2,7 @@
 IFA Alumni Visualization
 ------------------------------------------------
 
-Authors:                    Sagar Mohite, Jason Varone
+Authors:                    Sagar Mohite, Jason Varone, Yining Shi
 Github:                     https://github.com/sagar-sm/ifa/
 Developement Version:       https://sagar-sm.github.io/ifa/mapping-alumni/
 Live Version:               http://www.nyu.edu/gsas/dept/fineart/mapping-alumni/
@@ -348,14 +348,14 @@ $(document).ready(function(){
         .attr("xlink:href", "profile_images/university.png")
         .attr("width", function(d){
           var wid = 0;
-          if(placeCount[d.place] > 1){
+          if(placeCount[d.place] > 1 && d.place!==''){
             wid = width;
           }
           return wid;
          })
         .attr("height", function(d){
           var hei = 0;
-          if(placeCount[d.place] > 1){
+          if(placeCount[d.place] > 1 && d.place!==''){
             hei = width;
           }
           return hei;
@@ -428,7 +428,7 @@ $(document).ready(function(){
         .append("circle")
         .attr("r", function(d){
           var rad = radius;
-          if(placeCount[d.place] > 1){
+          if(placeCount[d.place] > 1 && d.place!==''){
             rad = 0;
           }
           return rad;
@@ -464,14 +464,18 @@ $(document).ready(function(){
         .data(alumniDom) 
         .attr("width", function(d){
           var wid = 0;
-          if(placeCount[d.place] > 1){
+          if(placeCount[d.place] > 1 && d.place!==''){
             wid = width;
+            if(d.name=='Gregory Galligan'){
+             console.log('name: '+d.name);
+             console.log('place: '+d.place);
+           }
           }
           return wid;
          })
         .attr("height", function(d){
           var hei = 0;
-          if(placeCount[d.place] > 1){
+          if(placeCount[d.place] > 1 && d.place!==''){
             hei = width;
           }
           return hei;
@@ -487,7 +491,7 @@ $(document).ready(function(){
         .data(alumniDom)
         .attr("r", function(d){
           var rad = radius;
-          if(placeCount[d.place] > 1){
+          if(placeCount[d.place] > 1 && d.place!==''){
             rad = 0;
           }
           return rad;
