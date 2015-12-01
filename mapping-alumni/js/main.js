@@ -11,6 +11,9 @@ Live Version:               http://www.nyu.edu/gsas/dept/fineart/mapping-alumni/
 
 //MISC FUNCTIONALITIES
 
+//globel var for map
+var mapp;
+
 //return all the values that are unique. i.e. remove repetiting values
 Array.prototype.unique = function()
 {
@@ -38,10 +41,13 @@ $(document).ready(function(){
 
   //SETUP Leaflet and MAPBOX. Mapbox just supplies map tile images whereas Leaflet is a complete mapping library
   L.mapbox.accessToken = 'pk.eyJ1Ijoic3NtIiwiYSI6IkFsRTJFNDAifQ.k7_1MScHyFU44SbXlC3x8w';
-  var map = L.mapbox.map('map', 'ssm.m5hkonen', {maxZoom: 15, minZoom: 2}) 
+  var map = L.mapbox.map('map','ssm.m5hkonen', {maxZoom: 15, minZoom: 2}) 
     .setView([35,-50], 3);
-    
 
+    mapp = map;
+
+    console.log("mapp: ");
+    console.log(mapp);
 
   //STATE VARIABLES AND CONSTANTS
   var panelOpen = false; //alumni info panel state
@@ -758,3 +764,34 @@ $(document).ready(function(){
   };
 
 });
+
+    //function for let map go fullscreen
+  function toggleFullScreen(){     
+        var wid = window.innerWidth + 'px';
+        var hei = window.innerHeight + 'px';
+
+      if(document.getElementById('map').style.width!==wid){
+        //mresize map
+        document.getElementById('map').style.width = wid;
+        document.getElementById('map').style.height = hei;
+        document.getElementById('map').style.zIndex = 1;
+        document.getElementById('map').style.position = "absolute";
+        document.getElementById('wrapper').className = 'noun';
+
+        //resize leaflet map tile too
+        console.log("mapp in the function: ")
+        console.log(mapp);
+        mapp.invalidateSize(true); 
+      }
+      else{
+        //go back to original state
+        document.getElementById('map').style.width = "940px";
+        document.getElementById('map').style.height = "390px";
+        document.getElementById('map').style.zIndex = 0;
+        document.getElementById('wrapper').className = 'mainWrapper'; 
+      }
+    }
+
+
+
+  

@@ -28,6 +28,8 @@
   <link href="./css/c3.min.css" rel="stylesheet" type="text/css"/>
   <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
 
+
+
   
 	<title>Mapping Institute of Fine Arts Alumni</title>
 
@@ -59,15 +61,17 @@
 
 	<div class="backgroundShade"></div>
 	<!--Begin the main div -->
-	<div class="mainWrapper">
-    <div class="header">
+	<div class="mainWrapper" id="wrapper">
+  <!-- <div id="wrapper"> -->
+    <div class="header" id="head">
       <div class="ifaLogoContainer">
       	<a href="../index.htm"><img src="../images/IFAlogo.png" alt="IFA Logo"></a>
       </div>
       <div class="nyuImage">
           <a href="http://www.nyu.edu" target="_blank"><img src="../images/NYUlogo.png" alt="NYU Logo"></a>
       </div>
-      <div class="mainHeaderContainer">
+      <div class="mainHeaderContainer" id="container">
+        <button type="button" onClick = "toggleFullScreen();" style ="left: 100px; z-index: 2;">Click!</button>
         <div id="map"></div>
         <div id="viz"></div>
       </div>
@@ -127,7 +131,6 @@
 
             
     </div>
-
 
     <script type="text/javascript" src='./js/main.js'></script>
     <script src='../js/toggleContent.js'></script>

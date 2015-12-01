@@ -1,5 +1,6 @@
 .full-width {
-  width: 940px !important;
+  /*width: 940px !important;*/
+  width: 940px;
 }
 
 .contentWrapper {
@@ -34,8 +35,12 @@
 }
 
 #map {
+  /*width:1200px;*/
   width:940px; 
   height:390px;
+  position: absolute;
+  left:0px;
+  top:0px;
 }
 
 .point {
