@@ -765,13 +765,13 @@ $(document).ready(function(){
 
 });
 
-    //function for let map go fullscreen
+  //function that lets map go fullscreen
   function toggleFullScreen(){     
         var wid = window.innerWidth + 'px';
         var hei = window.innerHeight + 'px';
 
       if(document.getElementById('map').style.width!==wid){
-        //mresize map
+        //resize map
         document.getElementById('map').style.width = wid;
         document.getElementById('map').style.height = hei;
         document.getElementById('map').style.zIndex = 1;
@@ -779,16 +779,52 @@ $(document).ready(function(){
         document.getElementById('wrapper').className = 'noun';
 
         //resize leaflet map tile too
-        console.log("mapp in the function: ")
-        console.log(mapp);
-        mapp.invalidateSize(true); 
+        mapp.invalidateSize(true);
+
+        //bring the serach bar to the front
+        document.getElementById('search').style.position = "absolute";
+        document.getElementById('search').style.zIndex = 2;
+        document.getElementById('search').style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+        document.getElementById('search').style.padding = '0px 373.5px 0px 0px';
+        document.getElementById('search').style.left = '250px';
+        document.getElementById('search').style.top = '-380px';
+          //bring search auto complete box too
+        document.getElementById('ui-id-1').style.position = "absolute";
+        document.getElementById('ui-id-1').style.zIndex = 2;
+
+        //bring alumni-info panel to upfront too
+        document.getElementById('alumni-info').style.position = "absolute";
+        document.getElementById('alumni-info').style.zIndex = 2;
+        document.getElementById('alumni-info').style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+        document.getElementById('alumni-info').style.left = '251px';
+        document.getElementById('alumni-info').style.top = '-350px';
+        document.getElementById('alumni-info').style.paddingTop = '0px';
+        document.getElementById('alumni-info').style.borderTop = '0px';
+        document.getElementById('alumni-info').style.width = '698px';
       }
       else{
         //go back to original state
         document.getElementById('map').style.width = "940px";
         document.getElementById('map').style.height = "390px";
         document.getElementById('map').style.zIndex = 0;
-        document.getElementById('wrapper').className = 'mainWrapper'; 
+        document.getElementById('wrapper').className = 'mainWrapper';
+
+        document.getElementById('search').style.zIndex = 0;
+        document.getElementById('search').style.position = "relative";
+        document.getElementById('search').style.left = '0px'; 
+        document.getElementById('search').style.top = '0px';
+        document.getElementById('search').style.padding = '0px 10px 10px 10px';
+
+        document.getElementById('ui-id-1').style.zIndex = 0;
+        document.getElementById('ui-id-1').style.position = "relative";
+
+        document.getElementById('alumni-info').style.zIndex = 0;
+        document.getElementById('alumni-info').style.position = "relative";
+        document.getElementById('alumni-info').style.backgroundColor = '#fff';
+        document.getElementById('alumni-info').style.left = '0px';
+        document.getElementById('alumni-info').style.top = '0px';
+        document.getElementById('alumni-info').style.paddingTop = '5px';
+        document.getElementById('alumni-info').style.borderTop = '3px';
       }
     }
 
