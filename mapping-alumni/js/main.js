@@ -225,10 +225,12 @@ $(document).ready(function(){
     alumniDom = alumni;
     var filterSet = categories;
     var tip  = d3.tip().attr('class', 'd3-tip').html(function(d) { 
-      if(placeCount[d.place] > 1)
+      if(placeCount[d.place] > 1 && d.place!==""){
         return d.place;
-      else
+      }
+      else{
         return d.name; 
+      }
     });
     var btip = d3.tip().attr('class', 'd3-tip').html(function(d) { return d.name.capitalizeFirstLetter() + ": " + d.count; });
     var linesData = [];
@@ -469,10 +471,6 @@ $(document).ready(function(){
           var wid = 0;
           if(placeCount[d.place] > 1 && d.place!==''){
             wid = width;
-            if(d.name=='Gregory Galligan'){
-             console.log('name: '+d.name);
-             console.log('place: '+d.place);
-           }
           }
           return wid;
          })
