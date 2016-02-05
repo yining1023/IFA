@@ -46,9 +46,6 @@ $(document).ready(function(){
 
     mapp = map;
 
-    console.log("mapp: ");
-    console.log(mapp);
-
   //STATE VARIABLES AND CONSTANTS
   var panelOpen = false; //alumni info panel state
   var marker; //blue pin marker to be displayed upon alumni select
@@ -766,12 +763,13 @@ $(document).ready(function(){
 });
 
   //function that lets map go fullscreen
-  function toggleFullScreen(){     
+  function toggleFullScreen(){
+        //get window's width and height     
         var wid = window.innerWidth + 'px';
         var hei = window.innerHeight + 'px';
 
       if(document.getElementById('map').style.width!==wid){
-        //resize map
+        //if it's not in the fullscreen mode, then resize map, make it fullcreen
         document.getElementById('map').style.width = wid;
         document.getElementById('map').style.height = hei;
         document.getElementById('map').style.zIndex = 1;
@@ -801,9 +799,13 @@ $(document).ready(function(){
         document.getElementById('alumni-info').style.paddingTop = '0px';
         document.getElementById('alumni-info').style.borderTop = '0px';
         document.getElementById('alumni-info').style.width = '698px';
+
+        //show the "close fullscreen" button
+        document.getElementsByClassName("xclose")[0].style.visibility = "visible";
+        document.getElementsByClassName("xclose")[0].style.left = window.innerWidth*9/10 + 'px';
       }
       else{
-        //go back to original state
+        //if it's fullscreent, then resize the map, make it smaller, go back to original state
         document.getElementById('map').style.width = "940px";
         document.getElementById('map').style.height = "390px";
         document.getElementById('map').style.zIndex = 0;
@@ -825,6 +827,9 @@ $(document).ready(function(){
         document.getElementById('alumni-info').style.top = '0px';
         document.getElementById('alumni-info').style.paddingTop = '5px';
         document.getElementById('alumni-info').style.borderTop = '3px';
+
+        //hide the "close fullscreen button"
+        document.getElementsByClassName("xclose")[0].style.visibility = "hidden";
       }
     }
 

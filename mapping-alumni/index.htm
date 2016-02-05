@@ -71,9 +71,14 @@
           <a href="http://www.nyu.edu" target="_blank"><img src="../images/NYUlogo.png" alt="NYU Logo"></a>
       </div>
       <div class="mainHeaderContainer" id="container">
-        <input id="fullscreen" type="image" class="button-border" src="css/icons/svgs/fi-arrows-out.svg" width="28" height="28" alt="FullScreen" onclick="toggleFullScreen();" style="padding:4px 4px 4px 4px; position: relative; top:  68px; left: 10px; z-index: 2;">
+        <!--close fullscreen mode button-->
+        <input id="fullscreen" type="image" class="button-border xclose" src="css/icons/svgs/fi-x.svg" width="28" height="28" alt="FullScreen" onclick="toggleFullScreen();" style="visibility: hidden; padding:4px 4px 4px 4px; position: relative; top:  13px; left: 500px; z-index: 3;">
         <br>
-        <input type="image" class="button-border" src="css/icons/svgs/fi-refresh.svg" width="28" height="28" alt="Reload" onclick="location.href='index.htm'" style="padding:4px 4px 4px 4px; position: relative; top:  68px; left: 10px; z-index: 2;">
+        <!--enter or exit fullscreen mode button-->
+        <input id="fullscreen" type="image" class="button-border" src="css/icons/svgs/fi-arrows-out.svg" width="28" height="28" alt="FullScreen" onclick="toggleFullScreen();" style="padding:4px 4px 4px 4px; position: relative; top:  37px; left: 10px; z-index: 2;">
+        <br>
+        <!--refresh button-->
+        <input type="image" class="button-border" src="css/icons/svgs/fi-refresh.svg" width="28" height="28" alt="Reload" onclick="location.href='index.htm'" style="padding:4px 4px 4px 4px; position: relative; top:  37px; left: 10px; z-index: 2;">
         <!-- <button type="button" onClick = "toggleFullScreen();" style ="left: 100px; z-index: 2;">Click!</button> -->
         <div id="map"></div>
         <div id="viz"></div>
