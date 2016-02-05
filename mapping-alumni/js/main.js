@@ -229,7 +229,7 @@ $(document).ready(function(){
         return d.place;
       }
       else{
-        return d.name; 
+        return d.name;
       }
     });
     var btip = d3.tip().attr('class', 'd3-tip').html(function(d) { return d.name.capitalizeFirstLetter() + ": " + d.count; });
@@ -677,13 +677,14 @@ $(document).ready(function(){
     if(marker)
       map.removeLayer(marker);
 
-    if(d.lat != 0 && d.lon !=0)
+    if(d.lat != 0 && d.lon !=0){
       map.setView([d.lat, d.lon], 15);
-    else
+      marker = L.marker([d.lat, d.lon]);
+      map.addLayer(marker);
+    }
+    else{
       map.setView([35,-50], 3);
-    
-    marker = L.marker([d.lat, d.lon]);
-    map.addLayer(marker);
+    }
   }
 
   //UPON ALUMNI NAME CLICK SHOW PROFILE PANEL
