@@ -71,8 +71,9 @@
           <a href="http://www.nyu.edu" target="_blank"><img src="../images/NYUlogo.png" alt="NYU Logo"></a>
       </div>
       <div class="mainHeaderContainer" id="container">
-        <input id="fullscreen" type="image" src="profile_images/fullScreen.png" width="28" height="28" 
-              border="0" alt="FullScreen" onClick = "toggleFullScreen();" style ="background-color: white; position: relative; top:  68px; left: 10px; z-index: 2;">
+        <input id="fullscreen" type="image" class="button-border" src="css/icons/svgs/fi-arrows-out.svg" width="28" height="28" alt="FullScreen" onclick="toggleFullScreen();" style="padding:4px 4px 4px 4px; position: relative; top:  68px; left: 10px; z-index: 2;">
+        <br>
+        <input type="image" class="button-border" src="css/icons/svgs/fi-refresh.svg" width="28" height="28" alt="Reload" onclick="location.href='index.htm'" style="padding:4px 4px 4px 4px; position: relative; top:  68px; left: 10px; z-index: 2;">
         <!-- <button type="button" onClick = "toggleFullScreen();" style ="left: 100px; z-index: 2;">Click!</button> -->
         <div id="map"></div>
         <div id="viz"></div>
@@ -82,7 +83,7 @@
     <div class="contentWrapper">
       <div class="mainContent">
         <p class="heading">Mapping IFA Alumni</p>
-        <p class="content">This interactive map visualizes the international reach of the Institute of Fine Arts' alumni. Here you can locate the current employment status of approximately 1,000 active alumni. If you are an IFA graduate and would like to be included on this map,<a href="https://docs.google.com/forms/d/1ODX4GWewUkLuPfa6n-gORbFwPPN4RnFONvK7iS6EiuQ/viewform?sid=60faa8d85d1cd6e9&token=H2t6rT0BAAA.5dU7ZDJYqaDnjJ64wLfyvA.famwlVoTr_bioRL93U4QEQ" target="_blank"> please send us your updated information</a>.</p>
+        <p class="content">This interactive map visualizes the international reach of the Institute of Fine Arts' alumni. Here you can locate the current employment status of over 1,000 active alumni. If you are an IFA graduate and would like to be included on this map,<a href="https://docs.google.com/forms/d/1ODX4GWewUkLuPfa6n-gORbFwPPN4RnFONvK7iS6EiuQ/viewform?sid=60faa8d85d1cd6e9&token=H2t6rT0BAAA.5dU7ZDJYqaDnjJ64wLfyvA.famwlVoTr_bioRL93U4QEQ" target="_blank"> please send us your updated information</a>.</p>
         <div id="search" class="ui-widget content">
           <input id="searchbox" placeholder="Search"></input>
           <i class="fi-magnifying-glass" id="searchbtn"></i>
