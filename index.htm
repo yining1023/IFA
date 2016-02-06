@@ -75,38 +75,6 @@
       <source src="http://beta.mattgrossdesign.com/sites/default/files/wood%20autumn-HD.mp4" type="video/mp4">
       </video>
 
-      <script>
-      var mVideo = document.querySelector('video');
-      var ratio = mVideo.videoWidth/mVideo.videoHeight;
-      window.addEventListener('resize', function(){
-        var w = window.innerWidth
-        || document.documentElement.clientWidth
-        || document.body.clientWidth;
-        var h = window.innerHeight
-        || document.documentElement.clientHeight
-        || document.body.clientHeight;
-        // if(ratio > w/h){
-        //   // mVideo.style.height = '100%';
-        //   mVideo.height = window.innerHeight;
-        //   mVideo.width = window.innerHeight * ratio;
-        // }
-        // else{
-        //   // mVideo.style.width = '100%';
-        //   mVideo.width = window.innerWidth;
-        //   mVideo.height = window.innerWidth / ratio;
-        // }
-
-        //when the width of the window is less then 640 px, hide the vieo
-        if(w>640){
-          mVideo.style.visibility = 'visible';
-        }
-        else{
-          mVideo.style.visibility = 'hidden';
-        }
-      });
-      </script>
-        
-
 		<div class="mainWrapper">
 	      <span class="NYULogoContainer"><a href="http://www.nyu.edu" target="_blank"><img src="images/nyulogo_horiz_white.png" alt="NYU Logo"></a></span><br>
 	      <div class="IFALogoContainer">
