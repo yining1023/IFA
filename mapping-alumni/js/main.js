@@ -344,7 +344,18 @@ $(document).ready(function(){
 
       g.call(tip);
       tip.direction("e");
-      tip.offset([-40,10]);
+      //when it's not in the fullscreen, tip.offset can be a fixed number
+      // tip.offset([-40,10]);
+      //Adjust the postion of the tip box depends on whether it's in the fullscreen mode or not
+      tip.offset(function(){
+        var wid = window.innerWidth + 'px';
+        if(document.getElementById('map').style.width!==wid){
+          return[-40, 10];
+        }
+        else{
+          return[0, 10];
+        }
+      });
 
       g.selectAll("image.point")
         .data(alumniDom)
@@ -689,7 +700,7 @@ $(document).ready(function(){
 
   //UPON ALUMNI NAME CLICK SHOW PROFILE PANEL
   $(document).on("click", ".alum-href", function(e){
-    console.log(e.target.innerHTML);
+    // console.log(e.target.innerHTML);
     var d = alumniDom.filter(function(a){ return a.name === e.target.innerHTML; })[0];
     renderAlumProfile(d);
   });
@@ -728,7 +739,7 @@ $(document).ready(function(){
       return (e.place === d.place);
       
     });
-    console.log(cumul);
+    // console.log(cumul);
     for (var i = 0; i < cumul.length; i+=3) {
       list_col1.append("<div class=\"alum-href\">" + cumul[i].name + "</div>");
       if(i < cumul.length - 1)
