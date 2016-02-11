@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">  
+   <title>Mapping Institute of Fine Arts Alumni</title>
+
+   <script src="./js/jquery.min.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+   <script type="text/javascript">
+    $(document).ready(function() {
+      
+      var options = {
+        chart: {
+          renderTo: 'container',
+          type: 'column'
+        },
+        title: {
+          text: 'Numbers of Dissesrtation Every Year'
+        },
+        xAxis: {
+          categories: []
+        },
+        yAxis: {
+          title: {
+            text: 'Units'
+          }
+        },
+        series: []
+      };
+      
+      /*
+       Load the data from the CSV file. This is the contents of the file:
+       
+        Year,Category,Name,Advisor,Title
+        2015,African Art,(sub-Saharan),Nora Burnett Abrams,Linda Nochlin,Para-realism and the Early Sculpture of Rachel Whiteread
+        
+       */ 
+      $.get('./data/ifa-dissertation.csv', function(data) {
+        // Split the lines
+        var lines = data.split('\n');
+        $.each(lines, function(lineNo, line) {
+          var items = line.split(',');
+          
+          // header line containes categories
+          if (lineNo == 0) {
+            $.each(items, function(itemNo, item) {
+              if (itemNo > 0) options.xAxis.categories.push(item);
+            });
+          }
+          
+          // the rest of the lines contain data with their name in the first position
+          else {
+            var series = { 
+              data: []
+            };
+            $.each(items, function(itemNo, item) {
+              if (itemNo == 0) {
+                series.name = item;
+              } else {
+                series.data.push(parseFloat(item));
+              }
+            });
+            
+            options.series.push(series);
+          }
+          
+        });
+        
+        var chart = new Highcharts.Chart(options);
+      });
+      
+      
+    });
+    </script>
+  </head>
+
+<body>
+<div style="width: 800px; margin: 2em auto; padding: 1em; border: 1px solid red; border-radius: 0.5em">
+      NOTE: This demo shows a way of manually parsing CSV. As of Highcharts 4.0 this is
+      not necessary for simple CSV files, as this functionality is built into the 
+      <a href="http://api.highcharts.com/#data">Data module</a>.
+    </div>
+    <div id="container" style="width: 800px; height: 400px; margin: 0 auto"></div>
+
+<script type="text/javascript" src='./js/main.js'></script>
+</body>
+</html>
