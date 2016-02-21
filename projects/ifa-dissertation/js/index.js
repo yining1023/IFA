@@ -1,117 +1,128 @@
-$(document).ready(function () {
-  var bubbleChart = new d3.svg.BubbleChart({
-    supportResponsive: true,
-    //container: => use @default
-    size: 1200,
-    //viewBoxSize: => use @default
-    innerRadius: 1200 / 3.5,
-    //outerRadius: => use @default
-    radiusMin: 50,
-    radiusMax: 80,
-    //radiusMax: use @default
-    //intersectDelta: use @default
-    //intersectInc: use @default
-    //circleColor: use @default
-    data: {
-      items: [
-        {text: "African Art (sub-Saharan)", count: "236"},
-        {text: "Architectural History/Historic Preservation", count: "382"},
-        {text: "Art of the Middle East/North Africa", count: "170"},
-        {text: "Art of the United States", count: "123"},
-        {text: "Chinese Art", count: "12"},
-        {text: "Contemporary Art", count: "170"},
-        {text: "Critical Theory/Gender Studies/Visual Studies", count: "382"},
-        {text: "Decorative Arts/Textiles/Design History", count: "10"},
-        {text: "Drawings/Prints/Works on Paper", count: "170"},
-        {text: "Digital Media.Animation", count: "12"},
-        {text: "Early Christian/Byzantine Art", count: "236"},
-        {text: "Early Medieval/Romanesque/Gothic Art", count: "382"},
-        {text: "Egyptian/Ancient Near Eastern Art", count: "170"},
-        {text: "Eighteenth-Century Art", count: "123"},
-        {text: "Film/Video", count: "12"},
-        {text: "Greek/Roman Art", count: "12"},
-        {text: "Japanese/Korean Art", count: "170"},
-        {text: "Latin American/Caribbean Art", count: "382"},
-        {text: "Native American", count: "10"},
-        {text: "Nineteenth-Century Art", count: "170"},
-        {text: "Oceanic/Australian Art", count: "236"},
-        {text: "Outsider/Folk Art", count: "382"},
-        {text: "Performance Studies", count: "170"},     
-        {text: "Pre-Columbian Art", count: "123"},
-        {text: "Prehistoric Art", count: "12"},
-        {text: "Renaissance/Baroque Art", count: "170"},
-        {text: "South/Southeast Asian Art", count: "382"},
-        {text: "Twentieth-Century Art", count: "10"},
-        {text: "World Art", count: "170"},
-      ],
-      eval: function (item) {return item.count;},
-      classed: function (item) {return item.text.split(" ").join("");}
-    },
-    plugins: [
-      {
-        name: "central-click",
-        options: {
-          text: "(See more detail)",
-          style: {
-            "font-size": "12px",
-            "font-style": "italic",
-            "font-family": "Source Sans Pro, sans-serif",
-            //"font-weight": "700",
-            "text-anchor": "middle",
-            "fill": "white"
-          },
-          attr: {dy: "65px"},
-          centralClick: function() {
-            alert("Here is more details!!");
-          }
-        }
-      },
-      {
-        name: "lines",
-        options: {
-          format: [
-            {// Line #0
-              textField: "count",
-              classed: {count: true},
-              style: {
+//return all the values that are unique. i.e. remove repetiting values
+Array.prototype.unique = function()
+{
+  var n = {},r=[];
+  for(var i = 0; i < this.length; i++) 
+  {
+    if (!n[this[i]]) 
+    {
+      n[this[i]] = true; 
+      r.push(this[i]); 
+    }
+  }
+  return r;
+}
+
+var diameter = 800, //max size of the bubbles
+    format = d3.format(",d"),
+    color = d3.scale.category20c(); //color category
+
+var bubble = d3.layout.pack()
+    .sort(null)
+    .size([diameter, diameter])
+    .padding(1.5);
+
+var svg = d3.select("body")
+    .append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+    .attr("class", "bubble");
+
+var tooltip = d3.select("body")
+    .append("div")
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .style("visibility", "hidden")
+    .style("color", "white")
+    .style("padding", "8px")
+    .style("background-color", "rgba(0, 0, 0, 0.75)")
+    .style("border-radius", "6px")
+    .style("font", "12px sans-serif")
+    .text("tooltip");
+
+d3.csv("./data/ifa-dissertations.csv", function(error, data) {
+  if (error) throw error;
+
+  var categories = data.map(function(a){
+        // a.Category = a.Category.toLowerCase();
+        return a.Category;
+      });
+
+  var catCount = {}; //category frequency.
+
+      data.forEach(function(a){
+        if(!catCount[a.Category]) 
+          catCount[a.Category]=1;
+        else
+          catCount[a.Category]++;
+      });
+
+  var catData = [];
+
+      Object.keys(catCount).forEach(function(k){
+          catData.push({
+            name: k,
+            count: catCount[k]
+          });
+      });
+
+      // console.log(catData);
+
+      categories = categories.unique();
+  catData = catData.map(function(d){ d.value = +d.count; return d; });
+  //bubbles needs specific format, convert data to this
+  var nodes = bubble.nodes({children:catData}).filter(function(d) { return !d.children; });
+
+  //setup the chart
+  var bubbles = svg.append("g")
+      .attr("transform", "translate(0,0)")
+      .selectAll(".bubble")
+      .data(nodes)
+      .enter();
+
+  bubbles.append("circle")
+      .attr("r", function(d) { return d.r; })
+      .attr("cx", function(d){ return d.x; })
+      .attr("cy", function(d){ return d.y; })
+      .style("fill", function(d) { return color(d.value); })
+      .on("mouseover", function(d) {
+              tooltip.text(d.name + ": " + format(d.value));
+              tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function() {
+          return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+      })
+      .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+  //format the text for each bubble
+    bubbles.append("text")
+        .attr("x", function(d){ return d.x; })
+        .attr("y", function(d){ return d.y + d.r/3; })
+        .attr("text-anchor", "middle")
+        .style("pointer-events", "none")
+        .text(function(d){
+          // console.log(d);
+          // return d["name"]; 
+          return d.name.substring(0, d.r / 4);
+        })
+        .style({
+                "font-size":"12px",
+                "font-family": "sans-serif",
+                "font-weight": "100",
+                "text-anchor": "middle",
+                fill: "white"
+        });
+    bubbles.append("text")
+        .attr("x", function(d){ return d.x; })
+        .attr("y", function(d){ return d.y; })
+        .attr("text-anchor", "middle")
+        .style("pointer-events", "none")
+        .text(function(d){ return d["count"]; })
+        .style({
                 "font-size": "28px",
-                "font-family": "Source Sans Pro, sans-serif",
+                "font-family": "sans-serif",
+                "font-weight": "100",
                 "text-anchor": "middle",
                 fill: "white"
-              },
-              attr: {
-                dy: "0px",
-                x: function (d) {return d.cx;},
-                y: function (d) {return d.cy;}
-              }
-            },
-            {// Line #1
-              textField: "text",
-              classed: {text: true},
-              style: {
-                "font-size": "4px",
-                "font-family": "Source Sans Pro, sans-serif",
-                "text-anchor": "middle",
-                fill: "white"
-              },
-              attr: {
-                dy: "20px",
-                x: function (d) {return d.cx;},
-                y: function (d) {return d.cy;}
-              }
-            }
-          ],
-          centralFormat: [
-            {// Line #0
-              style: {"font-size": "50px"},
-              attr: {}
-            },
-            {// Line #1
-              style: {"font-size": "3px"},
-              attr: {dy: "40px"}
-            }
-          ]
-        }
-      }]
-  });
+        });
 });
