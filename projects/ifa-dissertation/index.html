@@ -1,20 +1,30 @@
 <!DOCTYPE html>
+<html lang="en">
 <meta charset="utf-8">
 <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-  <style>
-  body{
-    text-align: center;
-  }
-    text {
-      font: 10px sans-serif;
-    }
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"crossorigin="anonymous">
 
-  </style>
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"  crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-<h1 style="font-family: sans-serif; font-weight: 100">A Data Visualization of IFA Dissertations from 1933 - 2014</h1>
+<div id="container">
+  <h1 style="font-family: sans-serif; font-weight: 100">A Data Visualization of IFA Dissertations from 1933 - 2014</h1>
+  <select class="form-control" id="text-select">
+    <option value="sherlock">Category</option>
+    <option value="aesop">Advisor</option>
+    <option value="alice">Year</option>
+  </select>
+</div>
 <script src="/js/d3/d3.min.js"></script>
 <script src="/js/index.js"></script>
 </body>
+</html>

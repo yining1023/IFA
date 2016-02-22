@@ -1,0 +1,12 @@
+  body{
+    text-align: center;
+  }
+  text {
+      font: 10px sans-serif;
+  }
+  #text-select{
+    /*float:right;*/
+    position:absolute;
+    left: 965px;
+    width: 10%;
+  }
