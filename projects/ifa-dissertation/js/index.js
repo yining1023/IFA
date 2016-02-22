@@ -199,8 +199,11 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
 
   function collide(alpha) {
     var quadtree = d3.geom.quadtree(nodes);
-    return function(d) {
-    var r = d.r + maxRadius + Math.max(padding, clusterPadding),
+    return function (d) {
+      console.log(d.r);
+      console.log(d.x);
+      console.log(d.y);
+    var r = d.r + maxRadius + padding,
         nx1 = d.x - r,
         nx2 = d.x + r,
         ny1 = d.y - r,
@@ -210,7 +213,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         var x = d.x - quad.point.x,
             y = d.y - quad.point.y,
             l = Math.sqrt(x * x + y * y),
-            r = d.r + quad.point.radius + (d.cluster === quad.point.cluster ? padding : clusterPadding);
+            r = d.r + quad.point.radius + (d.color !== quad.point.color) * padding;
         if (l < r) {
           l = (l - r) / l * alpha;
           d.x -= x *= l;
