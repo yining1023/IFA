@@ -122,15 +122,15 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
 
   //setup the chart
   var node = svg
-    // .append("g")
+    .append("g")
     // .selectAll(".bubble")
     .selectAll(".circle")
     // .attr("transform", "translate(0,0)")      
     .data(nodes)
     .enter().append("circle")
-    // .attr("r", function(d) { return d.r; })
-    // .attr("cx", function(d){ return d.x; })
-    // .attr("cy", function(d){ return d.y; })
+    .attr("r", function(d) { return d.r; })
+    .attr("cx", function(d){ return d.x; })
+    .attr("cy", function(d){ return d.y; })
     .style("fill", function(d) { return color(d.value); })
     .call(force.drag)
     .on("mouseover", function(d) {
