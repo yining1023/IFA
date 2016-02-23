@@ -18,13 +18,14 @@ var padding = 3, // separation between same-color nodes
     clusterPadding = 6, // separation between different-color nodes
     maxRadius = 12;
 
-var diameter = 800, //max size of the bubbles
+var height = 800, //max size of the bubbles
+    width = 1100,
     format = d3.format(",d"),
     color = d3.scale.category20c(); //color category
 
 var bubble = d3.layout.pack()
     .sort(null)
-    .size([diameter, diameter])
+    .size([width, height])
     .padding(1.5);
 
 var tooltip = d3.select("body")
@@ -93,11 +94,10 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   categories = categories.unique();
   advisors = advisors.unique();
 
-
   catData = catData.map(function(d){ 
     d.value = +d.count;
-    d.centerX = diameter/2;
-    d.centerY = diameter/2;
+    d.centerX = width/2;
+    d.centerY = height/2;
     return d; 
   });
   advData = advData.map(function(d){ d.value = +d.count; return d; });
@@ -107,7 +107,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
 
   var force = d3.layout.force()
     .nodes(catDataNodes)
-    .size([diameter, diameter])
+    .size([width, height])
     .gravity(0)
     .charge(0)
     .on("tick", tick)
@@ -115,20 +115,24 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
 
   var svg = d3.select("body")
     .append("svg")
-    .attr("width", diameter)
-    .attr("height", diameter)
+    .attr("width", width)
+    .attr("height", height)
     .attr("class", "bubble");
 
   //setup the chart
-  var nodes = svg.selectAll("circle")     
-    .data(catDataNodes);
+  var nodes = svg.selectAll(".node")//"circle"     
+    .data(catDataNodes)
+    .enter()
+    .append("g")
+    .attr("class", "nodes")
+    .call(force.drag);
 
-  nodes.enter().append("circle")
+  var circles = nodes.append("circle")
     .attr("r", function(d) { return d.r; })
     .attr("cx", function(d){ return d.x; })
     .attr("cy", function(d){ return d.y; })
     .style("fill", function(d) { return color(d.value); })
-    .call(force.drag)
+    // .call(force.drag)
     .on("mouseover", function(d) {
       tooltip.text(d.name + ": " + format(d.value));
       tooltip.style("visibility", "visible");
@@ -138,22 +142,14 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     })
     .on("mouseout", function() { return tooltip.style("visibility", "hidden"); });
 
-  nodes.transition()
-    .duration(750)
-    .delay(function(d, i) { return i * 5; })
-    .attrTween("r", function(d) {
-      var i = d3.interpolate(0, d.r);
-      return function(t) { return d.r = i(t); };
-    });
-
   //format the text for each bubble
-  nodes.append("text")
+  var name = nodes.append("text")
     .attr("x", function(d){ return d.x; })
     .attr("y", function(d){ return d.y + d.r/3; })
     .attr("text-anchor", "middle")
     .style("pointer-events", "none")
     .text(function(d){
-      // console.log(d);
+      console.log(d);
       // return d["name"]; 
       return d.name.substring(0, d.r / 4);
     })
@@ -165,11 +161,11 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       fill: "white"
     });
 
-  nodes.append("text")
+  var number = nodes.append("text")
     .attr("x", function(d){ return d.x; })
     .attr("y", function(d){ return d.y; })
     .attr("text-anchor", "middle")
-    .style("pointer-events", "none")
+    // .style("pointer-events", "none")
     .text(function(d){ return d["count"]; })
     .style({
       "font-size": "20px",
@@ -179,16 +175,35 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       fill: "white"
     });
 
+  circles.transition()
+    .duration(1000)//750
+    .delay(function(d, i) { return i * 5; })
+    .attrTween("r", function(d) {
+      var i = d3.interpolate(0, d.r);
+      return function(t) { return d.r = i(t); };
+    });
+
   function tick(e) {
-    nodes
+    circles
       .each(gravity(.1 * e.alpha))
       .each(collide(0.5))
       .attr("cx", function (d) { return d.x; })
       .attr("cy", function (d) { return d.y; });
+    number
+      .each(gravity(.1 * e.alpha))
+      .each(collide(0.5))
+      .attr("x", function (d) { return d.x; })
+      .attr("y", function (d) { return d.y; });
+    name
+      .each(gravity(.1 * e.alpha))
+      .each(collide(0.5))
+      .attr("x", function (d) { return d.x; })
+      .attr("y", function (d) { return d.y + d.r/3; });
   }
 
   function gravity(alpha) {
     return function (d) {
+      console.log(d);
       d.y += (d.centerY - d.y) * alpha;
       d.x += (d.centerX - d.x) * alpha;
     };
