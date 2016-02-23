@@ -14,7 +14,7 @@ Array.prototype.unique = function()
 }
 
 var radius = d3.scale.sqrt().range([0, 12]);
-var padding = 1.5, // separation between same-color nodes
+var padding = 3, // separation between same-color nodes
     clusterPadding = 6, // separation between different-color nodes
     maxRadius = 12;
 
@@ -70,8 +70,6 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     });
   });
 
-  // console.log(catData);
-
   categories = categories.unique();
 
   //get advisor
@@ -92,27 +90,28 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       count: advCount[k]
     });
   });
-
-  // console.log(catData);
-
   categories = categories.unique();
   advisors = advisors.unique();
 
 
-  catData = catData.map(function(d){ d.value = +d.count; return d; });
+  catData = catData.map(function(d){ 
+    d.value = +d.count;
+    d.centerX = diameter/2;
+    d.centerY = diameter/2;
+    return d; 
+  });
   advData = advData.map(function(d){ d.value = +d.count; return d; });
   //bubbles needs specific format, convert data to this
-  var nodes = bubble.nodes({children:catData}).filter(function(d) { return !d.children; });
-  var nodes2 = bubble.nodes({children:advData}).filter(function(d) { return !d.children; });
+  var catDataNodes = bubble.nodes({children:catData}).filter(function(d) { return !d.children; });
+  var advDataNodes = bubble.nodes({children:advData}).filter(function(d) { return !d.children; });
 
-  
   var force = d3.layout.force()
-      .nodes(nodes)
-      .size([diameter, diameter])
-      .gravity(.02)
-      .charge(0)
-      .on("tick", tick)
-      .start();
+    .nodes(catDataNodes)
+    .size([diameter, diameter])
+    .gravity(0)
+    .charge(0)
+    .on("tick", tick)
+    .start();
 
   var svg = d3.select("body")
     .append("svg")
@@ -121,13 +120,10 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     .attr("class", "bubble");
 
   //setup the chart
-  var node = svg
-    .append("g")
-    // .selectAll(".bubble")
-    .selectAll(".circle")
-    // .attr("transform", "translate(0,0)")      
-    .data(nodes)
-    .enter().append("circle")
+  var nodes = svg.selectAll("circle")     
+    .data(catDataNodes);
+
+  nodes.enter().append("circle")
     .attr("r", function(d) { return d.r; })
     .attr("cx", function(d){ return d.x; })
     .attr("cy", function(d){ return d.y; })
@@ -140,9 +136,9 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     .on("mousemove", function() {
       return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
     })
-    .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+    .on("mouseout", function() { return tooltip.style("visibility", "hidden"); });
 
-  node.transition()
+  nodes.transition()
     .duration(750)
     .delay(function(d, i) { return i * 5; })
     .attrTween("r", function(d) {
@@ -151,7 +147,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     });
 
   //format the text for each bubble
-  node.append("text")
+  nodes.append("text")
     .attr("x", function(d){ return d.x; })
     .attr("y", function(d){ return d.y + d.r/3; })
     .attr("text-anchor", "middle")
@@ -169,7 +165,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       fill: "white"
     });
 
-  node.append("text")
+  nodes.append("text")
     .attr("x", function(d){ return d.x; })
     .attr("y", function(d){ return d.y; })
     .attr("text-anchor", "middle")
@@ -182,48 +178,46 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       "text-anchor": "middle",
       fill: "white"
     });
+
   function tick(e) {
-    node
-      .each(gravity(.2 * e.alpha))
-      .each(collide(.5))
-      .attr("cx", function (d) {return d.x;})
-      .attr("cy", function (d) {return d.y;});
+    nodes
+      .each(gravity(.1 * e.alpha))
+      .each(collide(0.5))
+      .attr("cx", function (d) { return d.x; })
+      .attr("cy", function (d) { return d.y; });
   }
 
   function gravity(alpha) {
     return function (d) {
-      d.y += (d.cy - d.y) * alpha;
-      d.x += (d.cx - d.x) * alpha;
+      d.y += (d.centerY - d.y) * alpha;
+      d.x += (d.centerX - d.x) * alpha;
     };
   }
 
   function collide(alpha) {
-    var quadtree = d3.geom.quadtree(nodes);
+    var quadtree = d3.geom.quadtree(catDataNodes);
     return function (d) {
-      console.log(d.r);
-      console.log(d.x);
-      console.log(d.y);
-    var r = d.r + maxRadius + padding,
+      var r = d.r + maxRadius + padding,
         nx1 = d.x - r,
         nx2 = d.x + r,
         ny1 = d.y - r,
         ny2 = d.y + r;
-    quadtree.visit(function(quad, x1, y1, x2, y2) {
-      if (quad.point && (quad.point !== d)) {
-        var x = d.x - quad.point.x,
-            y = d.y - quad.point.y,
-            l = Math.sqrt(x * x + y * y),
-            r = d.r + quad.point.radius + (d.color !== quad.point.color) * padding;
-        if (l < r) {
-          l = (l - r) / l * alpha;
-          d.x -= x *= l;
-          d.y -= y *= l;
-          quad.point.x += x;
-          quad.point.y += y;
+      quadtree.visit(function(quad, x1, y1, x2, y2) {
+        if (quad.point && (quad.point !== d)) {
+          var x = d.x - quad.point.x,
+              y = d.y - quad.point.y,
+              l = Math.sqrt(x * x + y * y),
+              r = d.r + quad.point.r + padding;
+          if (l < r) {
+            l = (l - r) / l * alpha;
+            d.x -= x *= l;
+            d.y -= y *= l;
+            quad.point.x += x;
+            quad.point.y += y;
+          }
         }
-      }
-      return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
-    });
-   };
+        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+      });
+    };
   }
 });
