@@ -1448,7 +1448,7 @@ a:hover {
  * CSS FOR MAKING THE PAGE RESPONSIVE PARTIALLY
  *
  */
-img, video, canvas {
+img, canvas {
   max-width: 100%;
 }
 
