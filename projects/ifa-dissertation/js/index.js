@@ -149,7 +149,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     .attr("text-anchor", "middle")
     .style("pointer-events", "none")
     .text(function(d){
-      console.log(d);
+      // console.log(d);
       // return d["name"]; 
       return d.name.substring(0, d.r / 4);
     })
@@ -203,7 +203,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
 
   function gravity(alpha) {
     return function (d) {
-      console.log(d);
+      // console.log(d);
       d.y += (d.centerY - d.y) * alpha;
       d.x += (d.centerX - d.x) * alpha;
     };
