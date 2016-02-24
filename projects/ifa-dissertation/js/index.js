@@ -53,6 +53,12 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         return a.Advisor;
       });
 
+  var years = data.map(function(a){
+        // a.Category = a.Category.toLowerCase();
+        return a.Year;
+      });
+
+  //get catergory data
   var catCount = {}; //category frequency.
 
   data.forEach(function(a){
@@ -71,10 +77,8 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     });
   });
 
-  categories = categories.unique();
-
-  //get advisor
-  var advCount = {}; //category frequency.
+  //get advisor data
+  var advCount = {}; //advisor frequency.
 
   data.forEach(function(a){
     if(!advCount[a.Advisor]) 
@@ -91,8 +95,29 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       count: advCount[k]
     });
   });
+
+  //get year data
+  var yeaCount = {}; //year frequency.
+
+  data.forEach(function(a){
+    if(!yeaCount[a.Year]) 
+      yeaCount[a.Year]=1;
+    else
+      yeaCount[a.Year]++;
+  });
+
+  var yeaData = [];
+
+  Object.keys(yeaCount).forEach(function(k){
+    yeaData.push({
+      name: k,
+      count: yeaCount[k]
+    });
+  });
+
   categories = categories.unique();
   advisors = advisors.unique();
+  years = years.unique();
 
   catData = catData.map(function(d){ 
     d.value = +d.count;
@@ -100,18 +125,22 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     d.centerY = height/2;
     return d; 
   });
-  advData = advData.map(function(d){ d.value = +d.count; return d; });
+  advData = advData.map(function(d){ 
+    d.value = +d.count;
+    d.centerX = width/2;
+    d.centerY = height/2; 
+    return d; 
+  });
+  yeaData = yeaData.map(function(d){ 
+    d.value = +d.count;
+    d.centerX = width/2;
+    d.centerY = height/2; 
+    return d; 
+  });
   //bubbles needs specific format, convert data to this
   var catDataNodes = bubble.nodes({children:catData}).filter(function(d) { return !d.children; });
   var advDataNodes = bubble.nodes({children:advData}).filter(function(d) { return !d.children; });
-
-  var force = d3.layout.force()
-    .nodes(catDataNodes)
-    .size([width, height])
-    .gravity(0)
-    .charge(0)
-    .on("tick", tick)
-    .start();
+  var yeaDataNodes = bubble.nodes({children:yeaData}).filter(function(d) { return !d.children; });
 
   var svg = d3.select("body")
     .append("svg")
@@ -119,120 +148,148 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     .attr("height", height)
     .attr("class", "bubble");
 
-  //setup the chart
-  var nodes = svg.selectAll(".node")//"circle"     
-    .data(catDataNodes)
-    .enter()
-    .append("g")
-    .attr("class", "nodes")
-    .call(force.drag);
+  function updateData(newData){
+    //remove old elements  
+    d3.selectAll("circle")    
+      .remove();
 
-  var circles = nodes.append("circle")
-    .attr("r", function(d) { return d.r; })
-    .attr("cx", function(d){ return d.x; })
-    .attr("cy", function(d){ return d.y; })
-    .style("fill", function(d) { return color(d.value); })
-    // .call(force.drag)
-    .on("mouseover", function(d) {
-      tooltip.text(d.name + ": " + format(d.value));
-      tooltip.style("visibility", "visible");
-    })
-    .on("mousemove", function() {
-      return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
-    })
-    .on("mouseout", function() { return tooltip.style("visibility", "hidden"); });
+    var force = d3.layout.force()
+      .nodes(newData) //catDataNodes --> newData
+      .size([width, height])
+      .gravity(0)
+      .charge(0)
+      .on("tick", tick)
+      .start();  
 
-  //format the text for each bubble
-  var name = nodes.append("text")
-    .attr("x", function(d){ return d.x; })
-    .attr("y", function(d){ return d.y + d.r/3; })
-    .attr("text-anchor", "middle")
-    .style("pointer-events", "none")
-    .text(function(d){
-      // console.log(d);
-      // return d["name"]; 
-      return d.name.substring(0, d.r / 4);
-    })
-    .style({
-      "font-size":"12px",
-      "font-family": "sans-serif",
-      "font-weight": "100",
-      "text-anchor": "middle",
-      fill: "white"
-    });
+    //setup the chart
+    var nodes = svg.selectAll(".node")//"circle"     
+      .data(newData);
 
-  var number = nodes.append("text")
-    .attr("x", function(d){ return d.x; })
-    .attr("y", function(d){ return d.y; })
-    .attr("text-anchor", "middle")
-    // .style("pointer-events", "none")
-    .text(function(d){ return d["count"]; })
-    .style({
-      "font-size": "20px",
-      "font-family": "sans-serif",
-      "font-weight": "100",
-      "text-anchor": "middle",
-      fill: "white"
-    });
+    nodes.enter()
+      .append("g")
+      .attr("class", "nodes")
+      .call(force.drag);
 
-  circles.transition()
-    .duration(1000)//750
-    .delay(function(d, i) { return i * 5; })
-    .attrTween("r", function(d) {
-      var i = d3.interpolate(0, d.r);
-      return function(t) { return d.r = i(t); };
-    });
+    var circles = nodes.append("circle")
+      .attr("r", function(d) { return d.r; })
+      .attr("cx", function(d){ return d.x; })
+      .attr("cy", function(d){ return d.y; })
+      .style("fill", function(d) { return color(d.value); })
+      // .call(force.drag)
+      .on("mouseover", function(d) {
+        tooltip.text(d.name + ": " + format(d.value));
+        tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function() {
+        return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+      })
+      .on("mouseout", function() { return tooltip.style("visibility", "hidden"); });
 
-  function tick(e) {
-    circles
-      .each(gravity(.1 * e.alpha))
-      .each(collide(0.5))
-      .attr("cx", function (d) { return d.x; })
-      .attr("cy", function (d) { return d.y; });
-    number
-      .each(gravity(.1 * e.alpha))
-      .each(collide(0.5))
-      .attr("x", function (d) { return d.x; })
-      .attr("y", function (d) { return d.y; });
-    name
-      .each(gravity(.1 * e.alpha))
-      .each(collide(0.5))
-      .attr("x", function (d) { return d.x; })
-      .attr("y", function (d) { return d.y + d.r/3; });
-  }
-
-  function gravity(alpha) {
-    return function (d) {
-      // console.log(d);
-      d.y += (d.centerY - d.y) * alpha;
-      d.x += (d.centerX - d.x) * alpha;
-    };
-  }
-
-  function collide(alpha) {
-    var quadtree = d3.geom.quadtree(catDataNodes);
-    return function (d) {
-      var r = d.r + maxRadius + padding,
-        nx1 = d.x - r,
-        nx2 = d.x + r,
-        ny1 = d.y - r,
-        ny2 = d.y + r;
-      quadtree.visit(function(quad, x1, y1, x2, y2) {
-        if (quad.point && (quad.point !== d)) {
-          var x = d.x - quad.point.x,
-              y = d.y - quad.point.y,
-              l = Math.sqrt(x * x + y * y),
-              r = d.r + quad.point.r + padding;
-          if (l < r) {
-            l = (l - r) / l * alpha;
-            d.x -= x *= l;
-            d.y -= y *= l;
-            quad.point.x += x;
-            quad.point.y += y;
-          }
-        }
-        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+    //format the text for each bubble
+    var name = nodes.append("text")
+      .attr("x", function(d){ return d.x; })
+      .attr("y", function(d){ return d.y + d.r/3; })
+      .attr("text-anchor", "middle")
+      .style("pointer-events", "none")
+      .text(function(d){
+        // console.log(d);
+        // return d["name"]; 
+        return d.name.substring(0, d.r / 4);
+      })
+      .style({
+        "font-size":"12px",
+        "font-family": "sans-serif",
+        "font-weight": "100",
+        "text-anchor": "middle",
+        fill: "white"
       });
-    };
+
+    var number = nodes.append("text")
+      .attr("x", function(d){ return d.x; })
+      .attr("y", function(d){ return d.y; })
+      .attr("text-anchor", "middle")
+      .style("pointer-events", "none")
+      .text(function(d){ return d["count"]; })
+      .style({
+        "font-size": "20px",
+        "font-family": "sans-serif",
+        "font-weight": "100",
+        "text-anchor": "middle",
+        fill: "white"
+      });
+
+    circles.transition()
+      .duration(1000)//750
+      .delay(function(d, i) { return i * 5; })
+      .attrTween("r", function(d) {
+        var i = d3.interpolate(0, d.r);
+        return function(t) { return d.r = i(t); };
+      });
+
+    // //remove old elements  
+    // svg.selectAll(".node")//"circle"     
+    //   .data(newData).exit().remove();
+
+    // nodes.exit().remove().call(function(){console.log(nodes);});
+
+    function tick(e) {
+      circles
+        .each(gravity(.1 * e.alpha))
+        .each(collide(0.5))
+        .attr("cx", function (d) { return d.x; })
+        .attr("cy", function (d) { return d.y; });
+      number
+        .each(gravity(.1 * e.alpha))
+        .each(collide(0.5))
+        .attr("x", function (d) { return d.x; })
+        .attr("y", function (d) { return d.y; });
+      name
+        .each(gravity(.1 * e.alpha))
+        .each(collide(0.5))
+        .attr("x", function (d) { return d.x; })
+        .attr("y", function (d) { return d.y + d.r/3; });
+    }
+
+    function gravity(alpha) {
+      return function (d) {
+        // console.log(d);
+        d.y += (d.centerY - d.y) * alpha;
+        d.x += (d.centerX - d.x) * alpha;
+      };
+    }
+
+    function collide(alpha) {
+      var quadtree = d3.geom.quadtree(newData);//catDataNodes --> newData
+      return function (d) {
+        var r = d.r + maxRadius + padding,
+          nx1 = d.x - r,
+          nx2 = d.x + r,
+          ny1 = d.y - r,
+          ny2 = d.y + r;
+        quadtree.visit(function(quad, x1, y1, x2, y2) {
+          if (quad.point && (quad.point !== d)) {
+            var x = d.x - quad.point.x,
+                y = d.y - quad.point.y,
+                l = Math.sqrt(x * x + y * y),
+                r = d.r + quad.point.r + padding;
+            if (l < r) {
+              l = (l - r) / l * alpha;
+              d.x -= x *= l;
+              d.y -= y *= l;
+              quad.point.x += x;
+              quad.point.y += y;
+            }
+          }
+          return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+        });
+      };
+    }
   }
+  updateData(catDataNodes);
+
+  d3.select('#text-select')
+    .on('change', function(){
+      var newData = eval(d3.select(this).property('value'));
+      updateData(newData);
+    });
 });
