@@ -2,11 +2,35 @@
     text-align: center;
   }
   text {
-      font: 10px sans-serif;
+    font: 10px sans-serif;
   }
   #text-select{
     /*float:right;*/
     position:absolute;
-    left: 965px;
+    left: 35px;
     width: 10%;
+  }
+  #yearTag0{
+    font: 25px sans-serif;
+    text-align: left;
+    left: 85px;
+    position: absolute;
+    top: 130px;
+    z-index: 100;
+  }
+   #yearTag1{
+    font: 25px sans-serif;
+    text-align: left;
+    left: 480px;
+    position: absolute;
+    top: 130px;
+    z-index: 100;
+  }
+   #yearTag2{
+    font: 25px sans-serif;
+    text-align: left;
+    left: 960px;
+    position: absolute;
+    top: 130px;
+    z-index: 100;
   }

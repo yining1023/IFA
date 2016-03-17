@@ -13,15 +13,37 @@ Array.prototype.unique = function()
   return r;
 }
 
-var radius = d3.scale.sqrt().range([0, 12]);
+var radius = d3.scale.sqrt().range([0, 10]);
 var padding = 3, // separation between same-color nodes
     clusterPadding = 6, // separation between different-color nodes
-    maxRadius = 12;
+    maxRadius = 10;
 
 var height = 800, //max size of the bubbles
-    width = 1100,
+    width = 1200,
     format = d3.format(",d"),
     color = d3.scale.category20c(); //color category
+    
+var center = {
+  x: width/2,
+  y: height/2
+};
+
+var year_centers = [{
+    name: "1933-1960",
+    x: width / 10,
+    y: height / 2
+  },{
+    name: "1960-1987",
+    x: width * 4 / 10,
+    y: height / 2
+  },{ 
+    name: "1987-2014",
+    x: 8 * width / 10,
+    y: height / 2
+  }];
+
+var target;
+var damper = 0.1;
 
 var bubble = d3.layout.pack()
     .sort(null)
@@ -153,14 +175,32 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     d3.selectAll("circle")    
       .remove();
 
-    var force = d3.layout.force()
-      .nodes(newData) //catDataNodes --> newData
-      .size([width, height])
-      .gravity(0)
-      .charge(0)
-      .on("tick", tick)
-      .start();  
-
+    year0 = parseInt(newData[0].name);
+    if(year0 > 1932 && year0 < 2015){
+      var force = d3.layout.force()
+        .nodes(newData) //catDataNodes --> newData
+        .size([width, height])
+        .gravity(-0.01)
+        .charge(function(d){return -Math.pow(d.radius, 2.0) / 8; })
+        .friction(0.9)
+        .on("tick", tickYear)
+        .start();
+        display_years();
+    }
+    else{
+      var force = d3.layout.force()
+        .nodes(newData) //catDataNodes --> newData
+        .size([width, height])
+        .gravity(-0.01)
+        .charge(function(d){return -Math.pow(d.radius, 2.0) / 8; })
+        //.gravity(0)
+        //.charge(0)
+        //add friction
+        .friction(0.9)
+        .on("tick", tick)
+        .start(); 
+      hide_years(); 
+    }
     //setup the chart
     var nodes = svg.selectAll(".node")//"circle"     
       .data(newData);
@@ -177,41 +217,49 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       .style("fill", function(d) { return color(d.value); })
       // .call(force.drag)
       .on("mouseover", function(d) {
+        var bubble = d3.select(this);
+        bubble.attr("stroke", "#000")
+          .attr("stroke-width", 2.5);
         tooltip.text(d.name + ": " + format(d.value));
         tooltip.style("visibility", "visible");
       })
       .on("mousemove", function() {
         return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
       })
-      .on("mouseout", function() { return tooltip.style("visibility", "hidden"); });
-
-    //format the text for each bubble
-    var name = nodes.append("text")
-      .attr("x", function(d){ return d.x; })
-      .attr("y", function(d){ return d.y + d.r/3; })
-      .attr("text-anchor", "middle")
-      .style("pointer-events", "none")
-      .text(function(d){
-        // console.log(d);
-        // return d["name"]; 
-        return d.name.substring(0, d.r / 4);
-      })
-      .style({
-        "font-size":"12px",
-        "font-family": "sans-serif",
-        "font-weight": "100",
-        "text-anchor": "middle",
-        fill: "white"
+      .on("mouseout", function() { 
+        var bubble = d3.select(this);
+        tooltip.style("visibility", "hidden");
+        bubble.attr("stroke", "none");
       });
 
+    //format the text for each bubble
+    // var name = nodes.append("text")
+    //   .attr("x", function(d){ return d.x; })
+    //   .attr("y", function(d){ return d.y + d.r/3; })
+    //   .attr("text-anchor", "middle")
+    //   .style("pointer-events", "none")
+    //   .text(function(d){
+    //     // console.log(d);
+    //     // return d["name"]; 
+    //     return d.name.substring(0, d.r / 4);
+    //   })
+    //   .style({
+    //     "font-size":"12px",
+    //     "font-family": "sans-serif",
+    //     "font-weight": "100",
+    //     "text-anchor": "middle",
+    //     fill: "white"
+    //   });
+
+    //format the number for each bubble
     var number = nodes.append("text")
-      .attr("x", function(d){ return d.x; })
-      .attr("y", function(d){ return d.y; })
+      .attr("x", function(d){ return d.x})
+      .attr("y", function(d){ return d.y})
       .attr("text-anchor", "middle")
       .style("pointer-events", "none")
       .text(function(d){ return d["count"]; })
+      .style("font-size", function(d){return d.r/4 + 10 +"px";})
       .style({
-        "font-size": "20px",
         "font-family": "sans-serif",
         "font-weight": "100",
         "text-anchor": "middle",
@@ -219,14 +267,14 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       });
 
     circles.transition()
-      .duration(1000)//750
+      .duration(2000)//750
       .delay(function(d, i) { return i * 5; })
       .attrTween("r", function(d) {
         var i = d3.interpolate(0, d.r);
         return function(t) { return d.r = i(t); };
       });
 
-    // //remove old elements  
+    // remove old elements  
     // svg.selectAll(".node")//"circle"     
     //   .data(newData).exit().remove();
 
@@ -234,25 +282,107 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
 
     function tick(e) {
       circles
-        .each(gravity(.1 * e.alpha))
-        .each(collide(0.5))
+        // .each(gravity(.1 * e.alpha))
+        .each(collide(0.03))
+        .each(move_towards_center(e.alpha))
         .attr("cx", function (d) { return d.x; })
         .attr("cy", function (d) { return d.y; });
       number
-        .each(gravity(.1 * e.alpha))
-        .each(collide(0.5))
+        // .each(gravity(.1 * e.alpha))
+        .each(collide(0.03))
+        .each(move_towards_center(e.alpha))
         .attr("x", function (d) { return d.x; })
         .attr("y", function (d) { return d.y; });
-      name
-        .each(gravity(.1 * e.alpha))
-        .each(collide(0.5))
+      //show the name in the bubble
+      // name
+      //   .each(gravity(.1 * e.alpha))
+      //   .each(collide(0.5))
+      //   .attr("x", function (d) { return d.x; })
+      //   .attr("y", function (d) { return d.y + d.r/3; });
+    }
+
+    function tickYear(e) {
+      circles
+        // .each(gravity(.1 * e.alpha))
+        .each(collide(0.01))
+        .each(move_towards_year(e.alpha))
+        .attr("cx", function (d) { return d.x; })
+        .attr("cy", function (d) { return d.y; });
+      number
+        // .each(gravity(.1 * e.alpha))
+        .each(collide(0.01))
+        .each(move_towards_year(e.alpha))
         .attr("x", function (d) { return d.x; })
-        .attr("y", function (d) { return d.y + d.r/3; });
+        .attr("y", function (d) { return d.y; });
+    }
+
+    function move_towards_center(alpha){
+        return function(d) {
+          d.x = d.x + (center.x - d.x) * (damper + 0.02) * alpha;
+          d.y = d.y + (center.y - d.y) * (damper + 0.02) * alpha;
+        };
+    };
+
+    function move_towards_year(alpha){
+        return function(d) {
+          var year = parseInt(d.name);
+          if(year > 1932 && year < 1960){
+            target = year_centers[0];
+          }
+          else if(year >= 1960 && year < 1987){
+            target = year_centers[1];
+          }
+          else if(year >= 1987 && year <= 2014){
+            target = year_centers[2];
+          }
+          else{
+            target = year_centers[2];
+          }
+          var alphaY = alpha/4;
+          d.x = d.x + (target.x - d.x) * (damper + 0.02) * alpha * 1.1;
+          d.y = d.y + (target.y - d.y) * (damper + 0.02) * alphaY;
+        };
+    };
+
+    function display_years(){
+      if($("#yearTag0").length !== 0){
+        for(var i = 0; i < year_centers.length; i++){
+          var id = 'yearTag'+i;
+          id = id.toString();
+          if($("#" + id).length !== 0){
+            var a = $('#'+id);
+            a.css('visibility', 'visible');    
+          }
+        }
+      }
+      else{
+        var year = [];
+        for(var i = 0; i < year_centers.length; i++){
+          year[i] = document.createElement("div");
+          year[i].id = "yearTag"+i;
+          var content = document.createTextNode(year_centers[i].name); 
+          year[i].appendChild(content);
+          var bubble = $(".bubble");
+          document.body.insertBefore(year[i], bubble[0]);
+        }
+      }
+    }
+
+    function hide_years(){
+      for(var i = 0; i < year_centers.length; i++){
+        var id = 'yearTag'+i;
+        id = id.toString();
+        if($("#" + id).length !== 0){
+          var a = $('#'+id);
+          a.css('visibility', 'hidden');    
+        }
+      }
     }
 
     function gravity(alpha) {
       return function (d) {
         // console.log(d);
+        // alphaY = alpha / 8;
         d.y += (d.centerY - d.y) * alpha;
         d.x += (d.centerX - d.x) * alpha;
       };
