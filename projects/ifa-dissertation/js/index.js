@@ -80,7 +80,9 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         // a.Category = a.Category.toLowerCase();
         return a.Year;
       });
-
+  var titles = data.map(function(a){
+        return a.Title;
+      });
   //get catergory data
   var catCount = {}; //category frequency.
 
@@ -233,7 +235,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         bubble.attr("stroke", "none");
       })
       .on("click",  function(d){
-          renderCatProfile(d);
+        renderCatProfile(d);
       });
 
     //format the text for each bubble
@@ -422,6 +424,17 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           +"<span class=\"number\">" 
           + d["count"] + "</span>" + "</h3>"
       );
+      var dInOneCat = data.filter(function(e){
+        return (e.Category === d.name);
+      });
+      for (var i = 0; i < dInOneCat.length; i++) {
+        $("#dissertation-info").append("<div><b>" 
+          + dInOneCat[i].Author + "  </b>" 
+          + dInOneCat[i].Title + ";  "
+          + "Advisor:  <b>" + dInOneCat[i].Advisor + dInOneCat[i].Advisor2 + ";  "
+          + "</b>Year: <b>" + dInOneCat[i].Year
+          + "</b></div>");
+      };
     }
   }
   updateData(catDataNodes);
