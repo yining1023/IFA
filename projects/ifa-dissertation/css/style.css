@@ -34,3 +34,10 @@
     top: 130px;
     z-index: 100;
   }
+
+  #dissertation-info{
+    text-align: left;
+    position: absolute;
+    top: 620px;
+    left: 50px;
+  }

@@ -13,12 +13,13 @@ Array.prototype.unique = function()
   return r;
 }
 
+var panelOpen = false; //alumni info panel state
 var radius = d3.scale.sqrt().range([0, 10]);
 var padding = 3, // separation between same-color nodes
     clusterPadding = 6, // separation between different-color nodes
     maxRadius = 10;
 
-var height = 800, //max size of the bubbles
+var height = 600, //max size of the bubbles
     width = 1200,
     format = d3.format(",d"),
     color = d3.scale.category20c(); //color category
@@ -230,6 +231,9 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         var bubble = d3.select(this);
         tooltip.style("visibility", "hidden");
         bubble.attr("stroke", "none");
+      })
+      .on("click",  function(d){
+          renderCatProfile(d);
       });
 
     //format the text for each bubble
@@ -355,17 +359,6 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           }
         }
       }
-      else{
-        var year = [];
-        for(var i = 0; i < year_centers.length; i++){
-          year[i] = document.createElement("div");
-          year[i].id = "yearTag"+i;
-          var content = document.createTextNode(year_centers[i].name); 
-          year[i].appendChild(content);
-          var bubble = $(".bubble");
-          document.body.insertBefore(year[i], bubble[0]);
-        }
-      }
     }
 
     function hide_years(){
@@ -413,6 +406,22 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
         });
       };
+    }
+    function renderPanel(d){
+      renderCatProfile(d);
+      if( !panelOpen ){
+        // $("#dissertation-info").fadeThenSlideToggle();
+        panelOpen = true;
+      }
+    }
+      //RENDERS PLACE PROFILE i.e. list of all people in a place
+    function renderCatProfile(d){
+      $("#dissertation-info").html(
+          "<h3> <span class=\"name\">" 
+          + d.name + ": " + "</span>" 
+          +"<span class=\"number\">" 
+          + d["count"] + "</span>" + "</h3>"
+      );
     }
   }
   updateData(catDataNodes);
