@@ -167,7 +167,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   var advDataNodes = bubble.nodes({children:advData}).filter(function(d) { return !d.children; });
   var yeaDataNodes = bubble.nodes({children:yeaData}).filter(function(d) { return !d.children; });
 
-  var svg = d3.select("body")
+  var svg = d3.select(".visualization")
     .append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -418,23 +418,69 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     }
       //RENDERS PLACE PROFILE i.e. list of all people in a place
     function renderCatProfile(d){
-      $("#dissertation-info").html(
-          "<h3> <span class=\"name\">" 
-          + d.name + ": " + "</span>" 
-          +"<span class=\"number\">" 
+      $("#selection").html(
+          "<h3> <span class=\"name\">"
+          + d.name + ": " + "</span>"
+          +"<span class=\"number\">"
           + d["count"] + "</span>" + "</h3>"
       );
       var dInOneCat = data.filter(function(e){
         return (e.Category === d.name);
       });
-      for (var i = 0; i < dInOneCat.length; i++) {
-        $("#dissertation-info").append("<div><b>" 
-          + dInOneCat[i].Author + "  </b>" 
-          + dInOneCat[i].Title + ";  "
-          + "Advisor:  <b>" + dInOneCat[i].Advisor + dInOneCat[i].Advisor2 + ";  "
-          + "</b>Year: <b>" + dInOneCat[i].Year
-          + "</b></div>");
-      };
+      var dInOneAdv = data.filter(function(e){
+        return (e.Advisor === d.name);
+      });
+      var dInOneYea = data.filter(function(e){
+        return (e.Year === d.name);
+      });
+      if(dInOneCat.length > 0){
+        $("#dissertation").append("<tr>"
+          + "<th>Author</th>"
+          + "<th>Title</th>"
+          + "<th>Advisor(s)</th>"
+          + "<th>Year</th>"
+          + "</tr>");
+        for (var i = 0; i < dInOneCat.length; i++) {
+          $("#dissertation").append("<tr>"
+            + "<td><strong>" + dInOneCat[i].Author + "</strong></td>"
+            + "<td>" + dInOneCat[i].Title + "</td>"
+            + "<td>" + dInOneCat[i].Advisor + "; " + dInOneCat[i].Advisor2 + "</td>"
+            + "<td>" + dInOneCat[i].Year + "</td>"
+            + "</tr>");
+        };
+      }
+      else if(dInOneAdv.length > 0) {
+        $("#dissertation").append("<tr>"
+          + "<th>Author</th>"
+          + "<th>Title</th>"
+          + "<th>Category</th>"
+          + "<th>Year</th>"
+          + "</tr>");
+        for (var i = 0; i < dInOneAdv.length; i++) {
+          $("#dissertation").append("<tr>"
+            + "<td>" + dInOneAdv[i].Author + "</td>"
+            + "<td>" + dInOneAdv[i].Title + "</td>"
+            + "<td>" + dInOneAdv[i].Category + "</td>"
+            + "<td>" + dInOneAdv[i].Year + "</td>"
+            + "</tr>");
+        };
+      }
+      else if(dInOneYea.length > 0){
+        $("#dissertation").append("<tr>"
+          + "<th>Author</th>"
+          + "<th>Title</th>"
+          + "<th>Category</th>"
+          + "<th>Advisor(s)</th>"
+          + "</tr>");
+        for (var i = 0; i < dInOneYea.length; i++) {
+          $("#dissertation").append("<tr>"
+            + "<td>" + dInOneYea[i].Author + "</td>"
+            + "<td>" + dInOneYea[i].Title + "</td>"
+            + "<td>" + dInOneYea[i].Category + "</td>"
+            + "<td>" + dInOneYea[i].Advisor + ", " + dInOneYea[i].Advisor2 + "</td>"
+            + "</tr>");
+        };
+      }
     }
   }
   updateData(catDataNodes);
