@@ -37,8 +37,11 @@ body{
 .legend rect {
   display: hidden;
   fill:white;
-  stroke:black;
+  /*stroke:black;*/
   opacity:0.8;
+}
+.legend-items text {
+  fill: #555;
 }
 
 .info {
