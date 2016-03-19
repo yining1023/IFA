@@ -279,19 +279,19 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     //   });
 
     //format the number for each bubble
-    var number = nodes.append("text")
-      .attr("x", function(d){ return d.x})
-      .attr("y", function(d){ return d.y})
-      .attr("text-anchor", "middle")
-      .style("pointer-events", "none")
-      .text(function(d){ return d["count"]; })
-      .style("font-size", function(d){return d.r/4 + 10 +"px";})
-      .style({
-        "font-family": "sans-serif",
-        "font-weight": "100",
-        "text-anchor": "middle",
-        fill: "white"
-      });
+    // var number = nodes.append("text")
+    //   .attr("x", function(d){ return d.x})
+    //   .attr("y", function(d){ return d.y})
+    //   .attr("text-anchor", "middle")
+    //   .style("pointer-events", "none")
+    //   .text(function(d){ return d["count"]; })
+    //   .style("font-size", function(d){return d.r/4 + 10 +"px";})
+    //   .style({
+    //     "font-family": "sans-serif",
+    //     "font-weight": "100",
+    //     "text-anchor": "middle",
+    //     fill: "white"
+    //   });
 
     circles.transition()
       .duration(2000)//750
@@ -314,12 +314,12 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         .each(move_towards_center(e.alpha))
         .attr("cx", function (d) { return d.x; })
         .attr("cy", function (d) { return d.y; });
-      number
+      // number
         // .each(gravity(.1 * e.alpha))
-        .each(collide(0.03))
-        .each(move_towards_center(e.alpha))
-        .attr("x", function (d) { return d.x; })
-        .attr("y", function (d) { return d.y; });
+        // .each(collide(0.03))
+        // .each(move_towards_center(e.alpha))
+        // .attr("x", function (d) { return d.x; })
+        // .attr("y", function (d) { return d.y; });
       //show the name in the bubble
       // name
       //   .each(gravity(.1 * e.alpha))
@@ -335,12 +335,12 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         .each(move_towards_year(e.alpha))
         .attr("cx", function (d) { return d.x; })
         .attr("cy", function (d) { return d.y; });
-      number
+      // number
         // .each(gravity(.1 * e.alpha))
-        .each(collide(0.01))
-        .each(move_towards_year(e.alpha))
-        .attr("x", function (d) { return d.x; })
-        .attr("y", function (d) { return d.y; });
+        // .each(collide(0.01))
+        // .each(move_towards_year(e.alpha))
+        // .attr("x", function (d) { return d.x; })
+        // .attr("y", function (d) { return d.y; });
     }
 
     function move_towards_center(alpha){
