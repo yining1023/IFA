@@ -22,7 +22,14 @@ var padding = 3, // separation between same-color nodes
 var height = 600, //max size of the bubbles
     width = 1200,
     format = d3.format(",d"),
-    color = d3.scale.category20c(); //color category
+    colorMap = {},
+    color = function(key, totalColors) {
+      var colorIndex = Object.keys(colorMap).length + 10 || 1;
+      if (!colorMap[key]) {
+        colorMap[key] = d3.hsl((colorIndex * (360 / totalColors)) % 360, 0.7, 0.7);
+      }
+      return colorMap[key];
+    };
     
 var center = {
   x: width/2,
@@ -217,7 +224,9 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       .attr("r", function(d) { return d.r; })
       .attr("cx", function(d){ return d.x; })
       .attr("cy", function(d){ return d.y; })
-      .style("fill", function(d) { return color(d.value); })
+      .style("fill", function(d) {
+        return color(d.name, newData.length); 
+      })
       // .call(force.drag)
       .on("mouseover", function(d) {
         var bubble = d3.select(this);
@@ -237,6 +246,18 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       .on("click",  function(d){
         renderCatProfile(d);
       });
+
+    if(newData[0].name == "African Art (sub-Saharan)"){
+      circles.attr("data-legend", function(d) { return d.name; });
+      var legend = svg.append("g")
+        .attr("class","legend")
+        .attr("transform","translate(16, 70)")
+        .style("font-size","12px")
+        .attr("data-style-padding",10)
+        .call(d3.legend);
+    } else {
+      $("g.legend").remove();
+    }
 
     //format the text for each bubble
     // var name = nodes.append("text")
@@ -433,6 +454,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       var dInOneYea = data.filter(function(e){
         return (e.Year === d.name);
       });
+      $('#dissertation').empty();
       if(dInOneCat.length > 0){
         $("#dissertation").append("<tr>"
           + "<th>Author</th>"

@@ -1,13 +1,13 @@
 body{
   text-align: center;
 }
-text {
+/*text {
   font: 10px sans-serif;
-}
+}*/
 #text-select{
   /*float:right;*/
   position:absolute;
-  left: 35px;
+  left: 40px;
   width: 10%;
 }
 #yearTag0{
@@ -34,16 +34,23 @@ text {
   top: 130px;
   z-index: 100;
 }
+.legend rect {
+  display: hidden;
+  fill:white;
+  stroke:black;
+  opacity:0.8;
+}
 
 .info {
   text-align: left;
   left: 50px;
 }
-/*
+
 #dissertation {
-  top: 650px;
+  /*top: 650px;*/
+  width: 95%;
 }
 
-#selection {
+/*#selection {
   top: 620px;
 }*/
