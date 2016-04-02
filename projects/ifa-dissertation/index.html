@@ -1,40 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta charset="utf-8">
-<head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"crossorigin="anonymous">
+  <meta charset="utf-8">
+  <head>
+    <script src="./js/jquery.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="./css//icons/foundation-icons.css">
+    <link href="./css/av-style.css" rel="stylesheet" type="text/css"/>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"crossorigin="anonymous">
 
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"  crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"  crossorigin="anonymous">
 
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous">
-  </script>
-</head>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous">
+    </script>
 
-<body>
-<div id="container">
-  <h1 style="font-family: sans-serif; font-weight: 100">A Data Visualization of IFA Dissertations from 1933 - 2014</h1>
-  <select class="form-control" id="text-select">
-    <option value="catDataNodes">Category</option>
-    <option value="advDataNodes">Advisor</option>
-    <option value="yeaDataNodes">Year</option>
-  </select>
-  <div id='yearTag0'>1933-1960</div>
-  <div id='yearTag1'>1960-1987</div>
-  <div id='yearTag2'>1987-2014</div>
-  <div class='visualization'></div>
-  <div class="info row col-md-12">
-    <div id="selection"></div>
-    <table id="dissertation"></table>
+    <script src="./js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="./js/foundation.min.js"></script>
+  </head>
+
+  <body>
+  <div id="container">
+    <h1 style="font-family: sans-serif; font-weight: 100">A Data Visualization of IFA Dissertations from 1933 - 2014</h1>
+    <select class="form-control" id="text-select">
+      <option value="catDataNodes">Category</option>
+      <option value="advDataNodes">Advisor</option>
+      <option value="yeaDataNodes">Year</option>
+    </select>
+    <div id='yearTag0'>1933-1960</div>
+    <div id='yearTag1'>1960-1987</div>
+    <div id='yearTag2'>1987-2014</div>
+    <div class='visualization'></div>
+    <div id="search" class="ui-widget content">
+      <input id="searchbox" placeholder="Search"></input>
+      <i class="fi-magnifying-glass" id="searchbtn"></i>    
+    </div>
+    <div class="info row col-md-12">
+      <div id="selection"></div>
+      <table id="dissertation"></table>
+    </div>
   </div>
-</div>
-<script src="js/d3/d3.min.js"></script>
-<script src="js/d3/d3.legend.js"></script>
-<script src="js/index.js"></script>
-</body>
+  <script src="js/d3/d3.min.js"></script>
+  <script src="js/d3/d3.legend.js"></script>
+  <script src="js/index.js"></script>
+  </body>
 </html>

@@ -1,0 +1,253 @@
+.full-width {
+  /*width: 940px !important;*/
+  width: 940px;
+}
+
+.contentWrapper {
+  position: absolute;
+}
+
+.graticule {
+  fill: none;
+  display: none;
+  stroke: #777;
+  stroke-width: .5px;
+  stroke-opacity: .5;
+}
+
+.land {
+  fill: rgba(170,170,170,0.7);
+}
+
+.boundary {
+  fill: none;
+  stroke: #fff;
+  stroke-width: .5px;
+}
+
+.columns {
+  transition: all 0.9s ease-in-out;
+}
+
+#categories {
+  position: relative !important;
+  /*background-color: #fff;*/
+}
+
+#map {
+  /*width:1200px;*/
+  width:940px; 
+  height:390px;
+  position: absolute;
+  left:0px;
+  top:0px;
+}
+
+.point {
+  cursor: pointer;
+  transition: 0.3s all ease-in-out;
+}
+.point:hover {
+  width: 10;
+}
+
+.invisible {
+  display: none;
+}
+
+.heading {
+  font-weight: 300;
+}
+
+.category-box {
+  font-size: 0.85em;
+  width: 16px;
+  height: 16px;
+  background-color: #eee;
+  margin: 3px 3px 3px 3px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.3s ease-in-out;
+}
+
+#info-box{
+  padding-top: 0.83em;
+}
+#info-name {
+  width: 16px;
+  height: 16px;
+  background-color: #eee;
+  border-radius: 12px;
+}
+
+.selected {
+  border-left-width: 16px !important;
+  background-color: #bedded;
+}
+
+.text-inlay {
+  position: absolute;
+  text-transform: uppercase;
+  left: 40px;
+}
+
+.leaflet-bottom {
+  display: none;
+}
+
+#meta-viz {
+  font-weight: 300;
+  margin: 7px 0px;
+}
+h2 {
+  font-weight: bolder;
+}
+.info-inner {
+  border: 3px #efefef solid;
+  border-right-width: 0px !important;
+  border-left-width: 0px !important;
+  padding-top: 10px;
+  height: 260px;
+}
+
+#info {
+  margin: 10px 0 10px 0;
+}
+
+/*.name {
+  position: absolute;
+  left: 40px;
+  font-weight: 300;
+  font-size: 1.8em;
+}*/
+.degree {
+  color: #555;
+  margin: 6px 0 0 0;
+}
+.notes {
+  font-style: italic;
+}
+
+.ui-autocomplete {
+  max-height: 100px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+}
+
+.cardhighlight {
+  margin-bottom: 1px !important;
+}
+
+#searchbox {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 1em;
+  width: 300px;
+  height: 30px;
+}
+
+#searchbox2 {
+  margin-left: 6px;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 1em;
+  width: 300px;
+  height: 30px;
+}
+
+/* Bar graph */
+
+.bar {
+  /*fill: steelblue;*/
+  opacity: 1.0;
+  transition: all 0.3s ease-in-out;
+}
+
+.bar:hover {
+  opacity: 0.77;
+  transition: all 0.3s ease-in-out;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+
+#alumni-info {
+  display: none; /* default */
+  margin: 0px 0 10px 0;
+  padding-top: 5px;
+  border-top: 3px #efefef solid;
+}
+
+#profile_img {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.fi-x {
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  width: 10px;
+  font-size: 1.5em;
+  color: #666;
+}
+
+.fi-magnifying-glass {
+  margin-left: 7px;
+  width: 15px;
+  height: 15px;
+  font-size: 1.3em;
+  color: #666;
+}
+
+.button-border {border: 1px solid #999;border-radius: 2px;background-color:#FFF;}
+
+.alum-href {
+  padding: 3px;
+  margin: 2px 0px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.alum-href:hover {
+  background-color: #efefef;
+  transition: all 0.3s ease-in-out;
+}
+
+
+
+.ui-helper-hidden-accessible {
+  display: none;
+}
+.ui-autocomplete {
+  background-color: rgba(255,255,255,1);
+  width: 300px !important;
+  padding: 4px !important;
+  max-height: 300px !important;
+}
+.ui-menu-item {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  margin: 4px 0 0 0;
+}
+.ui-state-focus {
+  color: #fff !important;
+  background-color: #7a98ab !important;
+  border: none !important;
+  padding: 3px !important;
+}
+

@@ -19,6 +19,8 @@ var padding = 3, // separation between same-color nodes
     clusterPadding = 6, // separation between different-color nodes
     maxRadius = 10;
 
+var _data;
+
 var height = 600, //max size of the bubbles
     width = 1200,
     format = d3.format(",d"),
@@ -151,6 +153,9 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   advisors = advisors.unique();
   years = years.unique();
 
+  _data = data;
+  initSearchBox();
+
   catData = catData.map(function(d){ 
     d.value = +d.count;
     d.centerX = width/2;
@@ -180,6 +185,122 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     .attr("height", height)
     .attr("class", "bubble");
 
+  function initSearchBox(){
+    var categories = _data.map(function(a){
+      return a.Category;
+    }).unique();
+    // console.log(categories);
+    // var placesWithLocation = _data.map(function(a){
+    //   return { 
+    //     place: a.place,
+    //     lat: a.lat,
+    //     lon: a.lon
+    //   };
+    // });
+
+    // var names = _alumni.map(function(a){
+    //   return a.name;
+    // });
+
+    // var searchTerms = places.concat(names);
+
+    var searchTerms = categories;
+    // console.log(searchTerms);
+    $( "#searchbox" ).autocomplete({
+      source: searchTerms,
+      select: function(e, selected){
+        // var nameIndex = names.indexOf(selected.item.value);
+        // var placeIndex = places.indexOf(selected.item.value);
+        // if(nameIndex > -1){
+        //   var d = _alumni[nameIndex];
+        //   renderPanel(d, {alumniProfile: true});
+        // }
+        var catIndex = categories.indexOf(selected.item.value);
+        if(catIndex > -1){
+          var d = catDataNodes[catIndex];
+          console.log("here comes the d from searchbox");
+          console.log(d);
+          renderProfile(d);
+        }
+        // else{
+        //   //force to show list of alumnis at a place even if there is just one alumni at that place
+        //   var d = placesWithLocation.filter(function(pl) {
+        //     return (pl.place === selected.item.value);
+        //   });
+        //   d = d[0];
+        //   renderPanel(d, {forcePlaceProfile: true}); 
+        // }
+      }
+    });
+  }
+  //RENDERS PROFILE i.e. list of all dissertation in one cat/year/adv
+  function renderProfile(d){
+    // console.log(d);
+    $("#selection").html(
+        "<h3> <span class=\"name\">"
+        + d.name + ": " + "</span>"
+        +"<span class=\"number\">"
+        + d["count"] + "</span>" + "</h3>"
+    );
+    var dInOneCat = data.filter(function(e){
+      return (e.Category === d.name);
+    });
+    var dInOneAdv = data.filter(function(e){
+      return (e.Advisor === d.name);
+    });
+    var dInOneYea = data.filter(function(e){
+      return (e.Year === d.name);
+    });
+    $('#dissertation').empty();
+    if(dInOneCat.length > 0){
+      $("#dissertation").append("<tr>"
+        + "<th>Author</th>"
+        + "<th>Title</th>"
+        + "<th>Advisor(s)</th>"
+        + "<th>Year</th>"
+        + "</tr>");
+      for (var i = 0; i < dInOneCat.length; i++) {
+        $("#dissertation").append("<tr>"
+          + "<td><strong>" + dInOneCat[i].Author + "</strong></td>"
+          + "<td>" + dInOneCat[i].Title + "</td>"
+          + "<td>" + dInOneCat[i].Advisor + "; " + dInOneCat[i].Advisor2 + "</td>"
+          + "<td>" + dInOneCat[i].Year + "</td>"
+          + "</tr>");
+      };
+    }
+    else if(dInOneAdv.length > 0) {
+      $("#dissertation").append("<tr>"
+        + "<th>Author</th>"
+        + "<th>Title</th>"
+        + "<th>Category</th>"
+        + "<th>Year</th>"
+        + "</tr>");
+      for (var i = 0; i < dInOneAdv.length; i++) {
+        $("#dissertation").append("<tr>"
+          + "<td>" + dInOneAdv[i].Author + "</td>"
+          + "<td>" + dInOneAdv[i].Title + "</td>"
+          + "<td>" + dInOneAdv[i].Category + "</td>"
+          + "<td>" + dInOneAdv[i].Year + "</td>"
+          + "</tr>");
+      };
+    }
+    else if(dInOneYea.length > 0){
+      $("#dissertation").append("<tr>"
+        + "<th>Author</th>"
+        + "<th>Title</th>"
+        + "<th>Category</th>"
+        + "<th>Advisor(s)</th>"
+        + "</tr>");
+      for (var i = 0; i < dInOneYea.length; i++) {
+        $("#dissertation").append("<tr>"
+          + "<td>" + dInOneYea[i].Author + "</td>"
+          + "<td>" + dInOneYea[i].Title + "</td>"
+          + "<td>" + dInOneYea[i].Category + "</td>"
+          + "<td>" + dInOneYea[i].Advisor + ", " + dInOneYea[i].Advisor2 + "</td>"
+          + "</tr>");
+      };
+    }
+  }
   function updateData(newData){
     //remove old elements  
     d3.selectAll("circle")    
@@ -244,7 +365,8 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         bubble.attr("stroke", "none");
       })
       .on("click",  function(d){
-        renderCatProfile(d);
+        console.log(d);
+        renderProfile(d);
       });
 
     if(newData[0].name == "African Art (sub-Saharan)"){
@@ -430,82 +552,16 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         });
       };
     }
-    function renderPanel(d){
-      renderCatProfile(d);
-      if( !panelOpen ){
-        // $("#dissertation-info").fadeThenSlideToggle();
-        panelOpen = true;
-      }
-    }
-      //RENDERS PLACE PROFILE i.e. list of all people in a place
-    function renderCatProfile(d){
-      $("#selection").html(
-          "<h3> <span class=\"name\">"
-          + d.name + ": " + "</span>"
-          +"<span class=\"number\">"
-          + d["count"] + "</span>" + "</h3>"
-      );
-      var dInOneCat = data.filter(function(e){
-        return (e.Category === d.name);
-      });
-      var dInOneAdv = data.filter(function(e){
-        return (e.Advisor === d.name);
-      });
-      var dInOneYea = data.filter(function(e){
-        return (e.Year === d.name);
-      });
-      $('#dissertation').empty();
-      if(dInOneCat.length > 0){
-        $("#dissertation").append("<tr>"
-          + "<th>Author</th>"
-          + "<th>Title</th>"
-          + "<th>Advisor(s)</th>"
-          + "<th>Year</th>"
-          + "</tr>");
-        for (var i = 0; i < dInOneCat.length; i++) {
-          $("#dissertation").append("<tr>"
-            + "<td><strong>" + dInOneCat[i].Author + "</strong></td>"
-            + "<td>" + dInOneCat[i].Title + "</td>"
-            + "<td>" + dInOneCat[i].Advisor + "; " + dInOneCat[i].Advisor2 + "</td>"
-            + "<td>" + dInOneCat[i].Year + "</td>"
-            + "</tr>");
-        };
-      }
-      else if(dInOneAdv.length > 0) {
-        $("#dissertation").append("<tr>"
-          + "<th>Author</th>"
-          + "<th>Title</th>"
-          + "<th>Category</th>"
-          + "<th>Year</th>"
-          + "</tr>");
-        for (var i = 0; i < dInOneAdv.length; i++) {
-          $("#dissertation").append("<tr>"
-            + "<td>" + dInOneAdv[i].Author + "</td>"
-            + "<td>" + dInOneAdv[i].Title + "</td>"
-            + "<td>" + dInOneAdv[i].Category + "</td>"
-            + "<td>" + dInOneAdv[i].Year + "</td>"
-            + "</tr>");
-        };
-      }
-      else if(dInOneYea.length > 0){
-        $("#dissertation").append("<tr>"
-          + "<th>Author</th>"
-          + "<th>Title</th>"
-          + "<th>Category</th>"
-          + "<th>Advisor(s)</th>"
-          + "</tr>");
-        for (var i = 0; i < dInOneYea.length; i++) {
-          $("#dissertation").append("<tr>"
-            + "<td>" + dInOneYea[i].Author + "</td>"
-            + "<td>" + dInOneYea[i].Title + "</td>"
-            + "<td>" + dInOneYea[i].Category + "</td>"
-            + "<td>" + dInOneYea[i].Advisor + ", " + dInOneYea[i].Advisor2 + "</td>"
-            + "</tr>");
-        };
-      }
-    }
+    // function renderPanel(d){
+    //   renderCatProfile(d);
+    //   if( !panelOpen ){
+    //     // $("#dissertation-info").fadeThenSlideToggle();
+    //     panelOpen = true;
+    //   }
+    // }
   }
   updateData(catDataNodes);
+  // console.log(catDataNodes);
 
   d3.select('#text-select')
     .on('change', function(){
