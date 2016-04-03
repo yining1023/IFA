@@ -195,38 +195,46 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     var years = _data.map(function(a){
       return a.Year;
     }).unique();
+    var advisors = _data.map(function(a){
+      return a.Advisor;
+    }).unique();
 
-    var searchTerms = categories.concat(years);
+    var searchTerms0 = categories.concat(years);
+    var searchTerms = searchTerms0.concat(advisors);
     $( "#searchbox" ).autocomplete({
       source: searchTerms,
       select: function(e, selected){
         var catIndex = categories.indexOf(selected.item.value);
         var yeaIndex = years.indexOf(selected.item.value);
-        // console.log(years);
-        // console.log(selected.item.value);
-        // console.log(yeaIndex);
+        var advIndex = advisors.indexOf(selected.item.value);
+
         if(catIndex > -1){
           var d = Category[catIndex];
-          // console.log("here comes the d from searchbox");
           console.log(d);
           renderProfile(d);
           if(dataType !== "category"){
            var val = 'Category';
            $("#text-select").val(val);
-           // d3.select('text-select').property('value', 'Category');
            updateData(Category);
           }
         }
         else if(yeaIndex > -1){
           var reverseIndex = years.length -1 - yeaIndex;
           var d = Year[reverseIndex];
-          // console.log(d);
           renderProfile(d);
           if(dataType !== "year"){
             var val = 'Year';
             $("#text-select").val(val);
-            // d3.select('text-select').property('value', 'Year');
             updateData(Year);
+          }
+        }
+        else if(advIndex > -1){
+          var d = Advisor[advIndex];
+          renderProfile(d);
+          if(dataType !== "advisor"){
+            var val = 'Advisor';
+            $("#text-select").val(val);
+            updateData(Advisor);
           }
         }
       }
