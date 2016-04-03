@@ -89,11 +89,17 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         // a.Category = a.Category.toLowerCase();
         return a.Year;
       });
+
   var titles = data.map(function(a){
         return a.Title;
       });
-  //get catergory data
-  var catCount = {}; //category frequency.
+
+  var authors = data.map(function(a){
+        return a.Author;
+      });
+
+  //get catergory frequency data
+  var catCount = {};
 
   data.forEach(function(a){
     if(!catCount[a.Category]) 
@@ -149,9 +155,29 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     });
   });
 
+  //get author data
+  var autCount = {}; //year frequency.
+
+  data.forEach(function(a){
+    if(!autCount[a.Author]) 
+      autCount[a.Author]=1;
+    else
+      autCount[a.Author]++;
+  });
+
+  var autData = [];
+
+  Object.keys(autCount).forEach(function(k){
+    autData.push({
+      name: k,
+      count: autCount[k]
+    });
+  });
+
   categories = categories.unique();
   advisors = advisors.unique();
   years = years.unique();
+  authors = authors.unique();
 
   _data = data;
   initSearchBox();
@@ -174,13 +200,17 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     d.centerY = height/2; 
     return d; 
   });
+
+  autData = autData.map(function(d){ 
+    d.value = +d.count; //only needs valaue, no centerX, centerY 
+    return d; 
+  });
   //bubbles needs specific format, convert data to this
-  // var Category = bubble.nodes({children:catData}).filter(function(d) { return !d.children; });
-  // var Advisor = bubble.nodes({children:advData}).filter(function(d) { return !d.children; });
-  // var Year = bubble.nodes({children:yeaData}).filter(function(d) { return !d.children; });
   var Category = bubble.nodes({children:catData}).filter(function(d) { return !d.children; });
   var Advisor = bubble.nodes({children:advData}).filter(function(d) { return !d.children; });
   var Year = bubble.nodes({children:yeaData}).filter(function(d) { return !d.children; });
+
+  var Author = bubble.nodes({children:autData}).filter(function(d) { return !d.children; });
 
   var svg = d3.select(".visualization")
     .append("svg")
@@ -198,15 +228,20 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     var advisors = _data.map(function(a){
       return a.Advisor;
     }).unique();
+    var authors = _data.map(function(a){
+      return a.Author;
+    }).unique();
 
     var searchTerms0 = categories.concat(years);
-    var searchTerms = searchTerms0.concat(advisors);
+    var searchTerms1 = searchTerms0.concat(authors);
+    var searchTerms = searchTerms1.concat(advisors);
     $( "#searchbox" ).autocomplete({
       source: searchTerms,
       select: function(e, selected){
         var catIndex = categories.indexOf(selected.item.value);
         var yeaIndex = years.indexOf(selected.item.value);
         var advIndex = advisors.indexOf(selected.item.value);
+        var autIndex = authors.indexOf(selected.item.value);
 
         if(catIndex > -1){
           var d = Category[catIndex];
@@ -229,6 +264,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           }
         }
         else if(advIndex > -1){
+          console.log(Advisor);
           var d = Advisor[advIndex];
           renderProfile(d);
           if(dataType !== "advisor"){
@@ -236,6 +272,10 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
             $("#text-select").val(val);
             updateData(Advisor);
           }
+        }
+        else if(autIndex > -1){
+          var d = Author[autIndex];
+          renderProfile(d);
         }
       }
     });
@@ -257,6 +297,9 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     });
     var dInOneYea = data.filter(function(e){
       return (e.Year === d.name);
+    });
+    var dInOneAut = data.filter(function(e){
+      return (e.Author === d.name);
     });
     $('#dissertation').empty();
     if(dInOneCat.length > 0){
@@ -304,6 +347,22 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           + "<td>" + dInOneYea[i].Title + "</td>"
           + "<td>" + dInOneYea[i].Category + "</td>"
           + "<td>" + dInOneYea[i].Advisor + ", " + dInOneYea[i].Advisor2 + "</td>"
+          + "</tr>");
+      };
+    }
+    else if(dInOneAut.length > 0){
+      $("#dissertation").append("<tr>"
+        + "<th>Title</th>"
+        + "<th>Category</th>"
+        + "<th>Advisor(s)</th>"
+        + "<th>Year</th>"
+        + "</tr>");
+      for (var i = 0; i < dInOneAut.length; i++) {
+        $("#dissertation").append("<tr>"
+          + "<td>" + dInOneAut[i].Title + "</td>"
+          + "<td>" + dInOneAut[i].Category + "</td>"
+          + "<td>" + dInOneAut[i].Advisor + ", " + dInOneAut[i].Advisor2 + "</td>"
+          + "<td>" + dInOneAut[i].Year + "</td>"
           + "</tr>");
       };
     }
@@ -569,16 +628,8 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         });
       };
     }
-    // function renderPanel(d){
-    //   renderCatProfile(d);
-    //   if( !panelOpen ){
-    //     // $("#dissertation-info").fadeThenSlideToggle();
-    //     panelOpen = true;
-    //   }
-    // }
   }
   updateData(Category);
-  // console.log(Category);
 
   d3.select('#text-select')
     .on('change', function(){
