@@ -12,7 +12,7 @@ Array.prototype.unique = function()
   }
   return r;
 }
-
+var dataType;
 var panelOpen = false; //alumni info panel state
 var radius = d3.scale.sqrt().range([0, 10]);
 var padding = 3, // separation between same-color nodes
@@ -175,9 +175,12 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     return d; 
   });
   //bubbles needs specific format, convert data to this
-  var catDataNodes = bubble.nodes({children:catData}).filter(function(d) { return !d.children; });
-  var advDataNodes = bubble.nodes({children:advData}).filter(function(d) { return !d.children; });
-  var yeaDataNodes = bubble.nodes({children:yeaData}).filter(function(d) { return !d.children; });
+  // var Category = bubble.nodes({children:catData}).filter(function(d) { return !d.children; });
+  // var Advisor = bubble.nodes({children:advData}).filter(function(d) { return !d.children; });
+  // var Year = bubble.nodes({children:yeaData}).filter(function(d) { return !d.children; });
+  var Category = bubble.nodes({children:catData}).filter(function(d) { return !d.children; });
+  var Advisor = bubble.nodes({children:advData}).filter(function(d) { return !d.children; });
+  var Year = bubble.nodes({children:yeaData}).filter(function(d) { return !d.children; });
 
   var svg = d3.select(".visualization")
     .append("svg")
@@ -189,47 +192,43 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     var categories = _data.map(function(a){
       return a.Category;
     }).unique();
-    // console.log(categories);
-    // var placesWithLocation = _data.map(function(a){
-    //   return { 
-    //     place: a.place,
-    //     lat: a.lat,
-    //     lon: a.lon
-    //   };
-    // });
+    var years = _data.map(function(a){
+      return a.Year;
+    }).unique();
 
-    // var names = _alumni.map(function(a){
-    //   return a.name;
-    // });
-
-    // var searchTerms = places.concat(names);
-
-    var searchTerms = categories;
-    // console.log(searchTerms);
+    var searchTerms = categories.concat(years);
     $( "#searchbox" ).autocomplete({
       source: searchTerms,
       select: function(e, selected){
-        // var nameIndex = names.indexOf(selected.item.value);
-        // var placeIndex = places.indexOf(selected.item.value);
-        // if(nameIndex > -1){
-        //   var d = _alumni[nameIndex];
-        //   renderPanel(d, {alumniProfile: true});
-        // }
         var catIndex = categories.indexOf(selected.item.value);
+        var yeaIndex = years.indexOf(selected.item.value);
+        // console.log(years);
+        // console.log(selected.item.value);
+        // console.log(yeaIndex);
         if(catIndex > -1){
-          var d = catDataNodes[catIndex];
-          console.log("here comes the d from searchbox");
+          var d = Category[catIndex];
+          // console.log("here comes the d from searchbox");
           console.log(d);
           renderProfile(d);
+          if(dataType !== "category"){
+           var val = 'Category';
+           $("#text-select").val(val);
+           // d3.select('text-select').property('value', 'Category');
+           updateData(Category);
+          }
         }
-        // else{
-        //   //force to show list of alumnis at a place even if there is just one alumni at that place
-        //   var d = placesWithLocation.filter(function(pl) {
-        //     return (pl.place === selected.item.value);
-        //   });
-        //   d = d[0];
-        //   renderPanel(d, {forcePlaceProfile: true}); 
-        // }
+        else if(yeaIndex > -1){
+          var reverseIndex = years.length -1 - yeaIndex;
+          var d = Year[reverseIndex];
+          // console.log(d);
+          renderProfile(d);
+          if(dataType !== "year"){
+            var val = 'Year';
+            $("#text-select").val(val);
+            // d3.select('text-select').property('value', 'Year');
+            updateData(Year);
+          }
+        }
       }
     });
   }
@@ -302,14 +301,24 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     }
   }
   function updateData(newData){
+    year0 = parseInt(newData[0].name);
+    //check what data type do we have in the bubble chart now, category, year, or advisor
+    if(year0 > 1932 && year0 < 2015){
+      dataType = "year";
+    }
+    else if(newData[0].name == "African Art (sub-Saharan)"){
+      dataType = "category";
+    }
+    else{
+      dataType = "advisor";
+    }
     //remove old elements  
     d3.selectAll("circle")    
       .remove();
 
-    year0 = parseInt(newData[0].name);
     if(year0 > 1932 && year0 < 2015){
       var force = d3.layout.force()
-        .nodes(newData) //catDataNodes --> newData
+        .nodes(newData) //Category --> newData
         .size([width, height])
         .gravity(-0.01)
         .charge(function(d){return -Math.pow(d.radius, 2.0) / 8; })
@@ -320,7 +329,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     }
     else{
       var force = d3.layout.force()
-        .nodes(newData) //catDataNodes --> newData
+        .nodes(newData) //Category --> newData
         .size([width, height])
         .gravity(-0.01)
         .charge(function(d){return -Math.pow(d.radius, 2.0) / 8; })
@@ -365,7 +374,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         bubble.attr("stroke", "none");
       })
       .on("click",  function(d){
-        console.log(d);
+        // console.log(d);
         renderProfile(d);
       });
 
@@ -527,7 +536,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     }
 
     function collide(alpha) {
-      var quadtree = d3.geom.quadtree(newData);//catDataNodes --> newData
+      var quadtree = d3.geom.quadtree(newData);//Category --> newData
       return function (d) {
         var r = d.r + maxRadius + padding,
           nx1 = d.x - r,
@@ -560,12 +569,13 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     //   }
     // }
   }
-  updateData(catDataNodes);
-  // console.log(catDataNodes);
+  updateData(Category);
+  // console.log(Category);
 
   d3.select('#text-select')
     .on('change', function(){
       var newData = eval(d3.select(this).property('value'));
+      console.log(newData);
       updateData(newData);
     });
 });
