@@ -1,18 +1,41 @@
 h1{
-  text-align: center;
+  text-align: center; 
+  font-family: Garamond;
+  font-size: 48px;
+  color: #750005;
 }
-/*text {
-  font: 10px sans-serif;
-}*/
+h2{
+  text-align: center; 
+  font-family: Garamond;
+  font-size: 36px;
+  color: #750005;
+}
+h3{ 
+  font-family: Garamond;
+  font-size: 36px;
+  color: #750005;
+}
+@font-face {  
+  font-family: Garamond-italic; 
+  src: url( 'Garamond-italic.otf');
+  font-weight: 300;
+  font-style: italic; );
+}
+@font-face {  
+  font-family: Garamond;
+  font-weight: 300;  
+  src: url( 'Garamond.otf' );  
+}
 #text-select{
   /*float:right;*/
   position:absolute;
   left: 40px;
-  width: 10%;
+  width: 15%;
 }
 #search{
   position:relative;
-  left: 50px;
+  top: -350px;
+  left: 40px;
 }
 #yearTag0{
   font: 25px sans-serif;

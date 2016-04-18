@@ -21,7 +21,7 @@ var padding = 3, // separation between same-color nodes
 
 var _data;
 
-var height = 600, //max size of the bubbles
+var height = 500, //max size of the bubbles
     width = 1200,
     format = d3.format(",d"),
     colorMap = {},
@@ -31,7 +31,11 @@ var height = 600, //max size of the bubbles
         colorMap[key] = d3.hsl((colorIndex * (360 / totalColors)) % 360, 0.7, 0.7);
       }
       return colorMap[key];
-    };
+    }, //generate the evenly spaced hue color with fixed saturation and lightness
+    colorForCat = d3.scale.ordinal()
+    .domain(["0", "1", "2", "3", "4", "5", "6", "7", "8","9", "10", "11","12"])
+    .range(['#0a67a3','#4f90ba','#074f7e','#ffd663','#043e63',
+    '#ffcb39','#ffbc00','#ff4100','#ff8b63','#c53200']);
     
 var center = {
   x: width/2,
@@ -277,7 +281,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
 
         if(catIndex > -1){
           var d = Category[catIndex];
-          console.log(d);
+          // console.log(d);
           renderProfile(d);
           if(dataType !== "category"){
            var val = 'Category';
@@ -296,7 +300,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           }
         }
         else if(advIndex > -1){
-          console.log(Advisor);
+          // console.log(Advisor);
           var d = Advisor[advIndex];
           renderProfile(d);
           if(dataType !== "advisor"){
@@ -345,92 +349,93 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     $('#dissertation').empty();
     if(dInOneCat.length > 0){
       $("#dissertation").append("<tr>"
-        + "<th>Author</th>"
-        + "<th>Title</th>"
-        + "<th>Advisor(s)</th>"
         + "<th>Year</th>"
+        + "<th>Author</th>"
+        + "<th>Advisor(s)</th>"
+        + "<th>Title</th>"
         + "</tr>");
       for (var i = 0; i < dInOneCat.length; i++) {
         $("#dissertation").append("<tr>"
-          + "<td><strong>" + dInOneCat[i].Author + "</strong></td>"
-          + "<td>" + dInOneCat[i].Title + "</td>"
-          + "<td>" + dInOneCat[i].Advisor + "; " + dInOneCat[i].Advisor2 + "</td>"
           + "<td>" + dInOneCat[i].Year + "</td>"
+          + "<td>" + dInOneCat[i].Author + "</td>"
+          + "<td>" + dInOneCat[i].Advisor + "; " + dInOneCat[i].Advisor2 + "</td>"  
+          + "<td>" + dInOneCat[i].Title + "</td>"
           + "</tr>");
       };
     }
     else if(dInOneAdv.length > 0) {
       $("#dissertation").append("<tr>"
+        + "<th>Year</th>"
         + "<th>Author</th>"
         + "<th>Title</th>"
         + "<th>Category</th>"
-        + "<th>Year</th>"
         + "</tr>");
       for (var i = 0; i < dInOneAdv.length; i++) {
         $("#dissertation").append("<tr>"
+          + "<td>" + dInOneAdv[i].Year + "</td>"
           + "<td>" + dInOneAdv[i].Author + "</td>"
           + "<td>" + dInOneAdv[i].Title + "</td>"
           + "<td>" + dInOneAdv[i].Category + "</td>"
-          + "<td>" + dInOneAdv[i].Year + "</td>"
           + "</tr>");
       };
     }
     else if(dInOneYea.length > 0){
       $("#dissertation").append("<tr>"
         + "<th>Author</th>"
+        + "<th>Advisor(s)</th>"
         + "<th>Title</th>"
         + "<th>Category</th>"
-        + "<th>Advisor(s)</th>"
         + "</tr>");
       for (var i = 0; i < dInOneYea.length; i++) {
         $("#dissertation").append("<tr>"
           + "<td>" + dInOneYea[i].Author + "</td>"
+          + "<td>" + dInOneYea[i].Advisor + ", " + dInOneYea[i].Advisor2 + "</td>"
           + "<td>" + dInOneYea[i].Title + "</td>"
           + "<td>" + dInOneYea[i].Category + "</td>"
-          + "<td>" + dInOneYea[i].Advisor + ", " + dInOneYea[i].Advisor2 + "</td>"
           + "</tr>");
       };
     }
     else if(dInOneAut.length > 0){
       $("#dissertation").append("<tr>"
+        + "<th>Year</th>"
+        + "<th>Advisor(s)</th>"
         + "<th>Title</th>"
         + "<th>Category</th>"
-        + "<th>Advisor(s)</th>"
-        + "<th>Year</th>"
         + "</tr>");
       for (var i = 0; i < dInOneAut.length; i++) {
         $("#dissertation").append("<tr>"
+          + "<td>" + dInOneAut[i].Year + "</td>"
+          + "<td>" + dInOneAut[i].Advisor + ", " + dInOneAut[i].Advisor2 + "</td>"
           + "<td>" + dInOneAut[i].Title + "</td>"
           + "<td>" + dInOneAut[i].Category + "</td>"
-          + "<td>" + dInOneAut[i].Advisor + ", " + dInOneAut[i].Advisor2 + "</td>"
-          + "<td>" + dInOneAut[i].Year + "</td>"
           + "</tr>");
       };
     }
     else if(dInOneTit.length > 0){
       $("#dissertation").append("<tr>"
-        + "<th>Author</th>"
-        + "<th>Category</th>"
-        + "<th>Advisor(s)</th>"
         + "<th>Year</th>"
+        + "<th>Author</th>"
+        + "<th>Advisor(s)</th>"
+        + "<th>Category</th>"
         + "</tr>");
       for (var i = 0; i < dInOneTit.length; i++) {
         $("#dissertation").append("<tr>"
-          + "<td>" + dInOneTit[i].Author + "</td>"
-          + "<td>" + dInOneTit[i].Category + "</td>"
-          + "<td>" + dInOneTit[i].Advisor + ", " + dInOneTit[i].Advisor2 + "</td>"
           + "<td>" + dInOneTit[i].Year + "</td>"
+          + "<td>" + dInOneTit[i].Author + "</td>"
+          + "<td>" + dInOneTit[i].Advisor + ", " + dInOneTit[i].Advisor2 + "</td>"
+          + "<td>" + dInOneTit[i].Category + "</td>"
           + "</tr>");
       };
     }
   }
   function updateData(newData){
     year0 = parseInt(newData[0].name);
+    console.log(newData[0].name);
     //check what data type do we have in the bubble chart now, category, year, or advisor
-    if(year0 > 1932 && year0 < 2015){
+    if(year0 > 1932){
       dataType = "year";
     }
-    else if(newData[0].name == "African Art (sub-Saharan)"){
+    else if(newData[0].name == "Nineteenth- and Twentieth-Century Art"){
       dataType = "category";
     }
     else{
@@ -440,30 +445,28 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     d3.selectAll("circle")    
       .remove();
 
-    if(year0 > 1932 && year0 < 2015){
+    //if it's year data, display years
+    if(dataType == "year"){
       var force = d3.layout.force()
-        .nodes(newData) //Category --> newData
+        .nodes(newData) //Year --> newData
         .size([width, height])
         .gravity(-0.01)
         .charge(function(d){return -Math.pow(d.radius, 2.0) / 8; })
         .friction(0.9)
-        .on("tick", tickYear)
+        .on("tick", tickYear) //call tick Year instead
         .start();
         display_years();
     }
     else{
       var force = d3.layout.force()
-        .nodes(newData) //Category --> newData
+        .nodes(newData) //newData is not year
         .size([width, height])
         .gravity(-0.01)
         .charge(function(d){return -Math.pow(d.radius, 2.0) / 8; })
-        //.gravity(0)
-        //.charge(0)
-        //add friction
         .friction(0.9)
         .on("tick", tick)
         .start(); 
-      hide_years(); 
+        hide_years(); 
     }
     //setup the chart
     var nodes = svg.selectAll(".node")//"circle"     
@@ -478,9 +481,9 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       .attr("r", function(d) { return d.r; })
       .attr("cx", function(d){ return d.x; })
       .attr("cy", function(d){ return d.y; })
-      .style("fill", function(d) {
-        return color(d.name, newData.length); 
-      })
+      // .style("fill", function(d) {
+      //   return color(d.name, newData.length); 
+      // })
       // .call(force.drag)
       .on("mouseover", function(d) {
         var bubble = d3.select(this);
@@ -502,17 +505,39 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         renderProfile(d);
       });
 
-    if(newData[0].name == "African Art (sub-Saharan)"){
+    if(dataType == "category"){
+      circles.style("fill", function(d) {
+        return colorForCat(d.name); 
+      })
+    }else{
+      circles.style("fill", function(d) {
+        return color(d.name, newData.length); 
+      })
+    }
+
+    if(newData[0].name == "Nineteenth- and Twentieth-Century Art"){
       circles.attr("data-legend", function(d) { return d.name; });
+      var linearSize = d3.scale.linear().domain([0,10]).range([10, 30]);
       var legend = svg.append("g")
         .attr("class","legend")
-        .attr("transform","translate(16, 70)")
-        .style("font-size","12px")
+        .attr("transform","translate(45, 40)")
+        .style("font-size","12px") 
         .attr("data-style-padding",10)
         .call(d3.legend);
-    } else {
+    } else if (newData[0].name == "Storr, Robert"){
+      circles.attr("data-legend", function(d) { return d.name; });
+      var linearSize = d3.scale.linear().domain([0,10]).range([10, 30]);
+      var legend = svg.append("g")
+        .attr("class","legend")
+        .attr("transform","translate(45, 40)")
+        .style("font-size","12px") 
+        .attr("data-style-padding",10)
+        .call(d3.legend);
+    }else {
       $("g.legend").remove();
     }
+
+
 
     //format the text for each bubble
     // var name = nodes.append("text")
@@ -691,7 +716,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   d3.select('#text-select')
     .on('change', function(){
       var newData = eval(d3.select(this).property('value'));
-      console.log(newData);
+      // console.log(newData);
       updateData(newData);
     });
 });
