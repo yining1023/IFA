@@ -249,6 +249,12 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     .attr("height", height)
     .attr("class", "bubble");
 
+  //creating svg for legend for advisor data
+  var svg2 = d3.select("#legend")
+    .append("svg")
+    .attr("width", 300)
+    .attr("height", 20*(advData.length+1));
+
   function initSearchBox(){
     var categories = _data.map(function(a){
       return a.Category;
@@ -430,7 +436,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   }
   function updateData(newData){
     year0 = parseInt(newData[0].name);
-    console.log(newData[0].name);
+    // console.log(newData[0].name);
     //check what data type do we have in the bubble chart now, category, year, or advisor
     if(year0 > 1932){
       dataType = "year";
@@ -515,25 +521,55 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       })
     }
 
+    //when it's category data, show legend
     if(newData[0].name == "Nineteenth- and Twentieth-Century Art"){
-      circles.attr("data-legend", function(d) { return d.name; });
-      var linearSize = d3.scale.linear().domain([0,10]).range([10, 30]);
+      $("#legend").attr("style", "visibility: hidden");
+      $("#search").attr("style", "top: -800px");
+      $("g.legend").remove();
+      circles.attr("data-legend", function(d) { return d.name+": "+d.count; });
       var legend = svg.append("g")
         .attr("class","legend")
-        .attr("transform","translate(45, 40)")
+        .attr("transform","translate(47, 40)")
         .style("font-size","12px") 
         .attr("data-style-padding",10)
         .call(d3.legend);
-    } else if (newData[0].name == "Storr, Robert"){
-      circles.attr("data-legend", function(d) { return d.name; });
-      var linearSize = d3.scale.linear().domain([0,10]).range([10, 30]);
-      var legend = svg.append("g")
+    } else if (newData[0].name == "Storr, Robert"){ //when it's advisor data, show antoher legend
+        $("#search").attr("style", "top: -480px");
+        $("#legend").attr("style", "visibility: visible");
+        $("g.legend").remove();
+      
+      var legend = svg2.append("g")
         .attr("class","legend")
-        .attr("transform","translate(45, 40)")
+        .attr("transform","translate(50, 40)")
         .style("font-size","12px") 
-        .attr("data-style-padding",10)
-        .call(d3.legend);
+        .attr("data-style-padding",10);
+        // .call(d3.legend);
+      legend.selectAll('rect')
+        .data(newData)
+        .enter()
+        .append("circle")
+        .attr("cx", 30)
+        .attr("cy", function(d, i){ return (i-1) *  20})
+        .attr("r", 2.5)
+        // .attr("height", 5)
+        .style("stroke", "#660300")
+        .attr("stroke-width", 1)
+        .style("fill", "#660300");
+
+      legend.selectAll('text')
+        .data(newData)
+        .enter()
+        .append("text")
+        .attr("x", 40)
+        .attr("width", 5)
+        .attr("height", 5)
+        .attr("y", function(d, i){ return (i-1) *  20 + 5;})
+        .text(function(d) {
+          return d.name;
+        });
     }else {
+      $("#legend").attr("style", "visibility: hidden");
+      $("#search").attr("style", "top: -900px");
       $("g.legend").remove();
     }
 

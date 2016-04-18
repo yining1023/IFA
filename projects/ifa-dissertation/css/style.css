@@ -34,7 +34,6 @@ h3{
 }
 #search{
   position:relative;
-  top: -350px;
   left: 40px;
 }
 #yearTag0{
@@ -61,6 +60,14 @@ h3{
   top: 130px;
   z-index: 100;
 }
+.legend{
+  overflow: auto;
+  height: 450px;  
+  width: 300px;
+  position: relative;
+  top: -480px;
+  left: -33px;
+}
 .legend rect {
   display: hidden;
   fill:white;
@@ -79,6 +86,11 @@ h3{
 #dissertation {
   /*top: 650px;*/
   width: 95%;
+}
+
+.info{
+  position: relative;
+  top: -450px;
 }
 
 /*#selection {
