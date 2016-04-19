@@ -354,20 +354,29 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
 
     $('#dissertation').empty();
     if(dInOneCat.length > 0){
-      $("#dissertation").append("<tr>"
-        + "<th>Year</th>"
-        + "<th>Author</th>"
-        + "<th>Advisor(s)</th>"
-        + "<th>Title</th>"
-        + "</tr>");
+      $("#dissertation").append("<thead><tr>"
+        + "<th data-field='year' data-sortable='true'>Year</th>"
+        + "<th data-field='author' data-sortable='true'>Author</th>"
+        + "<th data-field='advisor' data-sortable='true'>Advisor(s)</th>"
+        + "<th data-field='title' data-sortable='true'>Title</th>"
+        + "</tr></thead><tbody>");
       for (var i = 0; i < dInOneCat.length; i++) {
-        $("#dissertation").append("<tr>"
-          + "<td>" + dInOneCat[i].Year + "</td>"
-          + "<td>" + dInOneCat[i].Author + "</td>"
-          + "<td>" + dInOneCat[i].Advisor + "; " + dInOneCat[i].Advisor2 + "</td>"  
-          + "<td>" + dInOneCat[i].Title + "</td>"
-          + "</tr>");
-      };
+        if(i<dInOneCat.length-1){
+          $("#dissertation").append("<tr>"
+            + "<td>" + dInOneCat[i].Year + "</td>"
+            + "<td>" + dInOneCat[i].Author + "</td>"
+            + "<td>" + dInOneCat[i].Advisor + "; " + dInOneCat[i].Advisor2 + "</td>"  
+            + "<td>" + dInOneCat[i].Title + "</td>"
+            + "</tr>");
+        }else{
+          $("#dissertation").append("<tr>"
+            + "<td>" + dInOneCat[i].Year + "</td>"
+            + "<td>" + dInOneCat[i].Author + "</td>"
+            + "<td>" + dInOneCat[i].Advisor + "; " + dInOneCat[i].Advisor2 + "</td>"  
+            + "<td>" + dInOneCat[i].Title + "</td>"
+            + "</tr></tbody>");
+        }
+      }
     }
     else if(dInOneAdv.length > 0) {
       $("#dissertation").append("<tr>"
@@ -433,6 +442,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           + "</tr>");
       };
     }
+    $('#dissertation').bootstrapTable();
   }
   function updateData(newData){
     year0 = parseInt(newData[0].name);
@@ -534,7 +544,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         .attr("data-style-padding",10)
         .call(d3.legend);
     } else if (newData[0].name == "Storr, Robert"){ //when it's advisor data, show antoher legend
-        $("#search").attr("style", "top: -480px");
+        $("#search").attr("style", "top: -475px");
         $("#legend").attr("style", "visibility: visible");
         $("g.legend").remove();
       
