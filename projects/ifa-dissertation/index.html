@@ -15,26 +15,33 @@
 
   <body>
   <div id="container">
-    <h1>Institute <i>of</i>&#8196Fine Arts Dissertations</h1>
-    <h2>1933 - Present</h2>
-    <select class="form-control" id="text-select">      
-      <option value="Category">Category</option>
-      <option value="Advisor">Advisor</option>
-      <option value="Year">Year</option>
-    </select>
-    <div id='yearTag0'>1933-1960</div>
-    <div id='yearTag1'>1960-1987</div>
-    <div id='yearTag2'>1987-2014</div>
-    <div class='visualization'></div>
-    <div id="legend" class="legend"></div>
-    <div id="search" class="ui-widget content">
-      <input id="searchbox" placeholder="Search"></input>
-      <i class="fi-magnifying-glass" id="searchbtn"></i>    
+    <div class="col-md-3"></div>
+    <div class="col-md-9">
+      <h1>Institute <i>of</i>&#8196Fine Arts Dissertations</h1>
+      <h2>1933 - Present</h2>
+      <div id='yearTag0'>1933-1960</div>
+      <div id='yearTag1'>1960-1987</div>
+      <div id='yearTag2'>1987-2014</div>
     </div>
-    <div class="info row col-md-12">
-      <div id="selection"></div>
-      <table id="dissertation"></table>
-    </div>
+      <select class="form-control" id="text-select">      
+        <option value="Category">Category</option>
+        <option value="Advisor">Advisor</option>
+        <option value="Year">Year</option>
+      </select>
+      
+      <div class='visualization'></div>
+      <div id="legend" class="legend"></div>
+      <div id="search" class="ui-widget content">
+        <input id="searchbox" placeholder="Search"></input>
+        <i class="fi-magnifying-glass" id="searchbtn"></i>    
+      </div>
+      <div class="col-md-3"></div>
+      <div class="col-md-9">
+        <div class="info row col-md-12">
+          <div id="selection"></div>
+          <table id="dissertation"></table>
+        </div>
+      </div>
   </div>
   <script src="js/d3/d3.min.js"></script>
   <script src="js/d3/d3.legend.js"></script>

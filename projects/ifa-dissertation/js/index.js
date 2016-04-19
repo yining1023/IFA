@@ -22,7 +22,7 @@ var padding = 3, // separation between same-color nodes
 var _data;
 
 var height = 500, //max size of the bubbles
-    width = 1200,
+    width = window.innerWidth*14/15,
     format = d3.format(",d"),
     colorMap = {},
     color = function(key, totalColors) {
@@ -38,21 +38,21 @@ var height = 500, //max size of the bubbles
     '#ffcb39','#ffbc00','#ff4100','#ff8b63','#c53200']);
     
 var center = {
-  x: width/2,
+  x: width*5/8,
   y: height/2
 };
 
 var year_centers = [{
     name: "1933-1960",
-    x: width / 10,
+    x: width*3.4 / 10,
     y: height / 2
   },{
     name: "1960-1987",
-    x: width * 4 / 10,
+    x: width * 6 / 10,
     y: height / 2
   },{ 
     name: "1987-2014",
-    x: 8 * width / 10,
+    x: 8.5 * width / 10,
     y: height / 2
   }];
 
@@ -252,7 +252,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   //creating svg for legend for advisor data
   var svg2 = d3.select("#legend")
     .append("svg")
-    .attr("width", 300)
+    .attr("width", 200)
     .attr("height", 20*(advData.length+1));
 
   function initSearchBox(){
@@ -526,7 +526,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       $("#legend").attr("style", "visibility: hidden");
       $("#search").attr("style", "top: -800px");
       $("g.legend").remove();
-      circles.attr("data-legend", function(d) { return d.name+": "+d.count; });
+      circles.attr("data-legend", function(d) { return d.name; });
       var legend = svg.append("g")
         .attr("class","legend")
         .attr("transform","translate(47, 40)")
@@ -540,7 +540,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       
       var legend = svg2.append("g")
         .attr("class","legend")
-        .attr("transform","translate(50, 40)")
+        .attr("transform","translate(-15, 40)")
         .style("font-size","12px") 
         .attr("data-style-padding",10);
         // .call(d3.legend);
@@ -569,7 +569,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         });
     }else {
       $("#legend").attr("style", "visibility: hidden");
-      $("#search").attr("style", "top: -900px");
+      $("#search").attr("style", "top: -930px");
       $("g.legend").remove();
     }
 
@@ -666,6 +666,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         };
     };
 
+//here is the function that divides all years evenly. To change it, change the if condition.
     function move_towards_year(alpha){
         return function(d) {
           var year = parseInt(d.name);
@@ -675,7 +676,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           else if(year >= 1960 && year < 1987){
             target = year_centers[1];
           }
-          else if(year >= 1987 && year <= 2014){
+          else if(year >= 1987){
             target = year_centers[2];
           }
           else{
