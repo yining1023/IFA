@@ -2759,9 +2759,16 @@
 
         this.each(function () {
             var $this = $(this),
-                data = $this.data('bootstrap.table'),
+                // data = $this.data('bootstrap.table')
+                data = "",//changed the original library here in order to create dynamic tables.
+                //when first create a table, data is empty so it will go into "if (!data)
+                // {$this.data('bootstrap.table', (data = new BootstrapTable(this, options)));}"
+                //but when create the table on the second time, data is not empty, it won't write new data into.
+                //so my solution is data will be empty at first no matter what
                 options = $.extend({}, BootstrapTable.DEFAULTS, $this.data(),
                     typeof option === 'object' && option);
+
+            console.log(options);
 
             if (typeof option === 'string') {
                 if ($.inArray(option, allowedMethods) < 0) {

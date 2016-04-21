@@ -41,7 +41,7 @@ h3{
   text-align: left;
   left: 45px;
   position: absolute;
-  top: 124px;
+  top: 150px;
   z-index: 100;
 }
  #yearTag1{
@@ -49,7 +49,7 @@ h3{
   text-align: left;
   left: 380px;
   position: absolute;
-  top: 124px;
+  top: 150px;
   z-index: 100;
 }
  #yearTag2{
@@ -57,13 +57,13 @@ h3{
   text-align: left;
   left: 750px;
   position: absolute;
-  top: 124px;
+  top: 150px;
   z-index: 100;
 }
 .legend{
   overflow: auto;
   height: 450px;  
-  width: 240px;
+  width: 212px;
   position: relative;
   top: -480px;
   left: 40px;

@@ -353,12 +353,19 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     });
 
     $('#dissertation').empty();
+    //one problem here, everytime render profile, the bootstrap-table.js will init
+    // a table container div(class:"bootstrarp-table"), so if render profile for several times, 
+    // there will be a container inside of another. I tried to empty it every time it init a container,
+    //but it didn't work:
+    // $('.bootstrap-table').empty();
+    //from the outside, there's no difference. But in the DOM, you can see there are extra container
+    // $('#dissertation').bootstrapTable('destory');
     if(dInOneCat.length > 0){
       $("#dissertation").append("<thead><tr>"
-        + "<th data-field='year' data-sortable='true'>Year</th>"
-        + "<th data-field='author' data-sortable='true'>Author</th>"
-        + "<th data-field='advisor' data-sortable='true'>Advisor(s)</th>"
-        + "<th data-field='title' data-sortable='true'>Title</th>"
+        + "<th data-sortable='true' data-field='year'>Year</th>"
+        + "<th data-sortable='true' data-field='anthor'>Author</th>"
+        + "<th data-sortable='true' data-field='advisor'>Advisor(s)</th>"
+        + "<th data-sortable='true' data-field='title'>Title</th>"
         + "</tr></thead><tbody>");
       for (var i = 0; i < dInOneCat.length; i++) {
         if(i<dInOneCat.length-1){
@@ -379,36 +386,55 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       }
     }
     else if(dInOneAdv.length > 0) {
-      $("#dissertation").append("<tr>"
-        + "<th>Year</th>"
-        + "<th>Author</th>"
-        + "<th>Title</th>"
-        + "<th>Category</th>"
-        + "</tr>");
+      $("#dissertation").append("<thead><tr>"
+        + "<th data-sortable='true'>Year</th>"
+        + "<th data-sortable='true'>Author</th>"
+        + "<th data-sortable='true'>Title</th>"
+        + "<th data-sortable='true'>Category</th>"
+        + "</tr></thead><tbody>");
       for (var i = 0; i < dInOneAdv.length; i++) {
-        $("#dissertation").append("<tr>"
-          + "<td>" + dInOneAdv[i].Year + "</td>"
-          + "<td>" + dInOneAdv[i].Author + "</td>"
-          + "<td>" + dInOneAdv[i].Title + "</td>"
-          + "<td>" + dInOneAdv[i].Category + "</td>"
-          + "</tr>");
-      };
+        if(i<dInOneAdv.length-1){
+          $("#dissertation").append("<tr>"
+            + "<td>" + dInOneAdv[i].Year + "</td>"
+            + "<td>" + dInOneAdv[i].Author + "</td>"
+            + "<td>" + dInOneAdv[i].Title + "</td>"
+            + "<td>" + dInOneAdv[i].Category + "</td>"
+            + "</tr>");
+        }else{
+          $("#dissertation").append("<tr>"
+            + "<td>" + dInOneAdv[i].Year + "</td>"
+            + "<td>" + dInOneAdv[i].Author + "</td>"
+            + "<td>" + dInOneAdv[i].Title + "</td>"
+            + "<td>" + dInOneAdv[i].Category + "</td>"
+            + "</tr></tbody>");
+        }
+      }
     }
     else if(dInOneYea.length > 0){
-      $("#dissertation").append("<tr>"
-        + "<th>Author</th>"
-        + "<th>Advisor(s)</th>"
-        + "<th>Title</th>"
-        + "<th>Category</th>"
-        + "</tr>");
+      $("#dissertation").append("<thead><tr>"
+        + "<th data-sortable='true'>Author</th>" //don't forget to add 'data-sortable='true'' 
+        //in order to make srtable table work
+        + "<th data-sortable='true'>Advisor(s)</th>"
+        + "<th data-sortable='true'>Title</th>"
+        + "<th data-sortable='true'>Category</th>"
+        + "</tr></thead><tbody>");
       for (var i = 0; i < dInOneYea.length; i++) {
-        $("#dissertation").append("<tr>"
-          + "<td>" + dInOneYea[i].Author + "</td>"
-          + "<td>" + dInOneYea[i].Advisor + ", " + dInOneYea[i].Advisor2 + "</td>"
-          + "<td>" + dInOneYea[i].Title + "</td>"
-          + "<td>" + dInOneYea[i].Category + "</td>"
-          + "</tr>");
-      };
+        if(i<dInOneYea.length-1){
+          $("#dissertation").append("<tr>"
+            + "<td>" + dInOneYea[i].Author + "</td>"
+            + "<td>" + dInOneYea[i].Advisor + ", " + dInOneYea[i].Advisor2 + "</td>"
+            + "<td>" + dInOneYea[i].Title + "</td>"
+            + "<td>" + dInOneYea[i].Category + "</td>"
+            + "</tr>");
+        }else{
+          $("#dissertation").append("<tr>"
+            + "<td>" + dInOneYea[i].Author + "</td>"
+            + "<td>" + dInOneYea[i].Advisor + ", " + dInOneYea[i].Advisor2 + "</td>"
+            + "<td>" + dInOneYea[i].Title + "</td>"
+            + "<td>" + dInOneYea[i].Category + "</td>"
+            + "</tr></tbody>");
+        }
+      }
     }
     else if(dInOneAut.length > 0){
       $("#dissertation").append("<tr>"
@@ -442,6 +468,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           + "</tr>");
       };
     }
+    //in order to dynamically add sortable table, call this function.
     $('#dissertation').bootstrapTable();
   }
   function updateData(newData){
