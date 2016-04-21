@@ -413,7 +413,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     else if(dInOneYea.length > 0){
       $("#dissertation").append("<thead><tr>"
         + "<th data-sortable='true'>Author</th>" //don't forget to add 'data-sortable='true'' 
-        //in order to make srtable table work
+        //in order to make srtable table work, also add <thead>, <tbody>
         + "<th data-sortable='true'>Advisor(s)</th>"
         + "<th data-sortable='true'>Title</th>"
         + "<th data-sortable='true'>Category</th>"
@@ -437,36 +437,54 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       }
     }
     else if(dInOneAut.length > 0){
-      $("#dissertation").append("<tr>"
-        + "<th>Year</th>"
-        + "<th>Advisor(s)</th>"
-        + "<th>Title</th>"
-        + "<th>Category</th>"
-        + "</tr>");
+      $("#dissertation").append("<thead><tr>"
+        + "<th data-sortable='true'>Year</th>"
+        + "<th data-sortable='true'>Advisor(s)</th>"
+        + "<th data-sortable='true'>Title</th>"
+        + "<th data-sortable='true'>Category</th>"
+        + "</tr></thead><tbody>");
       for (var i = 0; i < dInOneAut.length; i++) {
-        $("#dissertation").append("<tr>"
-          + "<td>" + dInOneAut[i].Year + "</td>"
-          + "<td>" + dInOneAut[i].Advisor + ", " + dInOneAut[i].Advisor2 + "</td>"
-          + "<td>" + dInOneAut[i].Title + "</td>"
-          + "<td>" + dInOneAut[i].Category + "</td>"
-          + "</tr>");
-      };
+        if(i<dInOneAut.length-1){
+          $("#dissertation").append("<tr>"
+            + "<td>" + dInOneAut[i].Year + "</td>"
+            + "<td>" + dInOneAut[i].Advisor + ", " + dInOneAut[i].Advisor2 + "</td>"
+            + "<td>" + dInOneAut[i].Title + "</td>"
+            + "<td>" + dInOneAut[i].Category + "</td>"
+            + "</tr>");
+        }else{
+          $("#dissertation").append("<tr>"
+            + "<td>" + dInOneAut[i].Year + "</td>"
+            + "<td>" + dInOneAut[i].Advisor + ", " + dInOneAut[i].Advisor2 + "</td>"
+            + "<td>" + dInOneAut[i].Title + "</td>"
+            + "<td>" + dInOneAut[i].Category + "</td>"
+            + "</tr></tbody>");
+        }
+      }
     }
     else if(dInOneTit.length > 0){
-      $("#dissertation").append("<tr>"
-        + "<th>Year</th>"
-        + "<th>Author</th>"
-        + "<th>Advisor(s)</th>"
-        + "<th>Category</th>"
-        + "</tr>");
+      $("#dissertation").append("<thead><tr>"
+        + "<th data-sortable='true'>Year</th>"
+        + "<th data-sortable='true'>Author</th>"
+        + "<th data-sortable='true'>Advisor(s)</th>"
+        + "<th data-sortable='true'>Category</th>"
+        + "</tr></thead><tbody>");
       for (var i = 0; i < dInOneTit.length; i++) {
-        $("#dissertation").append("<tr>"
-          + "<td>" + dInOneTit[i].Year + "</td>"
-          + "<td>" + dInOneTit[i].Author + "</td>"
-          + "<td>" + dInOneTit[i].Advisor + ", " + dInOneTit[i].Advisor2 + "</td>"
-          + "<td>" + dInOneTit[i].Category + "</td>"
-          + "</tr>");
-      };
+        if(i<dInOneTit.length-2){
+          $("#dissertation").append("<tr>"
+            + "<td>" + dInOneTit[i].Year + "</td>"
+            + "<td>" + dInOneTit[i].Author + "</td>"
+            + "<td>" + dInOneTit[i].Advisor + ", " + dInOneTit[i].Advisor2 + "</td>"
+            + "<td>" + dInOneTit[i].Category + "</td>"
+            + "</tr>");
+        }else{
+          $("#dissertation").append("<tr>"
+            + "<td>" + dInOneTit[i].Year + "</td>"
+            + "<td>" + dInOneTit[i].Author + "</td>"
+            + "<td>" + dInOneTit[i].Advisor + ", " + dInOneTit[i].Advisor2 + "</td>"
+            + "<td>" + dInOneTit[i].Category + "</td>"
+            + "</tr></tbody>");
+        }
+      }
     }
     //in order to dynamically add sortable table, call this function.
     $('#dissertation').bootstrapTable();
