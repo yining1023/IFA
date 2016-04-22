@@ -409,6 +409,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
             + "</tr></tbody>");
         }
       }
+      
     }
     else if(dInOneYea.length > 0){
       $("#dissertation").append("<thead><tr>"

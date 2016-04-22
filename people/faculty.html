@@ -1,0 +1,503 @@
+<!DOCTYPE HTML>
+<!--[if lt IE 9]>Some features of the Institute's website may not function properly with this version of Internet Explorer. Please consider updating your browser by <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">clicking here</a>.  <![endif]-->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+    
+    <!--CSS links-->
+    <link href="../style/style.css" rel="stylesheet" type="text/css"/>
+    
+	<title>IFA - Faculty</title>
+    
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-6533284-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>
+window.onload = function() {
+  var obj = getJSON();
+  var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(obj));
+
+  var a = document.getElementById('save-btn');
+  a.href = 'data:' + data;
+  a.download = 'faultyList.json';
+  a.innerHTML = 'Save as JSON';
+
+  var container = document.getElementById('container');
+};
+
+var getJSON = function() {
+  var json = [];
+
+  $("tr").each(function(i) {
+    var faculty = {};
+    faculty.img= $(this).find("img").src;
+    faculty.name = $(this).find("p").find("a").text();
+    faculty.name = $(this).find("italic").text();
+    faculty.name = $(this).find("greycontent").text();
+    json.push(faculty);
+  });
+
+  return json;
+};
+</script>"
+</head>
+
+<body>
+
+<div class="backgroundShade"></div>
+	<!--Begin the main div -->
+	<div class="mainWrapper">
+        <div>
+    	<div class="header">
+            <div class="ifaLogoContainer">
+            	<a href="../index.htm"><img src="../images/IFAlogo.png" alt="IFA Logo"></a>
+            </div>
+<div class="nyuImage">
+                    <a href="http://www.nyu.edu" target="_blank"><img src="../images/NYUlogo.png" alt="NYU Logo"></a>
+                </div>
+            <div class="mainHeaderContainer">
+<div id="topsearch">	<FORM METHOD=get ACTION="http://google.nyu.edu/search" target="_top">
+      <INPUT TYPE="hidden" NAME="site" VALUE="NYUWeb_Main">
+      <INPUT TYPE="hidden" NAME="client" VALUE="NYUWeb_Main">
+      <INPUT TYPE="hidden" NAME="output" VALUE="xml_no_dtd">
+      <INPUT TYPE="hidden" NAME="proxyreload" VALUE="1">
+      <INPUT TYPE="hidden" NAME="proxystylesheet" VALUE="ifa_frontend">
+      <INPUT TYPE="hidden" NAME="sitesearch" VALUE="www.nyu.edu/gsas/dept/fineart">
+      <INPUT class="formreg" id="search" name=q value="">
+      <INPUT TYPE="submit" VALUE="" id="button">
+    </FORM> 
+    </div>
+                <img src="../images/headerImages/FacultyHeader.jpg" alt="The Institute of Fine Arts">
+                
+       <div class="menuContainer">                  
+        <ul class="menuHover">
+          <li><a class="menuButton" id="button1" href="../about/index.htm"><span class="menuText">ABOUT</span></a></li>
+          <li><a class="menuButton" id="button2" href="../events/index.htm"><span class="menuText">EVENTS</span></a></li>
+          <li><a class="menuButton" id="button3" href="../people/index.htm"><span class="menuText">PEOPLE</span></a></li>
+          <li><a class="menuButton" id="button4" href="../news/index.htm"><span class="menuText">NEWS</span></a></li>
+          <li><a class="menuButton" id="button5" href="../academics/index.htm"><span class="menuText">ACADEMICS</span></a></li>
+          <li><a class="menuButton" id="button6" href="../conservation/index.htm"><span class="menuText">CONSERVATION PROGRAM</span></a></li>
+          <li><a class="menuButton" id="button7" href="../prospective/index.htm"><span class="menuText">APPLY</span></a></li>
+          <li><a class="menuButton" id="button8" href="../research/index.htm"><span class="menuText">RESEARCH & LIBRARIES</span></a></li>
+          <li><a class="menuButton" id="button9" href="../contact.htm"><span class="menuText">CONTACT</span></a></li>
+          <li><a class="menuButton" id="button10" href="../support/index.htm"><span class="menuText">SUPPORT US</span></a></li>
+        </ul>
+      </div>
+            </div>
+        </div>
+        <div class="contentWrapper">
+            <!-- All the important content relevant to the page goes here -->
+            <div class="mainContent">
+            <div class="dashedline">
+                <p class="heading">Institute of Fine Arts Faculty</p>
+              </div>
+                
+              <p class="headingexpanding">Academic Administration</p>
+
+                <table>
+        <tr>
+          <td width="100" class="content"><a href="faculty/rubin.htm"><img src="../images/faculty-thumbs/rubin-thumb.jpg" alt="Patricia Rubin" width="100" height="100"></a></td>
+          <td class="content"><p><a href="faculty/rubin.htm">Patricia Rubin</a> <br>
+            <span class="italic">Judy and Michael Steinhardt Director; Professor of Fine Arts</span></p>
+            <p><span class="greycontent">Field of study: Renaissance Art</span><br>
+            </p></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/oconnor.htm"><img src="../images/faculty-thumbs/oconnor-thumb.jpg" alt="David O'Connor" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/oconnor.htm" >David O'Connor</a><br>
+            <span class="italic">Deputy Director, Lila Acheson Wallace Professor of Ancient Egyptian Art; Co-Director, Yale University-University of Pennsylvania-Institute of Fine Arts, NYU Excavations at Abydos</span><br>
+            <span class="greycontent">Fields of Study: Ancient Aegean, Egyptian, Greek and Roman Ary; Archaeology</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/roemich.htm"><img src="../images/faculty-thumbs/roemich-thumb.jpg" alt="Hannelore Roemich" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/roemich.htm">Hannelore Roemich</a><br>
+            <span class="italic">Chairman of the Conservation Center, Professor of Conservation Science</span><span class="italic"></span><br>
+            <span class="greycontent">Field of study: Conservation of Works of Art and Artifacts</span><br></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/nagel.htm"><img src="../images/faculty-thumbs/nagel-thumb.jpg" alt="Alexander Nagel" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/nagel.htm" >Alexander Nagel</a> <span class="italic">(not teaching Spring 2016)</span><br>
+            <span class="italic">Director of Graduate Studies; Professor of Fine Arts</span><span class="italic"></span><br>
+            <span class="greycontent">Field of study: Renaissance Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/welch.htm"><img src="../images/faculty-thumbs/welch-thumb.jpg" alt="Katherine Welch" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/welch.htm" >Katherine Welch</a> <span class="italic">(not teaching Fall 2015)</span><br>
+            <span class="italic">Director of Masters Studies; Associate Professor of Fine Arts; Deputy Director, Excavations at Aphrodisias</span><br>
+            <span class="greycontent">Fields of study: Architecture; Archaeology</span><br></td>
+        </tr>
+        </tr>
+        <tr>
+          <td colspan="2" class="headingexpanding">Faculty in the History of Art and Archaeology<br>
+</td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/brown.htm"><img src="../images/faculty-thumbs/Brown-thumb.jpg" alt="Jonathan Brown" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/brown.htm">Jonathan Brown</a> <span class="italic">(not teaching Spring 2016)</span><br>
+            <span class="italic">Carroll and Milton Petrie Professor of Fine Arts</span><br>
+<span class="greycontent">Fields of study: Architecture; Latin American Art, Renaissance Art; Seventeenth- and Eighteenth-Century Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/cohen.htm"><img src="../images/faculty-thumbs/cohen-thumb.jpg" alt="Jean-Louis Cohen" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/cohen.htm">Jean-Louis Cohen</a><br>
+            <span class="italic">Sheldon H. Solow Professor in the History of Architecture</span><br>
+<span class="greycontent">Fields of Study: Architecture; Contemporary Art; Nineteenth- and Twentieth-Century Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/crow.htm"><img src="../images/faculty-thumbs/crow-thumb.jpg" alt="Thomas Crow" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/crow.htm" >Thomas Crow</a><br>
+            <span class="italic">Rosalie Solow Professor of Modern Art; Associate Provost for the Arts</span><br>
+<span class="greycontent">Fields of Study: Contemporary Art; Nineteenth- and Twentieth-Century Art; Seventeenth- and Eighteenth-Century Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/eisler.htm"><img src="../images/faculty-thumbs/eisler-thumb.jpg" alt="Colin Eisler" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/eisler.htm" >Colin Eisler</a><br>
+            <span class="italic">Robert Lehman Professor of Fine Arts</span><br>
+<span class="greycontent">Field of study: Renaissance Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/flood.htm"><img src="../images/faculty-thumbs/flood-thumb.jpg" alt="Finbarr Barry Flood" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/flood.htm" >Finbarr Barry Flood </a><span class="italic">(on leave and Spring 2016)</span><br>
+            <span class="italic">William R. Kenan Jr. Professor of the Humanities, Institute of Fine Arts and College of Arts and Sciences</span><br>
+<span class="greycontent">Fields of study: Archaeology; Art of the Middle East and South Asia </span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/hay.htm"><img src="../images/faculty-thumbs/hay-thumb.jpg" alt="Jonathan Hay" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/hay.htm" >Jonathan Hay</a><br>
+            <span class="italic">Ailsa Mellon Bruce Professor of Fine Arts</span><br>
+            <span class="greycontent">Field of study: East Asian Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/hood.htm"><img src="../images/faculty-thumbs/hood-thumb.jpg" alt="William Hood" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/hood.htm" >William Hood</a> <span class="italic">(will be teaching in Spring 2015)</span><br>
+            <span class="italic">Mildred C. Jay Professor Emeritus of Art History, Oberlin College; Visiting Professor, Institute of Fine Arts</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/kopcke.htm"><img src="../images/faculty-thumbs/kopcke1-thumb.jpg" alt="Guenter Kopcke" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/kopcke.htm" >G&uuml;nter H. Kopcke</a><br>
+            <span class="italic">Avalon Foundation Professor in the Humanities</span><br>
+            <span class="greycontent">Fields of study: Ancient Aegean, Egyptian, Greek and Roman Ar; Architecture</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/lubar.htm"><img src="../images/faculty-thumbs/lubar-thumb.jpg" alt="Robert Lubar" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/lubar.htm" >Robert Lubar</a> <span class="italic">(on leave Spring 2016)</span><br>
+            <span class="italic">Associate Professor of Fine Arts</span><br>
+  <span class="greycontent">Fields of study: Latin American Art; Nineteenth- and Twentieth-Century Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/marconi.htm"><img src="../images/faculty-thumbs/marconi-thumb.jpg" alt="Clemente Marconi" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/marconi.htm" >Clemente Marconi</a><br>
+            <span class="italic">James R. McCredie Professor in the History of Greek Art and Archaeology; 
+            University Professor</span><br>
+            <span class="greycontent">Fields of study: Ancient Aegean, Egyptian, Greek and Roman Art; Architecture; Archaeology</span><br></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/maxwell.htm"><img src="../images/faculty-thumbs/maxwell-thumb.jpg" alt="Robert A. Maxwell" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/maxwell.htm">Robert A. Maxwell</a><br>
+            <span class="italic">Sherman Fairchild Professor of Fine Arts</span><br>
+            <span class="greycontent">Fields of study: Early Christian, Byzantine, and Western Medieval Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/minturn.htm"><img src="../images/faculty-thumbs/minturn-thumb.jpg" alt="Clemente Marconi" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/minturn.htm">Kent Mitchell Minturn</a><br>
+            <span class="italic">Visiting Assistant Professor of Fine Arts </span><br>
+            <span class="greycontent">Fields of study: Contemporary Art; Nineteenth- and Twentieth-Century Art</span></td>
+        </tr>
+         <tr>
+          <td class="content"><a href="faculty/mochizuki.htm"><img src="../images/faculty-thumbs/mochizuki-thumb.jpg" alt="Mia M. Mochizuki" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/mochizuki.htm" >Mia M. Mochizuki</a><br>
+            <span class="italic">Associate Professor of the History of Art, New York University Abu Dhabi and Institute of Fine Arts </span><br>
+            <span class="greycontent">Fields of study:  Renaissance Art; Seventeenth- and Eighteenth-Century Art</span><br></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/de-montebello.htm"><img src="../images/faculty-thumbs/de_montebello-thumb.jpg" alt="Philippe de Montebello" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/de-montebello.htm">Philippe de Montebello</a><br>
+            <span class="italic">Fiske Kimball Professor in the History and Culture of Museums</span><br>
+<span class="greycontent">Fields of study:  Curatorial and Museum Studies</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/nagel.htm"><img src="../images/faculty-thumbs/nagel-thumb.jpg" alt="Alexander Nagel" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/nagel.htm" >Alexander Nagel</a> <span class="italic">(not teaching Spring 2016)</span><br>
+            <span class="italic">Director of Graduate Studies; Professor of Fine Arts</span><br>
+            <span class="greycontent">Field of study: Renaissance Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/oconnor.htm"><img src="../images/faculty-thumbs/oconnor-thumb.jpg" alt="David O'Connor" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/oconnor.htm" >David O'Connor</a><br>
+            <span class="italic">Deputy Director, Lila Acheson Wallace Professor of Ancient Egyptian Art; Co-Director, Yale University-University of Pennsylvania-Institute of Fine Arts, NYU Excavations at Abydos</span><br>
+            <span class="greycontent">Fields of Study: Ancient Aegean, Egyptian, Greek and Roman Ary; Archaeology</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/rubin.htm"><img src="../images/faculty-thumbs/rubin-thumb.jpg" alt="Patricia Rubin" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/rubin.htm">Patricia Rubin</a><br>
+            <span class="italic">Judy and Michael Steinhardt Director; Professor of Fine Arts</span><br>
+            <span class="greycontent">Field of study: Renaissance Art </span><br></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/shen.htm"><img src="../images/faculty-thumbs/shen-thumb.jpg" alt="Hseuh-Man Shen" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/shen.htm">Hsueh-Man Shen</a><br>
+            <span class="italic">Assistant Professor; Ehrenkranz Chair in World Art</span><br>
+            <span class="greycontent">Fields of Study: Archaeology; East Asian Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/slifkin.htm"><img src="../images/faculty-thumbs/slifkin-thumb.jpg" alt="Robert Slifkin" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/slifkin.htm">Robert Slifkin</a> <span class="italic">(not  teaching Spring 2016)</span><br>
+            <span class="italic">Associate Professor of Fine Arts</span><br>
+<span class="greycontent">Fields of Study: Contemporary Art; Nineteenth- and Twentieth-Century Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/smith.htm"><img src="../images/faculty-thumbs/smith-thumb.jpg" alt="Roland R. R. Smith" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/smith.htm" >Roland R. R. Smith</a> <span class="italic">(not currently teaching)</span><br>
+            <span class="italic">Lincoln Professor of Classical Archaeology, University of Oxford; Director, 
+        Excavations at Aphrodisias</span><br>
+        <span class="greycontent">Fields of Study: Ancient Aegean, Egyptian, Greek and Roman Art; Archaeology; Architecture</span></td> 
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/soucek.htm"><img src="../images/faculty-thumbs/soucek-thumb.jpg" alt="Priscilla P. Soucek" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/soucek.htm">Priscilla P. Soucek</a><br>
+            <span class="italic">John Langeloth Loeb Professor 
+      in the History of Art</span><br>
+      <span class="greycontent">Fields of Study: Architecture; Art of the Middle East and South Asia</span> </td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/sullivan.htm"><img src="../images/faculty-thumbs/sullivan-thumb.jpg" alt="Edward J. Sullivan" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/sullivan.htm" >Edward J. Sullivan</a> <span class="italic">(on leave Spring 2016, not teaching Fall 2016)</span><br>
+            <span class="italic">Helen Gould Sheppard Professor in the History of Art; Institute of Fine Arts and College of Arts and Sciences</span><br>
+<span class="greycontent">Fields of Study: Contemporary Art, Latin American Art, Nineteenth- and Twentieth-Century Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/thomas.htm"><img src="../images/faculty-thumbs/Thomas-thumb.jpg" alt="Thelma K. Thomas" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/thomas.htm">Thelma K. Thomas</a><br>
+            <span class="italic">Associate Professor of Fine Arts</span><span class="greycontent"><br>
+Fields of Study: Early Christian, Byzantine, and Western Medieval Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/trachtenberg.htm"><img src="../images/faculty-thumbs/tberg-thumb.jpg" alt="Marvin Trachtenberg" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/trachtenberg.htm" >Marvin Trachtenberg</a><br>
+            <span class="italic">Edith Kitzmiller Professor of the History of Fine Arts</span><br>
+<span class="greycontent">Fields of Study: Architecture; Early Christian, Byzantine, and Western Medieval Art; Renaissance Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><img src="../images/faculty-thumbs/brandt-thumb.jpg" alt="Kathellen Weil-Garris Brandt" width="100" height="100"></td>
+          <td class="content">Kathleen Weil-Garris Brandt <span class="italic">(not currently teaching)</span><br>
+            <span class="italic">Professor of Fine Arts, Institute of Fine Arts and College of Arts and Science</span><br>
+          <span class="greycontent">Fields of Study: Architecture; Renaissance Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/welch.htm"><img src="../images/faculty-thumbs/welch-thumb.jpg" alt="Katherine Welch" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/welch.htm" >Katherine Welch</a><br>
+            <span class="italic">Director of Masters Studies; Associate Professor of Fine Arts; Deputy Director, Excavations at Aphrodisias</span><br>
+            <span class="greycontent">Fields of study: Architecture; Archaeology</span></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="headingexpanding">
+          Conservation Center Faculty
+          <br>
+            
+            </td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/baer.htm"><img src="../images/faculty-thumbs/baer-thumb.jpg" alt="Norbert S. Baer" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/baer.htm">Norbert S. Baer</a><br>
+            <span class="italic">Hagop Kevorkian Professor of Conservation</span><br>
+<span class="greycontent">Field of study: Conservation of Works of Art and Artifacts</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/ellis.htm"><img src="../images/faculty-thumbs/ellis-thumb.jpg" alt="Margaret Holben Ellis" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/ellis.htm" >Margaret Holben Ellis </a><br>
+            <span class="italic">Eugene Thaw Professor of Paper Conservation; Director, Thaw Conservation 
+        Center, The Morgan Library and Museum (part-time); Conservation Consultant, Villa La Pietra</span><br>
+        <span class="greycontent">Field of study: Conservation of Works of Art and Artifacts</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/marincola.htm"><img src="../images/faculty-thumbs/marincola-thumb.jpg" alt="Michele D. Marincola" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/marincola.htm">Michele D. Marincola</a> <a href="faculty/ellis.htm" > </a><span class="italic">(on leave Fall 2015</span>)<br>
+            <span class="italic">Sherman Fairchild Distinguished Professor of Conservation;  Research Scholar, The Metropolitan Museum of Art; Conservation Consultant, Villa La Pietra</span><br>
+            <span class="greycontent">Field of study: Conservation of Works of Art and Artifacts</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/modestini.htm"><img src="../images/faculty-thumbs/modestini-thumb.jpg" alt="Michele D. Marincola" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/modestini.htm">Dianne Dwyer Modestini</a><br>
+            <span class="italic">Research Professor, Kress Program in Paintings Conservation</span><br>
+<span class="greycontent">Field of study: Conservation of Works of Art and Artifacts</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/roemich.htm"><img src="../images/faculty-thumbs/roemich-thumb.jpg" alt="Hannelore Roemich" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/roemich.htm">Hannelore Roemich</a><br>
+            <span class="italic">Chairman of the Conservation Center, Professor of Conservation Science</span><br>
+            <span class="greycontent">Field of study: Conservation of Works of Art and Artifacts</span></td>
+        </tr>
+        <tr>
+          <td colspan="2" class="headingexpanding"> Associate Faculty <br></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/khera.htm"><img src="../images/faculty-thumbs/Khera-thumb.jpg" alt="Dipti Khera" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/khera.htm">Dipti Khera</a><br>
+            <span class="italic">Assistant Professor of Art History, Institute of FIne Arts</span><br>
+            <span class="greycontent">Fields of study: Art of the Middle East and South Asia</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/martin.htm"><img src="../images/faculty-thumbs/Martin-thumb.jpg" alt="Meredith Martin" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/martin.htm" >Meredith Martin</a><br>
+            <span class="italic">Associate Professor of Art History, Institute of FIne Arts </span><br>
+            <span class="greycontent">Fields of study: Eighteenth- and Nineteenth-Century European Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/matteini.htm"><img src="../images/faculty-thumbs/matteini-thumb.jpg" alt="Michele Matteini" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/matteini.htm">Michele Matteini</a><br>
+            <span class="italic">Assistant Professor of East Asian Art, Architecture and Visual Culture</span><br>
+            <span class="greycontent">Field of study: East Asian Art</span><br></td>
+        </tr>
+       
+        <tr>
+          <td colspan="2" class="headingexpanding">
+          Emeritus Faculty
+          <br>
+</td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/alexander.htm"><img src="../images/faculty-thumbs/alexander-thumb.jpg" alt="Jonathan J. G. Alexander" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/alexander.htm">Jonathan J. G. Alexander</a><br>
+            <span class="italic">Sherman Fairchild Professor Emeritus of Fine Arts</span><br>
+<span class="greycontent">Fields of study: Early Christian, Byzantine, and Western Medieval Art; Renaissance Ar</span>t</td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/haverkamp-begemann.htm"><img src="../images/faculty-thumbs/begemann-thumb.jpg" alt="Egbert Haverkamp-Begemann" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/haverkamp-begemann.htm" >Egbert Haverkamp-Begemann</a><br>
+            <span class="italic">John Langeloth Loeb Professor Emeritus in the History of Art; Adjunct 
+        Professor of Fine Arts; Coordinating Scholar, Robert Lehman Collection 
+      Scholarly Catalogue</span><br>
+      <span class="greycontent">Field of study: Seventeenth- and Eighteenth-Century Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/mathews.htm"><img src="../images/faculty-thumbs/matthews-thumb.jpg" alt="Thomas F. Mathews" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/mathews.htm" >Thomas F. Mathews</a><br>
+            <span class="italic">John Langeloth Loeb Professor Emeritus in the History of Art</span></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/mccredie.htm"><img src="../images/faculty-thumbs/mccredie-thumb.jpg" alt="James R. McCredie" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/mccredie.htm" >James R. McCredie</a><br>
+            <span class="italic">Sherman Fairchild Professor Emeritus of Fine Arts; Director Emeritus, Excavations 
+            in Samothrace</span><br>
+            <span class="greycontent">Fields of study: Archaeology, Architecture </span><br></td>
+        </tr>
+        <tr>
+          <td class="content"><a href="faculty/nochlin.htm"><img src="../images/faculty-thumbs/nochlin-thumb.jpg" alt="Linda Nochlin" width="100" height="100"></a></td>
+          <td class="content"><a href="faculty/nochlin.htm" >Linda Nochlin</a><br>
+            <span class="italic">Lila Acheson Wallace Professor of Modern Art</span><br>
+            <span class="greycontent">Fields of study: Contemporary Art; Nineteenth- and Twentieth-Century Art</span><br></td>
+        </tr>
+      </table>
+          </div>
+            
+            <!-- All the cards go here --> 
+            <div class="cardHolder">
+              <div class="card">
+                              
+              <p class="heading">Faculty</p>
+                    <p class="content"><a href="faculty.htm">Faculty Directory</a><br>
+                    <a href="fields.htm">Faculty and Fields of Study</a>
+                    <br>
+                    <a href="lecturers.htm">IFA Lecturers &amp; Affliliated Faculty</a><br>
+                    <a href="lecturers-conservation.htm">Conservation  Lecturers &amp; Affliliated Faculty</a></p>
+              </div>
+              
+               <div class="card">
+                <p class="heading">Special Appointments</p><br>
+                <table width="90%" align="center">   
+<tr>
+                    <td width="13%">&nbsp;</td>
+                    <td width="39%"><a href="faculty/varnedoe.htm"><img src="../images/navimages/ifa-fac-varnedoe.jpg" alt="Kirk Varnedoe Visiting Professor" width="79" height="79"></a></td>
+                    <td width="48%" class="heading"><a href="faculty/varnedoe.htm">Kirk Varnedoe Visiting Professor</a></td>
+                  </tr>
+<tr>
+  <td>&nbsp;</td>
+  <td><a href="faculty/ifa-praska.htm"><img src="../images/navimages/ifa-fac-praska.jpg" alt="Judith Praska Visiting Professor" width="79" height="79"></a></td>
+  <td class="heading"><a href="faculty/ifa-praska.htm">Judith Praska Visiting Professors</a></td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td><a href="faculty/ifa-mellon-fellow.htm"><img src="../images/navimages/ifa-fac-mellon2.jpg" width="79" height="79" alt="IFA Mellon Postdoctoral Fellow"></a></td>
+  <td class="heading"><a href="faculty/ifa-mellon-fellow.htm">Mellon Postdoctoral Fellow</a></td>
+</tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td><a href="faculty/ifa-honorary.htm"><img src="../images/navimages/ifa-fac-honorary.jpg" alt="IFA Honorary Fellow" width="79" height="79"></a></td>
+                    <td class="heading"><a href="faculty/ifa-honorary.htm">Honorary Fellows</a></td>
+                  </tr>
+                </table>
+                <br>
+                </div>
+                
+                <div class="card">
+            
+<div class="expandingNavClosed">
+                   
+<p class="headingexpandingRed">Students </p>
+
+<div class="expandingSubText">              
+           <p class="content">
+                   <a href="phdstudents.htm"> PhD Students</a><br>
+                   <a href="MAstudents.htm">Masters Students</a><br>
+                   <a href="conservationstudents.htm">Conservation Students</a><br>
+                   <a href="../academics/student-resources.htm">Student Resources</a><br>
+                   <a href="../academics/student-opportunities.htm">Student Opportunities</a><br>
+                   <a href="../academics/calendar.htm">Academic Calendar</a><br>
+                   <a href="gsa.htm">Graduate Students Association</a>
+           </p>
+</div>
+                
+</div>
+                </div>
+                
+                 <div class="card">
+                 <div class="expandingNavClosed">
+                   
+<p class="headingexpandingRed">Alumni </p>
+<div class="expandingSubText">
+               
+                    <p class="content">
+                   <a href="alumni/alumni.htm">Alumni Website</a><br>
+                   <a href="../mapping-alumni/index.htm">Mapping IFA Alumni</a><br>
+				   <a target="_blank" href="https://docs.google.com/forms/d/1ODX4GWewUkLuPfa6n-gORbFwPPN4RnFONvK7iS6EiuQ/viewform?sid=60faa8d85d1cd6e9&token=H2t6rT0BAAA.5dU7ZDJYqaDnjJ64wLfyvA.famwlVoTr_bioRL93U4QEQ">Update Your Contact Information<img src="../images/navimages/newwindow.gif" width="12" height="11" alt="Open link in new window"></a></p>
+                   </div>
+                   </div>
+                </div>
+                
+                    <div class="card">
+                    <div class="expandingNavClosed">
+					<p class="headingexpandingRed">Staff</p>
+       
+        <div class="expandingSubText">
+		<p class="content"><a href="staff.htm">Staff Directory</a></p>
+		</div>
+                   
+                   </div>
+                </div>
+                
+                
+</div>
+            <div class="clear"></div>
+            
+        </div>
+            </div>
+    </div>
+   
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../js/toggleContent.js"></script>
+    <script src="../js/toggleNavRed.js"></script>
+
+</body>
+</html>
