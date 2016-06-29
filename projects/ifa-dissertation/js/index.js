@@ -368,18 +368,27 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         + "<th data-sortable='true' data-field='title'>Title</th>"
         + "</tr></thead><tbody>");
       for (var i = 0; i < dInOneCat.length; i++) {
+        console.log(dInOneCat[i].Advisor2);
+        var advisor3 = '';
+        if(dInOneCat[i].Advisor2.length > 0){
+          advisor3 = '; ' + dInOneCat[i].Advisor2;
+        }
+        else{
+          advisor3 = '';
+        }
+        console.log(advisor3);
         if(i<dInOneCat.length-1){
           $("#dissertation").append("<tr>"
             + "<td>" + dInOneCat[i].Year + "</td>"
             + "<td>" + dInOneCat[i].Author + "</td>"
-            + "<td>" + dInOneCat[i].Advisor + "; " + dInOneCat[i].Advisor2 + "</td>"  
+            + "<td>" + dInOneCat[i].Advisor + advisor3 + "</td>"  
             + "<td>" + dInOneCat[i].Title + "</td>"
             + "</tr>");
         }else{
           $("#dissertation").append("<tr>"
             + "<td>" + dInOneCat[i].Year + "</td>"
             + "<td>" + dInOneCat[i].Author + "</td>"
-            + "<td>" + dInOneCat[i].Advisor + "; " + dInOneCat[i].Advisor2 + "</td>"  
+            + "<td>" + dInOneCat[i].Advisor + advisor3 + "</td>"  
             + "<td>" + dInOneCat[i].Title + "</td>"
             + "</tr></tbody>");
         }
@@ -423,14 +432,14 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         if(i<dInOneYea.length-1){
           $("#dissertation").append("<tr>"
             + "<td>" + dInOneYea[i].Author + "</td>"
-            + "<td>" + dInOneYea[i].Advisor + ", " + dInOneYea[i].Advisor2 + "</td>"
+            + "<td>" + dInOneYea[i].Advisor + "; " + dInOneYea[i].Advisor2 + "</td>"
             + "<td>" + dInOneYea[i].Title + "</td>"
             + "<td>" + dInOneYea[i].Category + "</td>"
             + "</tr>");
         }else{
           $("#dissertation").append("<tr>"
             + "<td>" + dInOneYea[i].Author + "</td>"
-            + "<td>" + dInOneYea[i].Advisor + ", " + dInOneYea[i].Advisor2 + "</td>"
+            + "<td>" + dInOneYea[i].Advisor + "; " + dInOneYea[i].Advisor2 + "</td>"
             + "<td>" + dInOneYea[i].Title + "</td>"
             + "<td>" + dInOneYea[i].Category + "</td>"
             + "</tr></tbody>");
