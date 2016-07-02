@@ -32,10 +32,11 @@ var height = 500, //max size of the bubbles
       }
       return colorMap[key];
     }, //generate the evenly spaced hue color with fixed saturation and lightness
+    //fixed color for catagory data
     colorForCat = d3.scale.ordinal()
-    .domain(["0", "1", "2", "3", "4", "5", "6", "7", "8","9", "10", "11","12"])
-    .range(['#0a67a3','#4f90ba','#074f7e','#ffd663','#043e63',
-    '#ffcb39','#ffbc00','#ff4100','#ff8b63','#c53200']);
+    .domain(["0", "1", "2", "3", "4", "5", "6", "7", "8","9", "10", "11","12","13"])
+    .range(['#0a67a3','#4f90ba','#ffd663','#ffcb39','#ffbc00','#ff4100','#074f7e',
+            '#ff8b63','#c53200','#ff6c39','#9b7200','#c59100','#9b2800','#043e63']);
     
 var center = {
   x: width*5/8,
@@ -80,27 +81,28 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   if (error) throw error;
 
   var categories = data.map(function(a){
-        // a.Category = a.Category.toLowerCase();
-        return a.Category;
-      });
+    // a.Category = a.Category.toLowerCase();
+    if(a.Category == ""){
+      a.Category = "Uncategorized";
+    }
+    return a.Category;
+  });
 
   var advisors = data.map(function(a){
-        // a.Category = a.Category.toLowerCase();
-        return a.Advisor;
-      });
+    return a.Advisor;
+  });
 
   var years = data.map(function(a){
-        // a.Category = a.Category.toLowerCase();
-        return a.Year;
-      });
+    return a.Year;
+  });
 
   var titles = data.map(function(a){
-        return a.Title;
-      });
+    return a.Title;
+  });
 
   var authors = data.map(function(a){
-        return a.Author;
-      });
+    return a.Author;
+  });
 
   //get catergory frequency data
   var catCount = {};
@@ -368,27 +370,28 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         + "<th data-sortable='true' data-field='title'>Title</th>"
         + "</tr></thead><tbody>");
       for (var i = 0; i < dInOneCat.length; i++) {
-        console.log(dInOneCat[i].Advisor2);
-        var advisor3 = '';
+        // console.log(dInOneCat[i].Advisor2);
+        //see if there is a second advisor, if yes, add "; second advisor", if not, return ""
+        var ifadvisor2 = ''; 
         if(dInOneCat[i].Advisor2.length > 0){
-          advisor3 = '; ' + dInOneCat[i].Advisor2;
+          ifadvisor2 = '; ' + dInOneCat[i].Advisor2;
         }
         else{
-          advisor3 = '';
+          ifadvisor2 = '';
         }
-        console.log(advisor3);
+        // console.log(advisor3);
         if(i<dInOneCat.length-1){
           $("#dissertation").append("<tr>"
             + "<td>" + dInOneCat[i].Year + "</td>"
             + "<td>" + dInOneCat[i].Author + "</td>"
-            + "<td>" + dInOneCat[i].Advisor + advisor3 + "</td>"  
+            + "<td>" + dInOneCat[i].Advisor + ifadvisor2 + "</td>"  
             + "<td>" + dInOneCat[i].Title + "</td>"
             + "</tr>");
         }else{
           $("#dissertation").append("<tr>"
             + "<td>" + dInOneCat[i].Year + "</td>"
             + "<td>" + dInOneCat[i].Author + "</td>"
-            + "<td>" + dInOneCat[i].Advisor + advisor3 + "</td>"  
+            + "<td>" + dInOneCat[i].Advisor + ifadvisor2 + "</td>"  
             + "<td>" + dInOneCat[i].Title + "</td>"
             + "</tr></tbody>");
         }
@@ -429,17 +432,24 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         + "<th data-sortable='true'>Category</th>"
         + "</tr></thead><tbody>");
       for (var i = 0; i < dInOneYea.length; i++) {
+        var ifadvisor2 = ''; //see if there is a second advisor, if yes, add "; second advisor", if not, return ""
+        if(dInOneYea[i].Advisor2.length > 0){
+          ifadvisor2 = '; ' + dInOneYea[i].Advisor2;
+        }
+        else{
+          ifadvisor2 = '';
+        }
         if(i<dInOneYea.length-1){
           $("#dissertation").append("<tr>"
             + "<td>" + dInOneYea[i].Author + "</td>"
-            + "<td>" + dInOneYea[i].Advisor + "; " + dInOneYea[i].Advisor2 + "</td>"
+            + "<td>" + dInOneYea[i].Advisor + ifadvisor2 + "</td>"
             + "<td>" + dInOneYea[i].Title + "</td>"
             + "<td>" + dInOneYea[i].Category + "</td>"
             + "</tr>");
         }else{
           $("#dissertation").append("<tr>"
             + "<td>" + dInOneYea[i].Author + "</td>"
-            + "<td>" + dInOneYea[i].Advisor + "; " + dInOneYea[i].Advisor2 + "</td>"
+            + "<td>" + dInOneYea[i].Advisor + ifadvisor2 + "</td>"
             + "<td>" + dInOneYea[i].Title + "</td>"
             + "<td>" + dInOneYea[i].Category + "</td>"
             + "</tr></tbody>");
@@ -454,17 +464,24 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         + "<th data-sortable='true'>Category</th>"
         + "</tr></thead><tbody>");
       for (var i = 0; i < dInOneAut.length; i++) {
+        var ifadvisor2 = ''; //see if there is a second advisor, if yes, add "; second advisor", if not, return ""
+        if(dInOneAut[i].Advisor2.length > 0){
+          ifadvisor2 = '; ' + dInOneAut[i].Advisor2;
+        }
+        else{
+          ifadvisor2 = '';
+        }
         if(i<dInOneAut.length-1){
           $("#dissertation").append("<tr>"
             + "<td>" + dInOneAut[i].Year + "</td>"
-            + "<td>" + dInOneAut[i].Advisor + ", " + dInOneAut[i].Advisor2 + "</td>"
+            + "<td>" + dInOneAut[i].Advisor + ifadvisor2 + "</td>"
             + "<td>" + dInOneAut[i].Title + "</td>"
             + "<td>" + dInOneAut[i].Category + "</td>"
             + "</tr>");
         }else{
           $("#dissertation").append("<tr>"
             + "<td>" + dInOneAut[i].Year + "</td>"
-            + "<td>" + dInOneAut[i].Advisor + ", " + dInOneAut[i].Advisor2 + "</td>"
+            + "<td>" + dInOneAut[i].Advisor + ifadvisor2 + "</td>"
             + "<td>" + dInOneAut[i].Title + "</td>"
             + "<td>" + dInOneAut[i].Category + "</td>"
             + "</tr></tbody>");
@@ -479,18 +496,25 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         + "<th data-sortable='true'>Category</th>"
         + "</tr></thead><tbody>");
       for (var i = 0; i < dInOneTit.length; i++) {
+        var ifadvisor2 = ''; //see if there is a second advisor, if yes, add "; second advisor", if not, return ""
+        if(dInOneTit[i].Advisor2.length > 0){
+          ifadvisor2 = '; ' + dInOneTit[i].Advisor2;
+        }
+        else{
+          ifadvisor2 = '';
+        }
         if(i<dInOneTit.length-2){
           $("#dissertation").append("<tr>"
             + "<td>" + dInOneTit[i].Year + "</td>"
             + "<td>" + dInOneTit[i].Author + "</td>"
-            + "<td>" + dInOneTit[i].Advisor + ", " + dInOneTit[i].Advisor2 + "</td>"
+            + "<td>" + dInOneTit[i].Advisor + ifadvisor2 + "</td>"
             + "<td>" + dInOneTit[i].Category + "</td>"
             + "</tr>");
         }else{
           $("#dissertation").append("<tr>"
             + "<td>" + dInOneTit[i].Year + "</td>"
             + "<td>" + dInOneTit[i].Author + "</td>"
-            + "<td>" + dInOneTit[i].Advisor + ", " + dInOneTit[i].Advisor2 + "</td>"
+            + "<td>" + dInOneTit[i].Advisor + ifadvisor2s + "</td>"
             + "<td>" + dInOneTit[i].Category + "</td>"
             + "</tr></tbody>");
         }
@@ -501,16 +525,15 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   }
   function updateData(newData){
     year0 = parseInt(newData[0].name);
-    // console.log(newData[0].name);
     //check what data type do we have in the bubble chart now, category, year, or advisor
-    if(year0 > 1932){
+    if(!isNaN(year0) && typeof year0 === "number"){
       dataType = "year";
     }
-    else if(newData[0].name == "Nineteenth- and Twentieth-Century Art"){
-      dataType = "category";
+    else if(typeof newData[0].name === "string" && newData[0].name.indexOf(",") > -1){
+      dataType = "advisor";
     }
     else{
-      dataType = "advisor";
+      dataType = "category";
     }
     //remove old elements  
     d3.selectAll("circle")    
