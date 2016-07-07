@@ -21,8 +21,8 @@ var padding = 3, // separation between same-color nodes
 
 var _data;
 
-var height = 500, //max size of the bubbles
-    width = window.innerWidth*14/15,
+var height = 400, //max size of the bubbles
+    width = window.innerWidth*3/4,
     format = d3.format(",d"),
     colorMap = {},
     color = function(key, totalColors) {
@@ -39,7 +39,7 @@ var height = 500, //max size of the bubbles
             '#ff8b63','#c53200','#ff6c39','#9b7200','#c59100','#9b2800','#043e63']);
     
 var center = {
-  x: width*5/8,
+  x: width/2,
   y: height/2
 };
 
@@ -52,7 +52,7 @@ var year_centers = [{
     x: width * 6 / 10,
     y: height / 2
   },{ 
-    name: "1987-2014",
+    name: "1987-2016",
     x: 8.5 * width / 10,
     y: height / 2
   }];

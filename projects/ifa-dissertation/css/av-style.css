@@ -140,8 +140,10 @@
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-weight: 300;
   font-size: 1em;
-  width: 17.5%;
+  width: 19.8%;
   height: 30px;
+  /*left: -20px;*/
+  /*position: relative;*/
 }
 
 #searchbox2 {

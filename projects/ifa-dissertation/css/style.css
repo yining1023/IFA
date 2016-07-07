@@ -1,19 +1,9 @@
-h1{
+h1,h2,h3,h4,h5,h6{
   text-align: center; 
   font-family: Garamond;
-  font-size: 48px;
   color: #750005;
-}
-h2{
-  text-align: center; 
-  font-family: Garamond;
-  font-size: 36px;
-  color: #750005;
-}
-h3{ 
-  font-family: Garamond;
-  font-size: 36px;
-  color: #750005;
+  margin-top: 15px;
+  /*font-size: 36px;*/
 }
 @font-face {  
   font-family: Garamond-italic; 
@@ -28,45 +18,26 @@ h3{
 }
 #text-select{
   position:relative;
-  left: 40px;
-  width: 17.5%;
+  left: 20px;
+  width: 85%;
   top: 20px;
 }
 #search{
-  position:relative;
-  left: 40px;
+  /*position:relative;*/
+  /*left: 40px;*/
 }
-#yearTag0{
+#yearTag0, #yearTag1, #yearTag2{
   font: 25px sans-serif;
-  text-align: left;
-  left: 45px;
-  position: absolute;
-  top: 150px;
-  z-index: 100;
-}
- #yearTag1{
-  font: 25px sans-serif;
-  text-align: left;
-  left: 380px;
-  position: absolute;
-  top: 150px;
-  z-index: 100;
-}
- #yearTag2{
-  font: 25px sans-serif;
-  text-align: left;
-  left: 750px;
-  position: absolute;
-  top: 150px;
+  text-align: center;
   z-index: 100;
 }
 .legend{
   overflow: auto;
   height: 450px;  
-  width: 17.5%;
-  position: relative;
+  width: 85%;
+/*  position: relative;
   top: -480px;
-  left: 40px;
+  left: 40px;*/
   border-style: solid;
   border-width: 0.5px;
   border-color: #dddddd;
@@ -100,6 +71,7 @@ h3{
   width: 100%;
 }
 
-/*#selection {
-  top: 620px;
-}*/
+.col-xs-3{
+  padding-right: 0px;
+  padding-left: 0px;
+}
