@@ -1,52 +1,44 @@
+.container {
+  width: 100%;
+}
+
 h1,h2,h3,h4,h5,h6{
-  text-align: center; 
+  text-align: center;
   font-family: Garamond;
   color: #750005;
   margin-top: 15px;
   /*font-size: 36px;*/
 }
-@font-face {  
-  font-family: Garamond-italic; 
+@font-face {
+  font-family: Garamond-italic;
   src: url( 'Garamond-italic.otf');
   font-weight: 300;
   font-style: italic; );
 }
-@font-face {  
+@font-face {
   font-family: Garamond;
-  font-weight: 300;  
-  src: url( 'Garamond.otf' );  
+  font-weight: 300;
+  src: url( 'Garamond.otf' );
 }
 #text-select{
   position:relative;
-  left: 20px;
-  width: 85%;
-  top: 20px;
-}
-#search{
-  /*position:relative;*/
-  /*left: 40px;*/
 }
 #yearTag0, #yearTag1, #yearTag2{
   font: 25px sans-serif;
   text-align: center;
   z-index: 100;
 }
-.legend{
+
+.advisor-legend {
   overflow: auto;
-  height: 450px;  
-  width: 85%;
-/*  position: relative;
-  top: -480px;
-  left: 40px;*/
+  height: 450px;
   border-style: solid;
   border-width: 0.5px;
   border-color: #dddddd;
 }
+
 .legend rect {
-  display: hidden;
-  fill: white;
-  /*stroke:black;*/
-  opacity:0.8;
+  opacity: 0;
 }
 .legend-items text {
   fill: #555;
@@ -55,14 +47,6 @@ h1,h2,h3,h4,h5,h6{
 .info {
   text-align: left;
   left: 50px;
-}
-
-#dissertation {
-  /*top: 650px;*/
-  width: 95%;
-}
-
-.info{
   position: relative;
   top: -450px;
 }

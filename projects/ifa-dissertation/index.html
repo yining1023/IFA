@@ -18,53 +18,45 @@
   </head>
 
   <body>
-  <div id=".container-fluid">
+  <div class="container">
     <div class="row">
-      <div class="col-xs-3">
-        <h4>Institute <i>of</i>&#8196Fine Arts Dissertations</h4>
-        <h4>1933 - Present</h4></div>
-      <div class="col-md-9"></div>
+      <h2>Institute <i>of</i>&#8196Fine Arts Dissertations</h2>
+      <h3>1933 - Present</h3>
     </div>
-
-    <div class="row">
-      <div class="col-xs-3">
-        <select class="form-control" id="text-select">      
+    <!-- SIDEBAR -->
+    <div class="col-xs-12 col-sm-3">
+      <div class="row">
+        <select class="form-control" id="text-select">
           <option value="Category">Category</option>
           <option value="Advisor">Advisor</option>
           <option value="Year">Year</option>
         </select>
-
-        <div class="row">
-          <div class="col-xs-12">
-            <div id="search" class="ui-widget content">
-              <input id="searchbox" placeholder="Search"></input>    
-            </div>
-          </div>
-        </div>
-
-
       </div>
-      <div class="col-sm-9">
+
+      <div class="row">
+        <div id="search" class="ui-widget content">
+          <input id="searchbox" placeholder="Search"></input>
+        </div>
+      </div>
+
+      <div class="row">
+        <div id="advisor-legend" class="advisor-legend"></div>
+      </div>
+    </div>
+
+    <!-- MAIN VISUALIZATION -->
+    <div class="col-xs-12 col-sm-9">
+      <div class="row">
         <div class='visualization'></div>
       </div>
-    </div>
 
-    
-
-    <div class="row">
-      <div class="col-xs-3">
-        <div id="legend" class="legend"></div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="info row col-md-9">
+      <div class="row">
         <div id="selection"></div>
-        <table id="dissertation" class="table table-hover"></table>
-        <table id="dissertation" class="table table-hover"></table>
+        <table id="dissertation-table"></table>
       </div>
     </div>
+
+  <!-- END CONTAINER -->
   </div>
       <!-- <div class="col-sm-3">
         <div id='yearTag0'>1933-1960</div>
