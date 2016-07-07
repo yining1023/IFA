@@ -2,12 +2,12 @@
 Array.prototype.unique = function()
 {
   var n = {},r=[];
-  for(var i = 0; i < this.length; i++) 
+  for(var i = 0; i < this.length; i++)
   {
-    if (!n[this[i]]) 
+    if (!n[this[i]])
     {
-      n[this[i]] = true; 
-      r.push(this[i]); 
+      n[this[i]] = true;
+      r.push(this[i]);
     }
   }
   return r;
@@ -22,7 +22,7 @@ var padding = 3, // separation between same-color nodes
 var _data;
 
 var height = 400, //max size of the bubbles
-    width = window.innerWidth*3/4,
+    width = 800,
     format = d3.format(",d"),
     colorMap = {},
     color = function(key, totalColors) {
@@ -37,7 +37,7 @@ var height = 400, //max size of the bubbles
     .domain(["0", "1", "2", "3", "4", "5", "6", "7", "8","9", "10", "11","12","13"])
     .range(['#0a67a3','#4f90ba','#ffd663','#ffcb39','#ffbc00','#ff4100','#074f7e',
             '#ff8b63','#c53200','#ff6c39','#9b7200','#c59100','#9b2800','#043e63']);
-    
+
 var center = {
   x: width/2,
   y: height/2
@@ -45,15 +45,15 @@ var center = {
 
 var year_centers = [{
     name: "1933-1960",
-    x: width*3.4 / 10,
+    x: width * 2 / 10,
     y: height / 2
   },{
     name: "1960-1987",
-    x: width * 6 / 10,
+    x: width * 5/ 10,
     y: height / 2
-  },{ 
+  },{
     name: "1987-2016",
-    x: 8.5 * width / 10,
+    x: width * 8 / 10,
     y: height / 2
   }];
 
@@ -108,7 +108,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   var catCount = {};
 
   data.forEach(function(a){
-    if(!catCount[a.Category]) 
+    if(!catCount[a.Category])
       catCount[a.Category]=1;
     else
       catCount[a.Category]++;
@@ -127,7 +127,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   var advCount = {}; //advisor frequency.
 
   data.forEach(function(a){
-    if(!advCount[a.Advisor]) 
+    if(!advCount[a.Advisor])
       advCount[a.Advisor]=1;
     else
       advCount[a.Advisor]++;
@@ -146,7 +146,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   var yeaCount = {}; //year frequency.
 
   data.forEach(function(a){
-    if(!yeaCount[a.Year]) 
+    if(!yeaCount[a.Year])
       yeaCount[a.Year]=1;
     else
       yeaCount[a.Year]++;
@@ -165,7 +165,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   var autCount = {}; //author frequency. actually no need to calculate this
 
   data.forEach(function(a){
-    if(!autCount[a.Author]) 
+    if(!autCount[a.Author])
       autCount[a.Author]=1;
     else
       autCount[a.Author]++;
@@ -184,7 +184,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   var titCount = {}; //title frequency.
 
   data.forEach(function(a){
-    if(!titCount[a.Title]) 
+    if(!titCount[a.Title])
       titCount[a.Title]=1;
     else
       titCount[a.Title]++;
@@ -208,33 +208,33 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   _data = data;
   initSearchBox();
 
-  catData = catData.map(function(d){ 
+  catData = catData.map(function(d){
     d.value = +d.count;
     d.centerX = width/2;
     d.centerY = height/2;
-    return d; 
+    return d;
   });
-  advData = advData.map(function(d){ 
+  advData = advData.map(function(d){
     d.value = +d.count;
     d.centerX = width/2;
-    d.centerY = height/2; 
-    return d; 
+    d.centerY = height/2;
+    return d;
   });
-  yeaData = yeaData.map(function(d){ 
+  yeaData = yeaData.map(function(d){
     d.value = +d.count;
     d.centerX = width/2;
-    d.centerY = height/2; 
-    return d; 
+    d.centerY = height/2;
+    return d;
   });
 
-  autData = autData.map(function(d){ 
-    d.value = +d.count; //only needs valaue, no centerX, centerY 
-    return d; 
+  autData = autData.map(function(d){
+    d.value = +d.count; //only needs valaue, no centerX, centerY
+    return d;
   });
 
-  titData = titData.map(function(d){ 
-    d.value = +d.count; //only needs valaue, no centerX, centerY 
-    return d; 
+  titData = titData.map(function(d){
+    d.value = +d.count; //only needs valaue, no centerX, centerY
+    return d;
   });
 
   //bubbles needs specific format, convert data to this
@@ -249,13 +249,37 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     .append("svg")
     .attr("width", width)
     .attr("height", height)
-    .attr("class", "bubble");
+    .attr("class", "bubble")
+    .attr("viewBox", "0 0 800 400")
+    .attr("preserveAspectRatio", "xMidYMid meet");
+
+  var aspect = width / height;
 
   //creating svg for legend for advisor data
-  var svg2 = d3.select("#legend")
+  var svg2 = d3.select("#advisor-legend")
     .append("svg")
     .attr("width", 200)
     .attr("height", 20*(advData.length+1));
+
+  var yearTags = svg.selectAll('.yearTag')
+    .data(year_centers);
+
+  yearTags.enter()
+    .append("text")
+    .attr("class", "yearTag")
+    .text(function(d) { return d.name; })
+    .style("visibility", "hidden")
+    .attr("transform", function(d) {
+      return "translate(" + d.x + "," + height + ")";
+    });
+
+  d3.select(window)
+    .on("resize", function() {
+      var targetWidth = svg.node().getBoundingClientRect().width;
+      var targetHeight = targetWidth / aspect;
+      svg.attr("width", targetWidth);
+      svg.attr("height", targetHeight);
+    });
 
   function initSearchBox(){
     var categories = _data.map(function(a){
@@ -354,16 +378,19 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       return (e.Title === d.name);
     });
 
-    $('#dissertation').empty();
+    $('#dissertation-table').empty();
+    var dissertationTable = $('#dissertation-table');
+
+    // $('#dissertation').empty();
     //one problem here, everytime render profile, the bootstrap-table.js will init
-    // a table container div(class:"bootstrarp-table"), so if render profile for several times, 
+    // a table container div(class:"bootstrarp-table"), so if render profile for several times,
     // there will be a container inside of another. I tried to empty it every time it init a container,
     //but it didn't work:
     // $('.bootstrap-table').empty();
     //from the outside, there's no difference. But in the DOM, you can see there are extra container
     // $('#dissertation').bootstrapTable('destory');
     if(dInOneCat.length > 0){
-      $("#dissertation").append("<thead><tr>"
+      dissertationTable.append("<thead><tr>"
         + "<th data-sortable='true' data-field='year'>Year</th>"
         + "<th data-sortable='true' data-field='anthor'>Author</th>"
         + "<th data-sortable='true' data-field='advisor'>Advisor(s)</th>"
@@ -372,7 +399,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       for (var i = 0; i < dInOneCat.length; i++) {
         // console.log(dInOneCat[i].Advisor2);
         //see if there is a second advisor, if yes, add "; second advisor", if not, return ""
-        var ifadvisor2 = ''; 
+        var ifadvisor2 = '';
         if(dInOneCat[i].Advisor2.length > 0){
           ifadvisor2 = '; ' + dInOneCat[i].Advisor2;
         }
@@ -381,24 +408,24 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         }
         // console.log(advisor3);
         if(i<dInOneCat.length-1){
-          $("#dissertation").append("<tr>"
+          dissertationTable.append("<tr>"
             + "<td>" + dInOneCat[i].Year + "</td>"
             + "<td>" + dInOneCat[i].Author + "</td>"
-            + "<td>" + dInOneCat[i].Advisor + ifadvisor2 + "</td>"  
+            + "<td>" + dInOneCat[i].Advisor + ifadvisor2 + "</td>"
             + "<td>" + dInOneCat[i].Title + "</td>"
             + "</tr>");
         }else{
-          $("#dissertation").append("<tr>"
+          dissertationTable.append("<tr>"
             + "<td>" + dInOneCat[i].Year + "</td>"
             + "<td>" + dInOneCat[i].Author + "</td>"
-            + "<td>" + dInOneCat[i].Advisor + ifadvisor2 + "</td>"  
+            + "<td>" + dInOneCat[i].Advisor + ifadvisor2 + "</td>"
             + "<td>" + dInOneCat[i].Title + "</td>"
             + "</tr></tbody>");
         }
       }
     }
     else if(dInOneAdv.length > 0) {
-      $("#dissertation").append("<thead><tr>"
+      dissertationTable.append("<thead><tr>"
         + "<th data-sortable='true'>Year</th>"
         + "<th data-sortable='true'>Author</th>"
         + "<th data-sortable='true'>Title</th>"
@@ -406,14 +433,14 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         + "</tr></thead><tbody>");
       for (var i = 0; i < dInOneAdv.length; i++) {
         if(i<dInOneAdv.length-1){
-          $("#dissertation").append("<tr>"
+          dissertationTable.append("<tr>"
             + "<td>" + dInOneAdv[i].Year + "</td>"
             + "<td>" + dInOneAdv[i].Author + "</td>"
             + "<td>" + dInOneAdv[i].Title + "</td>"
             + "<td>" + dInOneAdv[i].Category + "</td>"
             + "</tr>");
         }else{
-          $("#dissertation").append("<tr>"
+          dissertationTable.append("<tr>"
             + "<td>" + dInOneAdv[i].Year + "</td>"
             + "<td>" + dInOneAdv[i].Author + "</td>"
             + "<td>" + dInOneAdv[i].Title + "</td>"
@@ -421,11 +448,11 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
             + "</tr></tbody>");
         }
       }
-      
+
     }
     else if(dInOneYea.length > 0){
-      $("#dissertation").append("<thead><tr>"
-        + "<th data-sortable='true'>Author</th>" //don't forget to add 'data-sortable='true'' 
+      dissertationTable.append("<thead><tr>"
+        + "<th data-sortable='true'>Author</th>" //don't forget to add 'data-sortable='true''
         //in order to make srtable table work, also add <thead>, <tbody>
         + "<th data-sortable='true'>Advisor(s)</th>"
         + "<th data-sortable='true'>Title</th>"
@@ -440,14 +467,14 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           ifadvisor2 = '';
         }
         if(i<dInOneYea.length-1){
-          $("#dissertation").append("<tr>"
+          dissertationTable.append("<tr>"
             + "<td>" + dInOneYea[i].Author + "</td>"
             + "<td>" + dInOneYea[i].Advisor + ifadvisor2 + "</td>"
             + "<td>" + dInOneYea[i].Title + "</td>"
             + "<td>" + dInOneYea[i].Category + "</td>"
             + "</tr>");
         }else{
-          $("#dissertation").append("<tr>"
+          dissertationTable.append("<tr>"
             + "<td>" + dInOneYea[i].Author + "</td>"
             + "<td>" + dInOneYea[i].Advisor + ifadvisor2 + "</td>"
             + "<td>" + dInOneYea[i].Title + "</td>"
@@ -457,7 +484,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       }
     }
     else if(dInOneAut.length > 0){
-      $("#dissertation").append("<thead><tr>"
+      dissertationTable.append("<thead><tr>"
         + "<th data-sortable='true'>Year</th>"
         + "<th data-sortable='true'>Advisor(s)</th>"
         + "<th data-sortable='true'>Title</th>"
@@ -472,14 +499,14 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           ifadvisor2 = '';
         }
         if(i<dInOneAut.length-1){
-          $("#dissertation").append("<tr>"
+          dissertationTable.append("<tr>"
             + "<td>" + dInOneAut[i].Year + "</td>"
             + "<td>" + dInOneAut[i].Advisor + ifadvisor2 + "</td>"
             + "<td>" + dInOneAut[i].Title + "</td>"
             + "<td>" + dInOneAut[i].Category + "</td>"
             + "</tr>");
         }else{
-          $("#dissertation").append("<tr>"
+          dissertationTable.append("<tr>"
             + "<td>" + dInOneAut[i].Year + "</td>"
             + "<td>" + dInOneAut[i].Advisor + ifadvisor2 + "</td>"
             + "<td>" + dInOneAut[i].Title + "</td>"
@@ -489,7 +516,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       }
     }
     else if(dInOneTit.length > 0){
-      $("#dissertation").append("<thead><tr>"
+      dissertationTable.append("<thead><tr>"
         + "<th data-sortable='true'>Year</th>"
         + "<th data-sortable='true'>Author</th>"
         + "<th data-sortable='true'>Advisor(s)</th>"
@@ -504,14 +531,14 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           ifadvisor2 = '';
         }
         if(i<dInOneTit.length-2){
-          $("#dissertation").append("<tr>"
+          dissertationTable.append("<tr>"
             + "<td>" + dInOneTit[i].Year + "</td>"
             + "<td>" + dInOneTit[i].Author + "</td>"
             + "<td>" + dInOneTit[i].Advisor + ifadvisor2 + "</td>"
             + "<td>" + dInOneTit[i].Category + "</td>"
             + "</tr>");
         }else{
-          $("#dissertation").append("<tr>"
+          dissertationTable.append("<tr>"
             + "<td>" + dInOneTit[i].Year + "</td>"
             + "<td>" + dInOneTit[i].Author + "</td>"
             + "<td>" + dInOneTit[i].Advisor + ifadvisor2s + "</td>"
@@ -521,9 +548,14 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       }
     }
     //in order to dynamically add sortable table, call this function.
-    $('#dissertation').bootstrapTable();
+    dissertationTable.bootstrapTable();
   }
+
   function updateData(newData){
+    //Clear Selections
+    $("#dissertation-table").empty();
+    $("#selection").empty();
+
     year0 = parseInt(newData[0].name);
     //check what data type do we have in the bubble chart now, category, year, or advisor
     if(!isNaN(year0) && typeof year0 === "number"){
@@ -535,12 +567,13 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     else{
       dataType = "category";
     }
-    //remove old elements  
-    d3.selectAll("circle")    
+    //remove old elements
+    d3.selectAll("circle")
       .remove();
 
     //if it's year data, display years
-    if(dataType == "year"){
+    if(dataType == "year") {
+      yearTags.style("visibility", "visible");
       var force = d3.layout.force()
         .nodes(newData) //Year --> newData
         .size([width, height])
@@ -550,8 +583,8 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         .on("tick", tickYear) //call tick Year instead
         .start();
         display_years();
-    }
-    else{
+    } else {
+      yearTags.style("visibility", "hidden");
       var force = d3.layout.force()
         .nodes(newData) //newData is not year
         .size([width, height])
@@ -559,11 +592,11 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         .charge(function(d){return -Math.pow(d.radius, 2.0) / 8; })
         .friction(0.9)
         .on("tick", tick)
-        .start(); 
-        hide_years(); 
+        .start();
+        hide_years();
     }
     //setup the chart
-    var nodes = svg.selectAll(".node")//"circle"     
+    var nodes = svg.selectAll(".node")//"circle"
       .data(newData);
 
     nodes.enter()
@@ -576,7 +609,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       .attr("cx", function(d){ return d.x; })
       .attr("cy", function(d){ return d.y; })
       // .style("fill", function(d) {
-      //   return color(d.name, newData.length); 
+      //   return color(d.name, newData.length);
       // })
       // .call(force.drag)
       .on("mouseover", function(d) {
@@ -589,7 +622,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       .on("mousemove", function() {
         return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
       })
-      .on("mouseout", function() { 
+      .on("mouseout", function() {
         var bubble = d3.select(this);
         tooltip.style("visibility", "hidden");
         bubble.attr("stroke", "none");
@@ -601,35 +634,35 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
 
     if(dataType == "category"){
       circles.style("fill", function(d) {
-        return colorForCat(d.name); 
+        return colorForCat(d.name);
       })
     }else{
       circles.style("fill", function(d) {
-        return color(d.name, newData.length); 
+        return color(d.name, newData.length);
       })
     }
 
     //when it's category data, show legend
     if(newData[0].name == "Nineteenth- and Twentieth-Century Art"){
-      $("#legend").attr("style", "visibility: hidden");
+      $("#advisor-legend").attr("style", "display: none");
       $("#search").attr("style", "top: -800px");
       $("g.legend").remove();
       circles.attr("data-legend", function(d) { return d.name; });
       var legend = svg.append("g")
         .attr("class","legend")
         .attr("transform","translate(47, 40)")
-        .style("font-size","12px") 
+        .style("font-size","12px")
         .attr("data-style-padding",10)
         .call(d3.legend);
-    } else if (newData[0].name == "Storr, Robert"){ //when it's advisor data, show antoher legend
+    } else if (newData[0].name == "Storr, Robert"){ //when it's advisor data, show another legend
         $("#search").attr("style", "top: -475px");
-        $("#legend").attr("style", "visibility: visible");
+        $("#advisor-legend").attr("style", "display: block");
         $("g.legend").remove();
-      
+
       var legend = svg2.append("g")
         .attr("class","legend")
         .attr("transform","translate(-15, 40)")
-        .style("font-size","12px") 
+        .style("font-size","12px")
         .attr("data-style-padding",10);
         // .call(d3.legend);
       legend.selectAll('rect')
@@ -652,11 +685,13 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         .attr("width", 5)
         .attr("height", 5)
         .attr("y", function(d, i){ return (i-1) *  20 + 5;})
+        .style("cursor", "pointer")
         .text(function(d) {
           return d.name;
-        });
+        })
+        .on("click", renderProfile);
     }else {
-      $("#legend").attr("style", "visibility: hidden");
+      $("#advisor-legend").attr("style", "display: none");
       $("#search").attr("style", "top: -930px");
       $("g.legend").remove();
     }
@@ -671,7 +706,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     //   .style("pointer-events", "none")
     //   .text(function(d){
     //     // console.log(d);
-    //     // return d["name"]; 
+    //     // return d["name"];
     //     return d.name.substring(0, d.r / 4);
     //   })
     //   .style({
@@ -705,8 +740,8 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         return function(t) { return d.r = i(t); };
       });
 
-    // remove old elements  
-    // svg.selectAll(".node")//"circle"     
+    // remove old elements
+    // svg.selectAll(".node")//"circle"
     //   .data(newData).exit().remove();
 
     // nodes.exit().remove().call(function(){console.log(nodes);});
@@ -783,7 +818,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           id = id.toString();
           if($("#" + id).length !== 0){
             var a = $('#'+id);
-            a.css('visibility', 'visible');    
+            a.css('visibility', 'visible');
           }
         }
       }
@@ -795,7 +830,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         id = id.toString();
         if($("#" + id).length !== 0){
           var a = $('#'+id);
-          a.css('visibility', 'hidden');    
+          a.css('visibility', 'hidden');
         }
       }
     }
