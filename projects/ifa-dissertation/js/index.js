@@ -25,6 +25,8 @@ var height = 400, //max size of the bubbles
     width = 800,
     format = d3.format(",d"),
     colorMap = {},
+    colorMapAdv = {},
+    colorMapYea = {},
     color = function(key, totalColors) {
       var colorIndex = Object.keys(colorMap).length + 10 || 1;
       if (!colorMap[key]) {
@@ -32,6 +34,23 @@ var height = 400, //max size of the bubbles
       }
       return colorMap[key];
     }, //generate the evenly spaced hue color with fixed saturation and lightness
+    //generate color #7b98aa with evenly space saturation and lgihtness
+    colorForAdv = function(key, totalColors){
+      var colorIndex = Object.keys(colorMapAdv).length + 10 || 1;
+      if (!colorMapAdv[key]) {
+        var brightness = ((colorIndex * (360 / totalColors)) % 360)/360/2;
+        colorMapAdv[key] = d3.hsl(203, 0.22, brightness + 0.2);
+      }
+      return colorMapAdv[key];
+    },
+    colorForYea = function(key, totalColors){
+      var colorIndex = Object.keys(colorMapYea).length + 10 || 1;
+      if (!colorMapYea[key]) {
+        var brightness = ((colorIndex * (360 / totalColors)) % 360)/3600;
+        colorMapYea[key] = d3.hsl(203, 0.22, brightness + 0.4);
+      }
+      return colorMapYea[key];
+    },
     //fixed color for catagory data
     colorForCat = d3.scale.ordinal()
     .domain(["0", "1", "2", "3", "4", "5", "6", "7", "8","9", "10", "11","12","13"])
@@ -44,15 +63,15 @@ var center = {
 };
 
 var year_centers = [{
-    name: "1933-1960",
+    name: "1933-1970",
     x: width * 2 / 10,
     y: height / 2
   },{
-    name: "1960-1987",
-    x: width * 5/ 10,
+    name: "1970-1997",
+    x: width * 5 / 10,
     y: height / 2
   },{
-    name: "1987-2016",
+    name: "1997-2016",
     x: width * 8 / 10,
     y: height / 2
   }];
@@ -261,17 +280,19 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     .attr("width", 200)
     .attr("height", 20*(advData.length+1));
 
+  //add year tag
   var yearTags = svg.selectAll('.yearTag')
     .data(year_centers);
 
   yearTags.enter()
-    .append("text")
-    .attr("class", "yearTag")
-    .text(function(d) { return d.name; })
-    .style("visibility", "hidden")
-    .attr("transform", function(d) {
-      return "translate(" + d.x + "," + height + ")";
-    });
+  .append("text")
+  .attr("class", "yearTag")
+  .text(function(d) { return d.name; })
+  .style("visibility", "hidden")
+  .attr("transform", function(d) {
+    var center = d.x - 40;
+    return "translate(" + center + "," + height + ")";
+  });
 
   d3.select(window)
     .on("resize", function() {
@@ -605,7 +626,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       .call(force.drag);
 
     var circles = nodes.append("circle")
-      .attr("r", function(d) { return d.r; })
+      .attr("r", function(d) { return d.r/2; })
       .attr("cx", function(d){ return d.x; })
       .attr("cy", function(d){ return d.y; })
       // .style("fill", function(d) {
@@ -636,14 +657,18 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       circles.style("fill", function(d) {
         return colorForCat(d.name);
       })
+    }else if(dataType == "advisor"){
+      circles.style("fill", function(d) {
+        return colorForAdv(d.name, newData.length);
+      })
     }else{
       circles.style("fill", function(d) {
-        return color(d.name, newData.length);
+        return colorForYea(d.name, newData.length);
       })
     }
 
     //when it's category data, show legend
-    if(newData[0].name == "Nineteenth- and Twentieth-Century Art"){
+    if(dataType == "category"){
       $("#advisor-legend").attr("style", "display: none");
       $("#search").attr("style", "top: -800px");
       $("g.legend").remove();
@@ -651,10 +676,10 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       var legend = svg.append("g")
         .attr("class","legend")
         .attr("transform","translate(47, 40)")
-        .style("font-size","12px")
-        .attr("data-style-padding",10)
+        .style("font-size","10px")
+        .attr("data-style-padding",8)
         .call(d3.legend);
-    } else if (newData[0].name == "Storr, Robert"){ //when it's advisor data, show another legend
+    } else if (dataType == "advisor"){ //when it's advisor data, show another legend
         $("#search").attr("style", "top: -475px");
         $("#advisor-legend").attr("style", "display: block");
         $("g.legend").remove();
@@ -673,9 +698,9 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         .attr("cy", function(d, i){ return (i-1) *  20})
         .attr("r", 2.5)
         // .attr("height", 5)
-        .style("stroke", "#660300")
+        .style("stroke", "#7b98aa")
         .attr("stroke-width", 1)
-        .style("fill", "#660300");
+        .style("fill", "#7b98aa");
 
       legend.selectAll('text')
         .data(newData)
@@ -740,12 +765,6 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         return function(t) { return d.r = i(t); };
       });
 
-    // remove old elements
-    // svg.selectAll(".node")//"circle"
-    //   .data(newData).exit().remove();
-
-    // nodes.exit().remove().call(function(){console.log(nodes);});
-
     function tick(e) {
       circles
         // .each(gravity(.1 * e.alpha))
@@ -793,13 +812,13 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     function move_towards_year(alpha){
         return function(d) {
           var year = parseInt(d.name);
-          if(year > 1932 && year < 1960){
+          if(year < 1970){
             target = year_centers[0];
           }
-          else if(year >= 1960 && year < 1987){
+          else if(year >= 1970 && year < 1997){
             target = year_centers[1];
           }
-          else if(year >= 1987){
+          else if(year >= 1997){
             target = year_centers[2];
           }
           else{
