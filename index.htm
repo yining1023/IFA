@@ -8,7 +8,7 @@
         <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 		<meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible' />
         <meta name="Description" content="The Institute of Fine Arts is dedicated to graduate teaching and advanced research in the history of art, archaeology and the conservation and technology of works of art." />
-        
+
        	<meta name="twitter:card" content="summary_large_image">
 		<meta name="twitter:site" content="@NYUIFA">
 		<meta name="twitter:title" content="The Institute of Fine Arts, NYU">
@@ -25,19 +25,19 @@
 		<meta name="twitter:app:id:iphone" content="">
 		<meta name="twitter:app:id:ipad" content="">
 		<meta name="twitter:app:id:googleplay" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 		<title>Institute of Fine Arts - NYU</title>
-		
-	
+
+
 		<link rel="stylesheet" href="style/jquery.maximage.min.css" type="text/css" media="screen" />
-        <link rel='stylesheet' href="style/style-main.css" />	
+        <link rel='stylesheet' href="style/style-main.css" />
 <!-- 		<link rel='stylesheet' media='screen and (min-width: 801px) and (max-width: 1199px)' href="style/style-main-smallerscreens.css" />
         <link rel='stylesheet' media='screen and (min-width: 0px) and (max-width: 800px)' href="style/style-main-phone.css" />
 		<link rel='stylesheet' media='screen and (min-height: 0px) and (max-height: 600px)' href="style/style-main-phone.css" /> -->
 		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-       
-		
+
+
 		<style type="text/css" media="screen">
 			/*I want to avoid jumpiness as the JS loads, so I initially hide my cycle*/
 			#maximage {
@@ -45,7 +45,7 @@
 				position:absolute !important;
 }
 		</style>
-		
+
 		<!--[if IE 6]>
 			<style type="text/css" media="screen">
 				/*I don't feel like messing with pngs for this browser... sorry*/
@@ -70,11 +70,9 @@
 <script src="//f.vimeocdn.com/js/froogaloop2.min.js"></script>
 </head>
 	<body>
-
-      <video autoplay loop id="video-background" muted>
-      <source src="http://beta.mattgrossdesign.com/sites/default/files/wood%20autumn-HD.mp4" type="video/mp4">
+      <video class="background-video" style="-ms-transform: translate(50%, -50%); -moz-transform: translate(50%, -50%); -webkit-transform: translate(50%, -50%);transform: translate(50%, -50%);" autoplay loop muted>
+        <source src="ifa.mp4" type="video/mp4">
       </video>
-
       <script>
       var mVideo = document.querySelector('video');
       var ratio = mVideo.videoWidth/mVideo.videoHeight;
@@ -92,14 +90,14 @@
         }
       });
       </script>
-        
+
 
 		<div class="mainWrapper">
 	      <span class="NYULogoContainer"><a href="http://www.nyu.edu" target="_blank"><img src="images/nyulogo_horiz_white.png" alt="NYU Logo"></a></span><br>
 	      <div class="IFALogoContainer">
 	        <img src="images/IFAlogo.png" alt="IFA Logo"><br>
 	      </div>
-	      <div class="menuContainer">                   
+	      <div class="menuContainer">
 	        <ul class="menuHover">
 	          <li><a class="menuButton" id="button1" href="about/index.htm"><span class="menuText">ABOUT</span></a></li>
 	          <li><a class="menuButton" id="button2" href="events/index.htm"><span class="menuText">EVENTS</span></a></li>
@@ -112,87 +110,82 @@
 	          <li><a class="menuButton" id="button9" href="contact.htm"><span class="menuText">CONTACT</span></a></li>
 	          <li><a class="menuButton" id="button10" href="support/index.htm"><span class="menuText">SUPPORT US</span></a></li>
 	        </ul>
-	      </div> 
+	      </div>
 	    </div>
 
 		<div id="maximage">
-        
-        
-                
+
+
+
                 <!--<div><img src="images/frontpage02.jpg" alt="The Institute of Fine Arts" />
             	<div class="text">
-                    
+
 				  <br><br>
                    <p class="quote"><span class="strong">
 Congratulations to our 2015 Graduates!</span>
 </p>
             	</div>
             </div>  -->
-            
+
              <!--<div><img src="images/frontpage01-chandelier.jpg" alt="The Institute of Fine Arts" /><div class="text">
-        
-        
-            
-           
+
+
+
+
             <p class="quote">
-            
+
             Tuesday, September 8th, 6:30pm<br>
             Artists at the Institute:
 Agnieszka Kurant. <a href="events/livestream.htm">Watch Live.</a></p>
-                     
+
                 </div>            </div> -->
-            
-             <div><!-- <img src="images/frontpage-promo.jpg" alt="The Institute of Fine Arts" /> --><div class="text">
-        
-        
-            
-           
-            <p class="quote">
-            
-            Stronger if Combined: Art History and Science<br>
-The Conservation Center Announces a New Dual Degree Program <a href="news/stronger-if-combined.htm">Find out more about the program.</a></p>
-                     
-                </div>            </div>
-            
-            <div><img src="images/frontpage01.jpg" alt="The Institute of Fine Arts" /><div class="text">
-        
-        
-            
-           
-            <p class="quote">
-            
-            The Institute is dedicated to graduate teaching and advanced research in the history of art, archaeology and the conservation and technology of works of art. <a href="academics/index.htm">Find out more about the program.</a></p>
-                     
-                </div>            </div>
-                
-               
-            
-            
+
+          <div><!-- <img src="images/frontpage-promo.jpg" alt="The Institute of Fine Arts" /> -->
+            <div class="text">
+              <p class="quote">
+              Stronger if Combined: Art History and Science<br>
+  The Conservation Center Announces a New Dual Degree Program <a href="news/stronger-if-combined.htm">Find out more about the program.</a>
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <img src="images/frontpage01.jpg" alt="The Institute of Fine Arts" />
+            <div class="text">
+              <p class="quote">
+              The Institute is dedicated to graduate teaching and advanced research in the history of art, archaeology and the conservation and technology of works of art. <a href="academics/index.htm">Find out more about the program.</a>
+              </p>
+              </div>
+            </div>
+
+
+
+
            <!-- <div><img src="images/frontpage03.jpg" alt="The Institute of Fine Arts" />
             	<div class="text">
                     <p class="quote">The Conservation Center is a graduate program for the study of the technology and conservation of works of art and historic artifacts. <a href="conservation/index.htm">Find out more about the program.</a></p>
             	</div>
             </div> -->
 		</div>
-   
+
 
 		<script src="js/jquery.cycle.all.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery.maximage.min.js" type="text/javascript" charset="utf-8"></script>
-		
+
 		<script type="text/javascript">
-			$(function(){
-				jQuery('#maximage').maximage({
-					cycleOptions: {
-						fx: 'fade',
-						// Speed has to match the speed for CSS transitions
-						speed: 3000, 
-					},
-					onFirstImageLoaded: function(){
-						jQuery('#maximage').fadeIn('fast');
-					}
-                });
-            });    
-		</script> 
+			// $(function(){
+			// 	jQuery('#maximage').maximage({
+			// 		cycleOptions: {
+			// 			fx: 'fade',
+			// 			// Speed has to match the speed for CSS transitions
+			// 			speed: 3000,
+			// 		},
+			// 		onFirstImageLoaded: function(){
+			// 			jQuery('#maximage').fadeIn('fast');
+			// 		}
+   //              });
+   //          });
+		</script>
 
   </body>
 </html>
