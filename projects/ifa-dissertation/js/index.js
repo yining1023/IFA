@@ -12,6 +12,21 @@ Array.prototype.unique = function()
   }
   return r;
 }
+
+d3.selection.prototype.moveToFront = function() {
+  return this.each(function(){
+    this.parentNode.appendChild(this);
+  });
+};
+d3.selection.prototype.moveToBack = function() {
+  return this.each(function() {
+    var firstChild = this.parentNode.firstChild;
+    if (firstChild) {
+      this.parentNode.insertBefore(this, firstChild);
+    }
+  });
+};
+
 var dataType;//year, advisor, or category
 var searchAdv="";//save which advisor does users search or click on
 var panelOpen = false; //alumni info panel state
@@ -301,14 +316,14 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     .data(year_centers);
 
   yearTags.enter()
-  .append("text")
-  .attr("class", "yearTag")
-  .text(function(d) { return d.name; })
-  .style("visibility", "hidden")
-  .attr("transform", function(d) {
-    var center = d.x - 40;
-    return "translate(" + center + "," + height + ")";
-  });
+    .append("text")
+    .attr("class", "yearTag")
+    .text(function(d) { return d.name; })
+    .style("visibility", "hidden")
+    .attr("transform", function(d) {
+      var center = d.x - 40;
+      return "translate(" + center + "," + height + ")";
+    });
 
   d3.select(window)
     .on("resize", function() {
@@ -826,7 +841,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
           return function(t) { return d.r = i(t); };
         });
     }
-    
+    yearTags.moveToFront();
 
     function tick(e) {
       circles
