@@ -161,6 +161,13 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     });
   });
 
+  advData = advData.sort(function(a, b){
+    if(a.name < b.name) return -1;
+    if(a.name > b.name) return 1;
+    return 0;
+  })
+  console.log(advData);
+
   //get year data
   var yeaCount = {}; //year frequency.
 
@@ -585,7 +592,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     else if(typeof newData[0].name === "string" && newData[0].name.indexOf(",") > -1){
       dataType = "advisor";
     }
-    else{
+    else if(typeof newData[0].name === "string" && newData[0].name.indexOf(",") == -1) {
       dataType = "category";
     }
     //remove old elements
@@ -703,7 +710,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         .attr("y", function(d, i){ return (i-1) *  12 + 5;})
         .style("cursor", "pointer")
         .text(function(d) {
-          return d.name;
+          return d.name + ' (' + d.count + ')';
         })
         .on("click", renderProfile);
     } else if (dataType == "advisor"){ //when it's advisor data, show another legend
