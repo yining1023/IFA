@@ -13,6 +13,7 @@ Array.prototype.unique = function()
   return r;
 }
 var dataType;//year, advisor, or category
+var searchAdv="";//save which advisor does users search or click on
 var panelOpen = false; //alumni info panel state
 var radius = d3.scale.sqrt().range([0, 10]);
 var padding = 3, // separation between same-color nodes
@@ -150,6 +151,14 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       advCount[a.Advisor]=1;
     else
       advCount[a.Advisor]++;
+    if(a.Advisor2 !== ""){
+      if(!advCount[a.Advisor2]){
+        advCount[a.Advisor2]=1;
+      }
+      else{
+        advCount[a.Advisor2]++;
+      }
+    }
   });
 
   var advData = [];
@@ -166,7 +175,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     if(a.name > b.name) return 1;
     return 0;
   })
-  console.log(advData);
+  // console.log(advData);
 
   //get year data
   var yeaCount = {}; //year frequency.
@@ -394,7 +403,8 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       return (e.Category === d.name);
     });
     var dInOneAdv = data.filter(function(e){
-      return (e.Advisor === d.name);
+      searchAdv = d.name;
+      return (e.Advisor === d.name || e.Advisor2 === d.name);
     });
     var dInOneYea = data.filter(function(e){
       return (e.Year === d.name);
@@ -458,14 +468,21 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         + "<th data-sortable='true'>Author</th>"
         + "<th data-sortable='true'>Title</th>"
         + "<th data-sortable='true'>Category</th>"
+        + "<th data-sortable='true'>First/Secondary Advisor</th>"
         + "</tr></thead><tbody>");
       for (var i = 0; i < dInOneAdv.length; i++) {
+        if(dInOneAdv[i].Advisor2!=="" && dInOneAdv[i].Advisor2 == searchAdv){
+          firstOrSecond = "Secondary";
+        }else{
+          firstOrSecond = "First";
+        }
         if(i<dInOneAdv.length-1){
           dissertationTable.append("<tr>"
             + "<td>" + dInOneAdv[i].Year + "</td>"
             + "<td>" + dInOneAdv[i].Author + "</td>"
             + "<td>" + dInOneAdv[i].Title + "</td>"
             + "<td>" + dInOneAdv[i].Category + "</td>"
+            + "<td>" + firstOrSecond + "</td>"
             + "</tr>");
         }else{
           dissertationTable.append("<tr>"
@@ -473,6 +490,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
             + "<td>" + dInOneAdv[i].Author + "</td>"
             + "<td>" + dInOneAdv[i].Title + "</td>"
             + "<td>" + dInOneAdv[i].Category + "</td>"
+            + "<td>" + firstOrSecond + "</td>"
             + "</tr></tbody>");
         }
       }
