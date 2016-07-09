@@ -46,8 +46,8 @@ var height = 400, //max size of the bubbles
     colorForYea = function(key, totalColors){
       var colorIndex = Object.keys(colorMapYea).length + 10 || 1;
       if (!colorMapYea[key]) {
-        var brightness = ((colorIndex * (360 / totalColors)) % 360)/3600;
-        colorMapYea[key] = d3.hsl(203, 0.22, brightness + 0.4);
+        var brightness = Math.random()*0.3;
+        colorMapYea[key] = d3.hsl(203, 0.22, 0.4 + brightness);
       }
       return colorMapYea[key];
     },
@@ -277,7 +277,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
   //creating svg for legend for advisor data
   var svg2 = d3.select("#advisor-legend")
     .append("svg")
-    .attr("width", 200)
+    .attr("width", 250)
     .attr("height", 20*(advData.length+1));
 
   //add year tag
@@ -600,7 +600,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         .size([width, height])
         .gravity(-0.01)
         .charge(function(d){return -Math.pow(d.radius, 2.0) / 8; })
-        .friction(0.9)
+        .friction(0.6)
         .on("tick", tickYear) //call tick Year instead
         .start();
         display_years();
@@ -611,7 +611,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         .size([width, height])
         .gravity(-0.01)
         .charge(function(d){return -Math.pow(d.radius, 2.0) / 8; })
-        .friction(0.9)
+        .friction(0.6)
         .on("tick", tick)
         .start();
         hide_years();
@@ -626,7 +626,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       .call(force.drag);
 
     var circles = nodes.append("circle")
-      .attr("r", function(d) { return d.r/2; })
+      .attr("r", function(d) {return d.r/2; })
       .attr("cx", function(d){ return d.x; })
       .attr("cy", function(d){ return d.y; })
       // .style("fill", function(d) {
@@ -661,7 +661,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       circles.style("fill", function(d) {
         return colorForAdv(d.name, newData.length);
       })
-    }else{
+    }else if(dataType == "year"){
       circles.style("fill", function(d) {
         return colorForYea(d.name, newData.length);
       })
@@ -675,10 +675,37 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       circles.attr("data-legend", function(d) { return d.name; });
       var legend = svg.append("g")
         .attr("class","legend")
-        .attr("transform","translate(47, 40)")
+        .attr("transform","translate(-15, 20)")
         .style("font-size","10px")
-        .attr("data-style-padding",8)
-        .call(d3.legend);
+        .attr("data-style-padding",8);
+        // .call(d3.legend);
+
+      legend.selectAll('rect')
+        .data(newData)
+        .enter()
+        .append("circle")
+        .attr("cx", 30)
+        .attr("cy", function(d, i){ return (i-1) *  12})
+        .attr("r", 4)
+        // .attr("height", 5)
+        // .style("stroke", "#7b98aa")
+        .style("fill", function(d) {return colorForCat(d.name);});
+        // .attr("stroke-width", 1)
+        // .style("fill", "#7b98aa");
+
+      legend.selectAll('text')
+        .data(newData)
+        .enter()
+        .append("text")
+        .attr("x", 40)
+        .attr("width", 5)
+        .attr("height", 5)
+        .attr("y", function(d, i){ return (i-1) *  12 + 5;})
+        .style("cursor", "pointer")
+        .text(function(d) {
+          return d.name;
+        })
+        .on("click", renderProfile);
     } else if (dataType == "advisor"){ //when it's advisor data, show another legend
         $("#search").attr("style", "top: -475px");
         $("#advisor-legend").attr("style", "display: block");
@@ -698,9 +725,10 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         .attr("cy", function(d, i){ return (i-1) *  20})
         .attr("r", 2.5)
         // .attr("height", 5)
-        .style("stroke", "#7b98aa")
-        .attr("stroke-width", 1)
-        .style("fill", "#7b98aa");
+        // .style("stroke", "#7b98aa")
+        // .attr("stroke-width", 1)
+        // .style("fill", "#7b98aa");
+        .style("fill", function(d) {return colorForAdv(d.name);});
 
       legend.selectAll('text')
         .data(newData)
@@ -712,7 +740,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         .attr("y", function(d, i){ return (i-1) *  20 + 5;})
         .style("cursor", "pointer")
         .text(function(d) {
-          return d.name;
+          return d.name + ' (' + d.count + ')';
         })
         .on("click", renderProfile);
     }else {
@@ -756,14 +784,24 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     //     "text-anchor": "middle",
     //     fill: "white"
     //   });
-
-    circles.transition()
-      .duration(2000)//750
-      .delay(function(d, i) { return i * 5; })
-      .attrTween("r", function(d) {
-        var i = d3.interpolate(0, d.r);
-        return function(t) { return d.r = i(t); };
-      });
+    if(dataType == "category"){
+      circles.transition()
+        .duration(2000)//750
+        .delay(function(d, i) { return i * 5; })
+        .attrTween("r", function(d) {
+          var i = d3.interpolate(0, d.r*3/4);
+          return function(t) { return d.r = i(t); };
+        });
+    }else{
+      circles.transition()
+        .duration(2000)//750
+        .delay(function(d, i) { return i * 5; })
+        .attrTween("r", function(d) {
+          var i = d3.interpolate(0, d.r);
+          return function(t) { return d.r = i(t); };
+        });
+    }
+    
 
     function tick(e) {
       circles
