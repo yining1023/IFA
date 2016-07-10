@@ -1,22 +1,22 @@
 @charset "UTF-8";
 /* CSS Document */
 
-@font-face {  
-  font-family: Gotham;  
-  font-weight: 300;
-  src: url( '../font/Gotham-Light.otf' );  
-}
-
-@font-face {  
-  font-family: Gotham;  
-  font-weight: 400;
-  src: url( '../font/Gotham-Book.otf' );  
-}
-
-@font-face {  
+@font-face {
   font-family: Gotham;
-  font-weight: 600;  
-  src: url( '../font/Gotham-Bold.otf' );  
+  font-weight: 300;
+  src: url( '../font/Gotham-Light.otf' );
+}
+
+@font-face {
+  font-family: Gotham;
+  font-weight: 400;
+  src: url( '../font/Gotham-Book.otf' );
+}
+
+@font-face {
+  font-family: Gotham;
+  font-weight: 600;
+  src: url( '../font/Gotham-Bold.otf' );
 }
 
 /*Reset CSS for coherence across multiple browsers*/
@@ -29,8 +29,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -41,7 +41,7 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
@@ -109,13 +109,13 @@ table {
         width: 85% !important;
 		height: 40px !important;
         vertical-align: center !important;
-		
+
     }
-	
+
 	#button1, #button2, #button3, #button4, #button5, #button6, #button7, #button8, #button9, #button10 {
     background: rgb(122,152,171) /* this is the FALLBACK for old versions of IE: 6,7,8 */ !important;
     background: rgba(122,152,171,0.75) !important;
-    
+
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
     filter: alpha(opacity=5)  !important;
 }
@@ -140,7 +140,7 @@ table {
         background: url('../images/frontpage-mobile.jpg') !important;
         background-attachment: fixed !important;
     }
-	
+
 
 }
 
@@ -168,36 +168,36 @@ table {
 #button1, #button10 {
     background: rgb(122,152,171); /* this is the FALLBACK for old versions of IE: 6,7,8 */
     background: rgba(122,152,171,0.75);
-    
+
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
-    filter: alpha(opacity=75);  
+    filter: alpha(opacity=75);
 }
 
 #button2, #button3, #button8, #button9 {
 
     background: rgb(176,220,247); /* this is the FALLBACK for old versions of IE: 6,7,8 */
     background: rgba(176,220,247,0.75);
-    
+
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
-    filter: alpha(opacity=75);  
+    filter: alpha(opacity=75);
 }
 
 #button4, #button5 {
     background: rgb(247,215,176); /* this is the FALLBACK for old versions of IE: 6,7,8 */
     background: rgba(247,215,176,0.75);
-    
+
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=75)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
-    filter: alpha(opacity=75);  
+    filter: alpha(opacity=75);
 }
 
 
 #button6, #button7 {
     background: rgb(236,237,231); /* this is the FALLBACK for old versions of IE: 6,7,8 */
     background: rgba(236,237,231,0.75);
-    
+
     -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=72)"; /* this is needed for transparency in old versions of IE: 6,7,8 */
-    filter: alpha(opacity=75);  
-    
+    filter: alpha(opacity=75);
+
 }
 
 
@@ -225,14 +225,14 @@ table {
 .NYULogoContainer {
 	margin-left:40px;
 	}
-	
+
 /*Setting up the div in the apporpriate place for the text and the required CSS*/
 .text {
     position:relative;
     left:0px;
     bottom:0px;
 	top:400px;
-    margin:45px;  
+    margin:45px;
     text-align:left;
 	z-index:1; /* Show above .gradient */
     text-shadow: 3px 2px 7px #000;
@@ -294,22 +294,17 @@ table {
 	color: #83c9ef
 }
 
-#video-background {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -100;
-    -ms-transform: translateX(-50%) translateY(-50%);
-    -moz-transform: translateX(-50%) translateY(-50%);
-    -webkit-transform: translateX(-50%) translateY(-50%);
-    transform: translateX(-50%) translateY(-50%);
+.background-video {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    min-height: 100%;
+    min-width: 100%;
+    width: auto;
+    height: auto;
 }
 /*
- * 
+ *
  * CSS FOR MAKING THE PAGE RESPONSIVE PARTIALLY
  *
  */
