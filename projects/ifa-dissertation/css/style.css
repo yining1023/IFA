@@ -38,7 +38,7 @@ h4{
 
 .advisor-legend {
   overflow: auto;
-  height: 350px;
+  height: 360px;
   border-style: solid;
   border-width: 0.5px;
   border-color: #dddddd;
@@ -194,9 +194,31 @@ h4{
   font-style: italic;
 }
 
-.cardhighlight {
-  margin-bottom: 1px !important;
+.card {
+  font-family: 'Helvetica-Neue', 'Helvetica', sans-serif;
+  /*text-align: center;*/
+  width: 100%;
+/*  height: 100px;
+  border-style: solid;
+  border-width: 0.5px;
+  border-color: #dddddd;
+  border-radius: 3px;*/
+  margin: 10px 0;
 }
+
+.card .heading {   
+  color:#7a3236;
+  padding-top: 5px;
+  padding-left: 10px;
+}
+
+.card .caption2 {
+  font-size: 80%;
+  padding-left: 10px;
+}
+
+p{margin: 0 0 0 0px;}
+
 #searchbox {
   width: 100%;
   margin: 10px 0;

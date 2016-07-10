@@ -434,6 +434,8 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     $('#dissertation-table').empty();
     var dissertationTable = $('#dissertation-table');
 
+    $('.advisor-thumb').empty();
+
     // $('#dissertation').empty();
     //one problem here, everytime render profile, the bootstrap-table.js will init
     // a table container div(class:"bootstrarp-table"), so if render profile for several times,
@@ -478,6 +480,20 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       }
     }
     else if(dInOneAdv.length > 0) {
+      //update the advisor thumb photo
+      //if the thumb photo exist
+      //remove the white spce in the string
+      var searchAdv1 = searchAdv.trim();
+      var url = './faculty-thumbs/'+searchAdv1+'.jpg';
+      console.log(url);
+      var img = new Image();
+      img.src = url;
+      img.onload = function() {
+        console.log("loaded image");
+        document.getElementById('advisor-thumb').appendChild(img);
+      };
+      img.onerror = function() {console.log("ERROR loading image");};
+      //update the table
       dissertationTable.append("<thead><tr>"
         + "<th data-sortable='true'>Year</th>"
         + "<th data-sortable='true'>Author</th>"
