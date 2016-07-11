@@ -28,6 +28,7 @@ d3.selection.prototype.moveToBack = function() {
 };
 
 var dataType;//year, advisor, or category
+var advisorInfo = [];//
 var searchAdv="";//save which advisor does users search or click on
 var panelOpen = false; //alumni info panel state
 var radius = d3.scale.sqrt().range([0, 10]);
@@ -485,14 +486,55 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       //remove the white spce in the string
       var searchAdv1 = searchAdv.trim();
       var url = './faculty-thumbs/'+searchAdv1+'.jpg';
-      console.log(url);
       var img = new Image();
       img.src = url;
       img.onload = function() {
-        console.log("loaded image");
         document.getElementById('advisor-thumb').appendChild(img);
       };
-      img.onerror = function() {console.log("ERROR loading image");};
+      img.onerror = function() {console.log("There is no image for this advisor");};
+
+      //show advisor info, name, title, field of study
+      //delete the comma in the name, eg: Nochlin, Linda into Nochlin Linda
+      //save the new name in searchAdv2 
+      searchAdv2 = searchAdv.replace(",","");
+      console.log(searchAdv2);
+      //clear every thing first
+      //clear name
+      var a = document.getElementById('advisor-link');
+      a.innerHTML = "";
+      //clear title
+      var advisorTitleDiv = document.getElementById('advisor-title');
+      advisorTitleDiv.innerHTML = "";
+      //clear field of study
+      var advisorFieldDiv = document.getElementById('advisor-field');
+      advisorFieldDiv.innerHTML = "";
+      //search if there is advisor info
+      for(var i = 0; i < advisorInfo.length; i++){
+        console.log(advisorInfo[i][0]);
+        if(advisorInfo[i][0] == searchAdv2){
+          console.log('got a name');
+          //show the border of advisor info
+          $("#advisor-info").attr("style", "display: block");
+          //add link to the advisor name
+          if(advisorInfo[i][1]!== null && advisorInfo[i][1] !== ""){
+            $("#advisor-link").attr("style", "color: #7a98ab");
+            a.href = advisorInfo[i][1];
+          }else{
+            $("#advisor-link").attr("style", "color: black");
+          }
+          a.innerHTML = searchAdv2;
+          //add title
+          var advisorTitleDiv = document.getElementById('advisor-title');
+          if(typeof advisorInfo[i][2] !== 'undefined' && advisorInfo[i][2]!==null && advisorInfo[i][2]!==""){
+            advisorTitleDiv.innerHTML = advisorInfo[i][2];
+          }
+          //add study of field
+          var advisorFieldDiv = document.getElementById('advisor-field');
+          if(typeof advisorInfo[i][3] !== 'undefined' && advisorInfo[i][3]!==null && advisorInfo[i][3]!==""){
+            advisorFieldDiv.innerHTML = advisorInfo[i][3];
+          }
+        }
+      }
       //update the table
       dissertationTable.append("<thead><tr>"
         + "<th data-sortable='true'>Year</th>"
@@ -525,7 +567,6 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
             + "</tr></tbody>");
         }
       }
-
     }
     else if(dInOneYea.length > 0){
       dissertationTable.append("<thead><tr>"
@@ -726,6 +767,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     //when it's category data, show legend
     if(dataType == "category"){
       $("#advisor-legend").attr("style", "display: none");
+      $("#advisor-info").attr("style", "display: none");
       $("#search").attr("style", "top: -800px");
       $("g.legend").remove();
       circles.attr("data-legend", function(d) { return d.name; });
@@ -765,6 +807,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
     } else if (dataType == "advisor"){ //when it's advisor data, show another legend
         $("#search").attr("style", "top: -475px");
         $("#advisor-legend").attr("style", "display: block");
+        $("#advisor-info").attr("style", "display: none");
         $("g.legend").remove();
 
       var legend = svg2.append("g")
@@ -801,6 +844,7 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
         .on("click", renderProfile);
     }else {
       $("#advisor-legend").attr("style", "display: none");
+      $("#advisor-info").attr("style", "display: none");
       $("#search").attr("style", "top: -930px");
       $("g.legend").remove();
     }
@@ -993,3 +1037,33 @@ d3.csv("./data/ifa-dissertations.csv", function(error, data) {
       updateData(newData);
     });
 });
+
+//read advisor info csv and save them as arrays
+$(document).ready(function() {
+  $.ajax({
+    type: "GET",
+    url: "./data/ifa-advisors.csv",
+    success: function(data) {
+      processData(data);
+    }
+  });
+});
+
+function processData(allText) {
+  var allTextLines = allText.split(/\r\n|\n/);
+  var headers = allTextLines[0].split(',');
+
+  for (var i=1; i<allTextLines.length; i++) {
+    var data = allTextLines[i].split(',');
+    // if (data.length <= headers.length && data.length > 0) {
+      var tarr = [];
+      for (var j=0; j<headers.length; j++) {
+        // if(data[j]!==""){
+          tarr.push(data[j]);
+        // }
+      }
+      advisorInfo.push(tarr);
+    // }
+  }
+  console.log(advisorInfo);
+}

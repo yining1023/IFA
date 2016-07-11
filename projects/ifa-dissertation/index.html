@@ -28,7 +28,7 @@
     <div class="col-xs-12 col-sm-3">
       <div class="row">
         <select class="form-control" id="text-select">
-          <option value="Category">Category</option>
+          <option value="Category" selected="selected">Category</option>
           <option value="Advisor">Advisor</option>
           <option value="Year">Year</option>
         </select>
@@ -42,6 +42,17 @@
 
       <div class="row">
         <div id="advisor-legend" class="advisor-legend"></div>
+      </div>
+
+      <div class="row">
+        <div class="advisor-info" id="advisor-info">
+          <div class="advisor-thumb" id="advisor-thumb"></div>
+          <div class="advisor-name" id="advisor-name">
+            <a class="advisor-link" id="advisor-link" target="_blank"></a>
+          </div>
+          <div class="advisor-title" id="advisor-title"></div>
+          <div class="advisor-field" id="advisor-field"></div>
+        </div>
       </div>
 
       <div class="row">
@@ -65,7 +76,6 @@
 
       <div class="row">
         <div id="selection"></div>
-        <div class="advisor-thumb" id="advisor-thumb"></div>
         <table id="dissertation-table"></table>
       </div>
     </div>
